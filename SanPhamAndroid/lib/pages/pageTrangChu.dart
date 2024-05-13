@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../database_test/ImageDemo.dart';
+
 class PageTrangChu extends StatefulWidget {
   const PageTrangChu({super.key});
 
@@ -17,7 +19,9 @@ class _PageTrangChuState extends State<PageTrangChu> {
       appBar: AppBar(
         title: const Text("Trang chủ"),
       ),
-      body: Container(),
+      body: Container(
+        child: Image.asset(ImageDemo.path),
+      ),
     );
   }
 }

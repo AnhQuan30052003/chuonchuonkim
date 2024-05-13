@@ -1,3 +1,5 @@
+import 'package:chuonchuonkim_app/database_test/ImageDemo.dart';
+
 class SanPham {
   String maSP, tenSP, moTaSP, hinhAnhSP;
   String maLSP; // khoá ngoại
@@ -14,4 +16,6 @@ class SanPham {
   });
 }
 
-List<SanPham> dbSanPham = [];
+List<SanPham> dbSanPham = [
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001")
+];
