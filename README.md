@@ -1,1 +1,2 @@
-# chuonchuonkim
+# android studio
+# chuonchuonkim app
