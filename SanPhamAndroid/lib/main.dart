@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key})
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class PageDemo extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Run file demo successful"),
+          Text("Run file demo successfulll"),
         ],
       )),
     );
