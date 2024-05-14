@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: PageDemo(),
+      home: ChuonChuonKimApp(),
     );
   }
 }
@@ -48,7 +48,7 @@ class ChuonChuonKimApp extends StatelessWidget {
       title: "Chuonchuonkim App",
       debugShowCheckedModeBanner: false,
       initialBinding: ChuonChuonKimBindings(),
-      home: const PageCart(),
+      home: PageHome(),
     );
   }
 }
