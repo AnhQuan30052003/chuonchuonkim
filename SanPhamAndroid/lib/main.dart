@@ -1,3 +1,4 @@
+import '../controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -28,9 +29,7 @@ class PageDemo extends StatelessWidget {
       body: const Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Run file demo successfulll"),
-        ],
+        children: [Text("Run file demo successful")],
       )),
     );
   }
@@ -42,6 +41,11 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return GetMaterialApp(
+      title: "Chuonchuonkim App",
+      debugShowCheckedModeBanner: false,
+      initialBinding: ChuonChuonKimBindings(),
+      home: const PageCart(),
+    );
   }
 }
