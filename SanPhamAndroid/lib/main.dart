@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'pages/pageTrangChu.dart';
@@ -9,10 +10,11 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: "Chuonchuonkim App",
       debugShowCheckedModeBanner: false,
-      home: PageTrangChu(),
+      initialBinding: ChuonChuonKimBindings(),
+      home: const PageTrangChu(),
     );
   }
 }

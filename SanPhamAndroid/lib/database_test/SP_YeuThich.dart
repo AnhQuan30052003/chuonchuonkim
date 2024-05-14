@@ -8,4 +8,8 @@ class SP_YeuThich {
   });
 }
 
-List<SP_YeuThich> dbSP_YeuThich = [];
+List<SP_YeuThich> dbSP_YeuThich = [
+  SP_YeuThich(maSPYT: "SPYT001", maSP: "S001"),
+  SP_YeuThich(maSPYT: "SPYT001", maSP: "S001"),
+  SP_YeuThich(maSPYT: "SPYT001", maSP: "S001"),
+];

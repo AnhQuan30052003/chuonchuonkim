@@ -17,5 +17,16 @@ class SanPham {
 }
 
 List<SanPham> dbSanPham = [
-  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001")
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
+  SanPham(maSP: "SP001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: ImageDemo.path, giaSP: 12000, soLuongConSP: 10, maLSP: "LSP001"),
 ];

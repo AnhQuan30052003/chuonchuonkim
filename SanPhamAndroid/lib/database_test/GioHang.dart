@@ -10,4 +10,8 @@ class GioHang {
   });
 }
 
-List<GioHang> dbGioHang = [];
+List<GioHang> dbGioHang = [
+  GioHang(maGH: "GH001", maSP: "SP001", soLuong: 1),
+  GioHang(maGH: "GH001", maSP: "SP001", soLuong: 1),
+  GioHang(maGH: "GH001", maSP: "SP001", soLuong: 1),
+];

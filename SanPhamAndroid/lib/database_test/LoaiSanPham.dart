@@ -7,4 +7,7 @@ class LoaiSanPham {
   });
 }
 
-List<LoaiSanPham> dbLoaiSanPham = [];
+List<LoaiSanPham> dbLoaiSanPham = [
+  LoaiSanPham(maLSP: "LSP001", tenLSP: "Đồ ăn"),
+  LoaiSanPham(maLSP: "LSP002", tenLSP: "Nước uống")
+];
