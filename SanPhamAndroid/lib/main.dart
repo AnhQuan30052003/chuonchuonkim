@@ -1,5 +1,8 @@
 import '../controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'pages/pageHome.dart';
+import 'pages/pageCart.dart';
 
 void main() => runApp(const MyApp());
 
