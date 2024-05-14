@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-class PageTrangChu extends StatefulWidget {
-  const PageTrangChu({super.key});
+class PageHome extends StatefulWidget {
+  const PageHome({super.key});
 
   @override
-  State<PageTrangChu> createState() => _PageTrangChuState();
+  State<PageHome> createState() => _PageHomeState();
 }
 
-class _PageTrangChuState extends State<PageTrangChu> {
+class _PageHomeState extends State<PageHome> {
 
   @override
   Widget build(BuildContext context) {

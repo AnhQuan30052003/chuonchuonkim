@@ -1,7 +1,8 @@
-import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import '../controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'pages/pageTrangChu.dart';
+import 'pages/pageHome.dart';
+import 'pages/pageCart.dart';
 
 void main() => runApp(const ChuonChuonKimApp());
 
@@ -14,7 +15,7 @@ class ChuonChuonKimApp extends StatelessWidget {
       title: "Chuonchuonkim App",
       debugShowCheckedModeBanner: false,
       initialBinding: ChuonChuonKimBindings(),
-      home: const PageTrangChu(),
+      home: const PageCart(),
     );
   }
 }
