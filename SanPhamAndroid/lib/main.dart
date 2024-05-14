@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key})
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,12 @@ class PageDemo extends StatelessWidget {
         title: const Text("Title demo"),
       ),
       body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Run file demo successful")
-          ],
-        )
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Run file demo successful"),
+        ],
+      )),
     );
   }
 }
