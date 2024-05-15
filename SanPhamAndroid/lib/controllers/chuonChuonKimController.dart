@@ -20,6 +20,7 @@ class ChuonChuonKimController extends GetxController {
 
   void getData() {
     listProduct = dbProduct;
+    update(["client_products"]);
   }
 
   // Thêm sản phẩm vào giỏ hàng
