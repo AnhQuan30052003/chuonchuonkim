@@ -8,6 +8,7 @@ class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
 
   List<Product> listProduct = [];
+  List<Product> listProductSave = [];
   final listCart = <Cart>[
     Cart(maSP: "SP001", soLuong: 1),
   ].obs;
@@ -19,7 +20,7 @@ class ChuonChuonKimController extends GetxController {
   }
 
   void getData() {
-    listProduct = dbProduct;
+    listProduct = listProductSave = dbProduct;
     update(["client_products"]);
   }
 
@@ -64,6 +65,19 @@ class ChuonChuonKimController extends GetxController {
       }
     }
     return sum;
+  }
+
+  /// Hàm xủ lỷ
+  // Hiển thị sản phẩm theo loại sản phẩm click vào !
+  void showProductType({required String idLSP}) {
+    listProduct = [];
+    for (var p in listProductSave) {
+      if (p.maLSP == idLSP) {
+        listProduct.add(p);
+      }
+    }
+
+    update(["client_products"]);
   }
 }
 

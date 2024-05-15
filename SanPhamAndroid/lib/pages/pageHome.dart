@@ -97,7 +97,12 @@ class PageHome extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(10),
-                          child: Image.asset(iconTypeProduct[index]),
+                          child: GestureDetector(
+                            child: Image.asset(iconTypeProduct[index]),
+                            onTap: () {
+                              controller.showProductType(idLSP: products[index].maLSP);
+                            },
+                          ),
                         ),
                       );
                     },
