@@ -62,6 +62,16 @@ class ProductTypeSnapshot {
 
     return list;
   }
+
+  static Future<List<ProductTypeSnapshot>> futureData() async {
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductType).get();
+
+    var list = qs.docs.map(
+      (docSnap) => ProductTypeSnapshot.fromDocSnap(docSnap)
+    ).toList();
+
+    return list;
+  }
 }
 
 List<ProductType> dbProductType = [

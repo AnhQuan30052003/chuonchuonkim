@@ -63,6 +63,16 @@ class CartSnapshot {
 
     return list;
   }
+
+  static Future<List<CartSnapshot>> futureData() async {
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colCart).get();
+
+    var list = qs.docs.map(
+      (docSnap) => CartSnapshot.fromDocSnap(docSnap)
+    ).toList();
+
+    return list;
+  }
 }
 
 List<Cart> dbCart = [

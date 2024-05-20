@@ -62,13 +62,23 @@ class ProductSnapshot {
     await docRef.update(object.toJson());
   }
 
-  static Stream<List<ProductSnapshot>> getData() {
+  static Stream<List<ProductSnapshot>> streamData() {
     var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProduct).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
         (docSnap) => ProductSnapshot.fromDocSnap(docSnap)
       ).toList()
     );
+
+    return list;
+  }
+
+  static Future<List<ProductSnapshot>> futureData() async {
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colProduct).get();
+
+    var list = qs.docs.map(
+      (docSnap) => ProductSnapshot.fromDocSnap(docSnap)
+    ).toList();
 
     return list;
   }

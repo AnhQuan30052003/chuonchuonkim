@@ -59,6 +59,16 @@ class ProductFavoriteSnapshot {
 
     return list;
   }
+
+  static Future<List<ProductFavoriteSnapshot>> futureData() async {
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorites).get();
+
+    var list = qs.docs.map(
+      (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)
+    ).toList();
+
+    return list;
+  }
 }
 
 List<ProductFavorite> dbProductFavorite = [

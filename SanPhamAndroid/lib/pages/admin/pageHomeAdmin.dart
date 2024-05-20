@@ -5,26 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../database/connect/firebaseConnect.dart';
 
-void main() => runApp(const AdminConnect());
-
 class AdminConnect extends StatelessWidget {
   const AdminConnect({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // return FirebaseConnect(
-    //   builder: (context) => GetMaterialApp(
-    //     title: "Admin connect",
-    //     debugShowCheckedModeBanner: false,
-    //     initialBinding: ChuonChuonKimBindings(),
-    //     home: const PageHomeAdmin(),
-    //   ),
-    // );
-
-    return const GetMaterialApp(
-      title: "Admin connect",
-      debugShowCheckedModeBanner: false,
-      home: PageHomeAdmin(),
+    return FirebaseConnect(
+      builder: (context) => GetMaterialApp(
+        title: "Admin connect",
+        debugShowCheckedModeBanner: false,
+        initialBinding: ChuonChuonKimBindings(),
+        home: const PageHomeAdmin(),
+      ),
     );
   }
 }
