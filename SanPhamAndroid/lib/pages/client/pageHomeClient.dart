@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class PageHome extends StatelessWidget {
+class PageHomeClient extends StatelessWidget {
   final List iconTypeProduct = [
     "assets/images/icons/icon1.png",
     "assets/images/icons/icon2.png",
@@ -15,7 +15,8 @@ class PageHome extends StatelessWidget {
     "assets/images/icons/icon3.png",
     "assets/images/icons/icon1.png",
   ];
-  PageHome({super.key});
+
+  PageHomeClient({super.key});
 
   @override
   Widget build(BuildContext context) {

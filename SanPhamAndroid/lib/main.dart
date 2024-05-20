@@ -1,8 +1,8 @@
-import '../controllers/chuonChuonKimController.dart';
+import 'controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'pages/pageHome.dart';
-import 'pages/pageCart.dart';
+import 'pages/client/pageHomeClient.dart';
+import 'pages/admin/pageHomeAdmin.dart';
+import 'pages/system/uploadData.dart';
 
 void main() => runApp(const ChuonChuonKimApp());
 
@@ -11,11 +11,51 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const MaterialApp(
       title: "Chuonchuonkim App",
       debugShowCheckedModeBanner: false,
-      initialBinding: ChuonChuonKimBindings(),
-      home: PageHome(),
+      home: ListApp(),
+    );
+  }
+}
+
+// Tạo một danh sách truy cập 
+class ListApp extends StatelessWidget {
+  const ListApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Chọn app ?"),
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              _buildButon(context, label: "Upload Data", type: const AppUploadData()),
+              _buildButon(context, label: "App client", type: PageHomeClient()),
+              _buildButon(context, label: "App admin", type: const PageHomeAdmin()),
+            ],
+          ),
+        ),
+      )
+    );
+  }
+
+  Container _buildButon(BuildContext context, {required String label, required Widget type}) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      width: MediaQuery.of(context).size.width * 0.75,
+      child: ElevatedButton(
+        child: Text(label),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => type)
+          );
+        },
+      ),
     );
   }
 }

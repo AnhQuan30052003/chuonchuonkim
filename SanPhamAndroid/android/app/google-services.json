@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "6854883975",
+    "project_id": "chuonchuonkim-a7c61",
+    "storage_bucket": "chuonchuonkim-a7c61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6854883975:android:1e1f2f9b2ae414b7929622",
+        "android_client_info": {
+          "package_name": "com.example.chuonchuonkim_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4nJGfeC57_p5hKXEEPO1iVqmbpiT-d9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

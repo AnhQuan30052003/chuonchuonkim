@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import '../database_test/Cart.dart';
-import '../database_test/Product.dart';
+import '../database/models/Product.dart';
+import '../database/models/Cart.dart';
 import 'checkProductController.dart';
 import 'counterQuantityProductController.dart';
 
@@ -10,7 +10,7 @@ class ChuonChuonKimController extends GetxController {
   List<Product> listProduct = [];
   List<Product> listProductSave = [];
   final listCart = <Cart>[
-    Cart(maSP: "SP001", soLuong: 1),
+    // Cart(maSP: "SP001", soLuong: 1),
   ].obs;
 
   @override
@@ -33,7 +33,7 @@ class ChuonChuonKimController extends GetxController {
       }
     }
 
-    listCart.add(Cart(maSP: product.maSP, soLuong: 1));
+    // listCart.add(Cart(maSP: product.maSP, soLuong: 1));
   }
 
   // Xoá sản phẩm khỏi giỏ hàng

@@ -1,7 +1,7 @@
 // Đạt
 
 import 'package:flutter/material.dart';
-import '../database_test/Product.dart';
+import '../../database/models/Product.dart';
 
 class PageDetails extends StatelessWidget {
   final Product product;
