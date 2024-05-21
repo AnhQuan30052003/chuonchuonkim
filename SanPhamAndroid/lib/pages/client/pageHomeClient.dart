@@ -119,7 +119,7 @@ class PageHomeClient extends StatelessWidget {
                             child: GestureDetector(
                               child: Image.network(item.hinhAnhLSP),
                               onTap: () {
-                                controller.showProductType(idLSP: list[index].maLSP);
+                                // controller.showProductType(idLSP: list[index].maLSP);
                               },
                             ),
                           ),
