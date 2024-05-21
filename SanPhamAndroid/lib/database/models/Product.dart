@@ -86,5 +86,5 @@ class ProductSnapshot {
 
 List<Product> dbProduct = [
   Product(maSP: "001", tenSP: "Cơm chiên", moTaSP: "Cơm ngon mẹ làm", hinhAnhSP: "", giaSP: 12000, maLSP: "001"),
-  // Product(maSP: "002", tenSP: "Cơm sườn", moTaSP: "Cơm ngon tại quán", hinhAnhSP: ImageDemo.path, giaSP: 12000, maLSP: "002"),
+  Product(maSP: "002", tenSP: "Cơm sườn", moTaSP: "Cơm ngon tại quán", hinhAnhSP: "", giaSP: 15000, maLSP: "002"),
 ];
