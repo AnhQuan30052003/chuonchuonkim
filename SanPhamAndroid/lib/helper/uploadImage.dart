@@ -25,6 +25,7 @@ Future<String?> uploadImage({required String imagePath, required List<String> fo
     downloadUrl = await reference.getDownloadURL();
     return downloadUrl;
   } on FirebaseException catch (e) {
+    print("Đã có lỗi trong quá trình upload image: $e");
     return Future.error("Lỗi upload ảnh !");
   }
 }
