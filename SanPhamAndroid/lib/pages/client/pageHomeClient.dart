@@ -76,6 +76,9 @@ class PageHomeClient extends StatelessWidget {
                         suffixIcon: const Icon(Icons.sort, color: Colors.redAccent),
                         hintText: "Tìm kiếm",
                       ),
+                      onChanged: (input) {
+
+                      },
                     ),
                   ),
                   // * end search
