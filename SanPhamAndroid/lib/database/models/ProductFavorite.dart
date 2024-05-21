@@ -49,17 +49,6 @@ class ProductFavoriteSnapshot {
     await docRef.update(object.toJson());
   }
 
-  static Stream<List<ProductFavoriteSnapshot>> getData() {
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProductFavorites).snapshots();
-    var list = querySnapshot.map(
-      (qsn) => qsn.docs.map(
-        (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)
-      ).toList()
-    );
-
-    return list;
-  }
-
   static Future<List<ProductFavoriteSnapshot>> futureData() async {
     var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorites).get();
 

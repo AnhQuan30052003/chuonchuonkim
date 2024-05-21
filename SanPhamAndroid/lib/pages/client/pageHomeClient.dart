@@ -39,7 +39,9 @@ class PageHomeClient extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             icon: const Icon(
               Icons.notifications_none,
               color: Color(0xFF3A3737),
@@ -88,6 +90,7 @@ class PageHomeClient extends StatelessWidget {
                       itemCount: controller.listProductType.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
+                        var item = controller.listProductType[index];
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           height: 60,
@@ -106,7 +109,7 @@ class PageHomeClient extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: GestureDetector(
-                              child: Image.network(controller.listProductType[index].hinhAnhLSP),
+                              child: Image.network(item.hinhAnhLSP),
                               onTap: () {
                                 controller.showProductType(idLSP: list[index].maLSP);
                               },
@@ -117,6 +120,7 @@ class PageHomeClient extends StatelessWidget {
                     ),
                   ),
                   // * end filter
+
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +134,9 @@ class PageHomeClient extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+
+                        },
                         child: const Text(
                           "Tất cả",
                           style: TextStyle(color: Colors.redAccent, fontSize: 15),

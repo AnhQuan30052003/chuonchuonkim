@@ -23,13 +23,13 @@ class ChuonChuonKimController extends GetxController {
   }
 
 
-  //// Lấy dữu liệu về
   // Lấy dữ liệu Product
   void getProducts() async {
     var data = await ProductSnapshot.futureData();
     listProduct = data.map((e) => e.product).toList();
     listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
     updatePageHome();
+    print("Đã cập nhật Product. Số lượng: ${listProduct.length}");
   }
 
   // Lấy dữ liệu ProductType
@@ -37,6 +37,8 @@ class ChuonChuonKimController extends GetxController {
     var data = await ProductTypeSnapshot.futureData();
     listProductType = data.map((e) => e.productType).toList();
     listProductType.sort((ProductType a, ProductType b) => a.maLSP.compareTo(b.maLSP));
+    updatePageHome();
+    print("Đã cập nhật Product Type. ${listProductType.length}");
   }
 
   void updatePageHome() {
@@ -90,7 +92,6 @@ class ChuonChuonKimController extends GetxController {
   }
 
 
-  /// Hàm xủ lỷ
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
     getProducts();

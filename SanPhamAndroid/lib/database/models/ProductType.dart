@@ -52,7 +52,7 @@ class ProductTypeSnapshot {
     await docRef.update(object.toJson());
   }
 
-  static Stream<List<ProductTypeSnapshot>> getData() {
+  static Stream<List<ProductTypeSnapshot>> streamData() {
     var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProductType).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
