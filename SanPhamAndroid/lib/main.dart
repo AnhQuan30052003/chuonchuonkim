@@ -34,8 +34,8 @@ class ListApp extends StatelessWidget {
           child: Column(
             children: [
               _buildButton(context, label: "Upload Data", type: const AppUploadData()),
-              _buildButton(context, label: "App client", type: const PageHomeClient()),
-              _buildButton(context, label: "App admin", type: const PageHomeAdmin()),
+              _buildButton(context, label: "App client", type: const ClientConnect()),
+              _buildButton(context, label: "App admin", type: const AdminConnect()),
             ],
           ),
         ),
