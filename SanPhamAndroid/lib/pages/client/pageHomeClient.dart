@@ -1,9 +1,14 @@
 // * Đạt
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
+
+void main() {
+  return runApp(const ClientConnect());
+}
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -24,6 +29,7 @@ class ClientConnect extends StatelessWidget {
 class PageHomeClient extends StatelessWidget {
   const PageHomeClient({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -39,9 +45,7 @@ class PageHomeClient extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.notifications_none,
               color: Color(0xFF3A3737),
@@ -57,6 +61,7 @@ class PageHomeClient extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -137,9 +142,7 @@ class PageHomeClient extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: const Text(
                           "Tất cả",
                           style: TextStyle(color: Colors.redAccent, fontSize: 15),
@@ -147,7 +150,7 @@ class PageHomeClient extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   // * card product
                   SizedBox(
@@ -189,8 +192,7 @@ class PageHomeClient extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 17,
-                                            fontWeight: FontWeight.bold
-                                        ),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         item.moTaSP,
@@ -214,7 +216,6 @@ class PageHomeClient extends StatelessWidget {
                                           ),
                                         ],
                                       )
-                                      // Image.asset(item.hinhAnhSP)
                                     ],
                                   ),
                                 ),
@@ -244,6 +245,124 @@ class PageHomeClient extends StatelessWidget {
                         );
                       },
                     ),
+                  ),
+                  // * end card product
+                  const SizedBox(height: 10),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Sản phẩm",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GetBuilder<ChuonChuonKimController>(
+                    builder: (controller) {
+                      return GridView.extent(
+                        maxCrossAxisExtent: 250,
+                        shrinkWrap: true,
+                        children: controller.listProduct
+                            .map((product) => GestureDetector(
+                                  onTap: () {},
+                                  child: ListView(
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 8.0),
+                                            child: Container(
+                                              margin: const EdgeInsets.all(10),
+                                              height: 200,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(10),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4,
+                                                    spreadRadius: 2,
+                                                    color: Colors.black12,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    const SizedBox(height: 7),
+                                                    Text(
+                                                      product.tenSP,
+                                                      style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 17,
+                                                          fontWeight: FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      product.moTaSP,
+                                                      style: const TextStyle(
+                                                          color: Colors.black45, fontSize: 15),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "${product.giaSP}đ",
+                                                          style: const TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight.normal),
+                                                        ),
+                                                        Container(
+                                                          height: 30,
+                                                          width: 30,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.black12,
+                                                            borderRadius: BorderRadius.circular(30),
+                                                          ),
+                                                          child: const Icon(
+                                                              Icons.favorite_border_outlined),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left: 25,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(80),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4,
+                                                    spreadRadius: 2,
+                                                    color: Colors.black12,
+                                                  )
+                                                ],
+                                              ),
+                                              child: Image.network(
+                                                product.hinhAnhSP,
+                                                height: 140,
+                                                width: 140,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                            .toList(),
+                      );
+                    },
                   )
                 ],
               ),
@@ -254,4 +373,3 @@ class PageHomeClient extends StatelessWidget {
     );
   }
 }
-
