@@ -1,14 +1,13 @@
 // * Đạt
 
+import 'package:chuonchuonkim_app/database/models/Product.dart';
+import 'package:chuonchuonkim_app/pages/client/pageDetails.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
-
-void main() {
-  return runApp(const ClientConnect());
-}
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -261,100 +260,68 @@ class PageHomeClient extends StatelessWidget {
                   GetBuilder<ChuonChuonKimController>(
                     builder: (controller) {
                       return GridView.extent(
-                        maxCrossAxisExtent: 250,
+                        maxCrossAxisExtent: 300, // chiều rộng lớn nhất
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
                         shrinkWrap: true,
                         children: controller.listProduct
                             .map((product) => GestureDetector(
-                                  onTap: () {},
-                                  child: ListView(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 8.0),
-                                            child: Container(
-                                              margin: const EdgeInsets.all(10),
-                                              height: 200,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(10),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 4,
-                                                    spreadRadius: 2,
-                                                    color: Colors.black12,
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  onTap: () {
+                                    Get.to(() => PageDetails(product: product));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(
+                                        color: Colors.redAccent.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    borderOnForeground: true,
+                                    child: Container(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          children: [
+                                            Expanded(child: Image.network(product.hinhAnhSP)),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.tenSP,
+                                                  style: const TextStyle(
+                                                      fontWeight: FontWeight.bold, fontSize: 15),
+                                                ),
+                                                Text(product.moTaSP),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    const SizedBox(height: 7),
                                                     Text(
-                                                      product.tenSP,
+                                                      "${product.giaSP}",
                                                       style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 17,
+                                                          fontSize: 15,
+                                                          color: Colors.black87,
                                                           fontWeight: FontWeight.bold),
                                                     ),
-                                                    Text(
-                                                      product.moTaSP,
-                                                      style: const TextStyle(
-                                                          color: Colors.black45, fontSize: 15),
+                                                    Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.black12,
+                                                        borderRadius: BorderRadius.circular(30),
+                                                      ),
+                                                      child: const Icon(
+                                                          Icons.favorite_border_outlined),
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "${product.giaSP}đ",
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight: FontWeight.normal),
-                                                        ),
-                                                        Container(
-                                                          height: 30,
-                                                          width: 30,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.black12,
-                                                            borderRadius: BorderRadius.circular(30),
-                                                          ),
-                                                          child: const Icon(
-                                                              Icons.favorite_border_outlined),
-                                                        ),
-                                                      ],
-                                                    )
                                                   ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 25,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(80),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 4,
-                                                    spreadRadius: 2,
-                                                    color: Colors.black12,
-                                                  )
-                                                ],
-                                              ),
-                                              child: Image.network(
-                                                product.hinhAnhSP,
-                                                height: 140,
-                                                width: 140,
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ))
                             .toList(),
