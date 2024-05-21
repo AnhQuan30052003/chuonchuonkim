@@ -38,7 +38,7 @@ class ChuonChuonKimController extends GetxController {
     listProductType = data.map((e) => e.productType).toList();
     listProductType.sort((ProductType a, ProductType b) => a.maLSP.compareTo(b.maLSP));
     updatePageHome();
-    print("Đã cập nhật Product Type. ${listProductType.length}");
+    print("Đã cập nhật Product Type. Số lượng: ${listProductType.length}");
   }
 
   void updatePageHome() {

@@ -3,7 +3,7 @@ class Firebase {
   static List<String> pathImageProductType = ["Images", "ProductsTypes"];
   static List<String> pathAvatarUser = ["Images", "AvatarUsers"];
   static String colProduct = "Products";
-  static String colProductType = "ProductTypes";
+  static String colProductType = "ProductsTypes";
   static String colCart = "Carts";
   static String colProductFavorites = "ProductFavorites";
   static String colUser = "Users";
