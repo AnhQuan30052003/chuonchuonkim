@@ -5,6 +5,10 @@ import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 
+void main() {
+  return runApp(const ClientConnect());
+}
+
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
 
@@ -24,6 +28,7 @@ class ClientConnect extends StatelessWidget {
 class PageHomeClient extends StatelessWidget {
   const PageHomeClient({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -39,9 +44,7 @@ class PageHomeClient extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.notifications_none,
               color: Color(0xFF3A3737),
@@ -134,9 +137,7 @@ class PageHomeClient extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: const Text(
                           "Tất cả",
                           style: TextStyle(color: Colors.redAccent, fontSize: 15),
@@ -186,8 +187,7 @@ class PageHomeClient extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 17,
-                                            fontWeight: FontWeight.bold
-                                        ),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         item.moTaSP,
@@ -251,4 +251,3 @@ class PageHomeClient extends StatelessWidget {
     );
   }
 }
-
