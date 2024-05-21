@@ -1,8 +1,8 @@
 // * Đạt
 
-import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 
 class ClientConnect extends StatelessWidget {
