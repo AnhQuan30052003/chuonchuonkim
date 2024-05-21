@@ -18,7 +18,7 @@ class ChuonChuonKimApp extends StatelessWidget {
   }
 }
 
-// Tạo một danh sách truy cập 
+// Tạo một danh sách truy cập
 class ListApp extends StatelessWidget {
   const ListApp({super.key});
 
@@ -33,26 +33,24 @@ class ListApp extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              _buildButon(context, label: "Upload Data", type: const AppUploadData()),
-              _buildButon(context, label: "App client", type: const ClientConnect()),
-              _buildButon(context, label: "App admin", type: const AdminConnect()),
+              _buildButton(context, label: "Upload Data", type: const AppUploadData()),
+              _buildButton(context, label: "App client", type: PageHomeClient()),
+              _buildButton(context, label: "App admin", type: const PageHomeAdmin()),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 
-  Container _buildButon(BuildContext context, {required String label, required Widget type}) {
+  Container _buildButton(BuildContext context, {required String label, required Widget type}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       width: MediaQuery.of(context).size.width * 0.75,
       child: ElevatedButton(
         child: Text(label),
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => type)
-          );
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => type));
         },
       ),
     );
