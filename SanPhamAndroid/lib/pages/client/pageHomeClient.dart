@@ -269,8 +269,7 @@ class PageHomeClient extends StatelessWidget {
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
                     shrinkWrap: true,
-                    children: controller.listProduct.map(
-                      (product) {
+                    children: controller.listProduct.map((product) {
                       return GestureDetector(
                         onTap: () {
                           Get.to(() => PageDetails(product: product));
@@ -328,7 +327,7 @@ class PageHomeClient extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      );
                     }).toList())
                 // * end card product
               ]),
