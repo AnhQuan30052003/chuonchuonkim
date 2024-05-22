@@ -80,9 +80,7 @@ class PageHomeClient extends StatelessWidget {
                         suffixIcon: const Icon(Icons.sort, color: Colors.redAccent),
                         hintText: "Tìm kiếm",
                       ),
-                      onChanged: (input) {
-
-                      },
+                      onChanged: (input) {},
                     ),
                   ),
                   // * end search
@@ -246,6 +244,7 @@ class PageHomeClient extends StatelessWidget {
                     ),
                   ),
                   // * end card product
+
                   const SizedBox(height: 10),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,10 +259,11 @@ class PageHomeClient extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // * all products
                   GetBuilder<ChuonChuonKimController>(
                     builder: (controller) {
                       return GridView.extent(
-                        maxCrossAxisExtent: 300, // chiều rộng lớn nhất
+                        maxCrossAxisExtent: 200, // chiều rộng lớn nhất
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 5,
                         shrinkWrap: true,
@@ -273,11 +273,14 @@ class PageHomeClient extends StatelessWidget {
                                     Get.to(() => PageDetails(product: product));
                                   },
                                   child: Card(
+                                    surfaceTintColor: Colors.white,
+                                    elevation: 10, // Change this
+                                    shadowColor: Colors.black, // Change this
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       side: BorderSide(
-                                        color: Colors.redAccent.withOpacity(0.5),
-                                        width: 2,
+                                        color: Colors.black.withOpacity(0.1),
+                                        width: 1,
                                       ),
                                     ),
                                     color: Colors.white,
@@ -331,11 +334,15 @@ class PageHomeClient extends StatelessWidget {
                       );
                     },
                   )
+                  // * end all products
                 ],
               ),
             ),
           );
         },
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(8),
       ),
     );
   }
