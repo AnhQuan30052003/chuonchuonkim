@@ -38,7 +38,7 @@ class UploadData extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Product type
-                // deleteData(collectionPath: Firebase.colProductType);
+                deleteData(collectionPath: Firebase.colProductType);
                 for (var o in dbProductType) {
                   ProductTypeSnapshot.add(o);
                 }
