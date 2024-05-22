@@ -82,7 +82,7 @@ class PageHomeClient extends StatelessWidget {
                         hintText: "Tìm kiếm",
                       ),
                       onChanged: (input) {
-
+                        print("Đã chạy lệnh trnog search frame");
                       },
                     ),
                   ),
