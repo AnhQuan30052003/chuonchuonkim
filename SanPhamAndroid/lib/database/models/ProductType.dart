@@ -75,6 +75,10 @@ class ProductTypeSnapshot {
 }
 
 List<ProductType> dbProductType = [
-  ProductType(maLSP: "001", tenLSP: "Cơm", hinhAnhLSP: ""),
-  ProductType(maLSP: "002", tenLSP: "Nước uống", hinhAnhLSP: "")
+  ProductType(maLSP: "001", tenLSP: "Cơm sườn", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fcooking.png?alt=media&token=46aeee3c-0af4-4454-b9a1-350b6a1f4a3c"),
+  ProductType(maLSP: "002", tenLSP: "Hamburger", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fhamburger.png?alt=media&token=7ecf34aa-5a02-4e6b-9ebd-ec4dc5037011"),
+  ProductType(maLSP: "003", tenLSP: "Bún", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fnoodles.png?alt=media&token=95873746-1098-4b6f-8558-b3fb720ff9cf"),
+  ProductType(maLSP: "004", tenLSP: "Phở", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fpho.png?alt=media&token=8779915d-b714-4a7b-a43b-d511da9b9b49"),
+  ProductType(maLSP: "005", tenLSP: "Nước", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fsoda.png?alt=media&token=bbc11cdb-bab4-4563-aba8-5b2958ea8812"),
+  ProductType(maLSP: "006", tenLSP: "Sald", hinhAnhLSP: "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProductTypes%2Fcai.png?alt=media&token=72b8372a-c2b2-481a-8c18-209925a4d03c")
 ];

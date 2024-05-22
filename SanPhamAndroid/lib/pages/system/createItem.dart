@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/database/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 
@@ -67,22 +68,36 @@ List<String> hinhAnhComSuon = [
   "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fcom_suon_9.jpg?alt=media&token=690f7ec3-f82a-4540-a35f-702aef4e726b",
   "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fcom_suon_10.jpg?alt=media&token=dbfa36e6-47c8-4e6a-82db-197ded5f2e45",
 ];
+List<String> hinhAnhSalad = [
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_1.png?alt=media&token=4322777a-1540-4a36-8998-bd7827467799",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_2.png?alt=media&token=4c3ac91d-b1b1-49cb-ba6a-f76a01bcc3eb",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_3.png?alt=media&token=e81342f6-406f-472a-9378-fd5a41542b9c",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_4.png?alt=media&token=557f3c0c-33ac-4b1b-b774-7827dbe4efdb",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_5.png?alt=media&token=10ed6877-1239-451b-977c-baf38b2c9cd4",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_6.png?alt=media&token=ca9d7824-eac1-43a1-bfc9-dacdaf750138",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_7.png?alt=media&token=0b17e769-f903-4af8-b361-3c11888186b1",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_8.png?alt=media&token=0009201b-127c-431e-8b63-d2af51ab33d4",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_9.png?alt=media&token=876187da-09de-4634-bf62-8aa13d5a623d",
+  "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_10.png?alt=media&token=f3d5030e-1392-49cb-8ed8-69522fab7d3f",
+];
 
 void buildProduct({required int soLuongTao, required String tenSPTao, required List<String> hinhAnhSPTao, required List<String> giaSPTao, required String maLSPTao}) {
-  String maSP, tenSP, moTaSP, hinhAnhSP, giaSP, maLSP;
+  String maSP, tenSP, moTaSP, hinhAnhSP, maLSP;
+  int giaSP;
 
   moTaSP = "$tenSPTao ngon từ Việt Nam";
   maLSP = maLSPTao;
 
-  for (int i = 0; i <= soLuongTao; i++) {
+  for (int i = 0; i < soLuongTao; i++) {
     maSP = xayDungMa(i+1);
     tenSP = "$tenSPTao ${listTen[Random().nextInt(listTen.length)]}";
-    giaSP = giaSPTao[Random().nextInt(giaSPTao.length)];
+    giaSP = int.parse(giaSPTao[Random().nextInt(giaSPTao.length)]);
     hinhAnhSP = hinhAnhSPTao[Random().nextInt(hinhAnhSPTao.length)];
+    dbProduct.add(Product(maSP: maSP, tenSP: tenSP, moTaSP: moTaSP, hinhAnhSP: hinhAnhSP, giaSP: giaSP, maLSP: maLSP));
   }
 }
 
-Future<void> DeleteData({required String collectionPath}) async {
+Future<void> deleteData({required String collectionPath}) async {
   CollectionReference collectionRef = FirebaseFirestore.instance.collection(collectionPath);
   QuerySnapshot querySnapshot = await collectionRef.get();
   List<Future> deleteFutures = querySnapshot.docs.map((doc) => doc.reference.delete()).toList();
