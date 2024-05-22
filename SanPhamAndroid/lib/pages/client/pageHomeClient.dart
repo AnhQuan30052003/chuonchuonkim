@@ -151,8 +151,124 @@ class PageHomeClient extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  // * card product
+                  SizedBox(
+                    height: 250,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: list.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        var item = list[index];
+                        return Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                height: 250,
+                                width: 190,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      spreadRadius: 2,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      const SizedBox(height: 7),
+                                      Text(
+                                        item.tenSP,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        item.moTaSP,
+                                        style: const TextStyle(color: Colors.black45, fontSize: 15),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${item.giaSP}đ",
+                                            style: const TextStyle(fontWeight: FontWeight.normal),
+                                          ),
+                                          Container(
+                                            height: 30,
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black12,
+                                              borderRadius: BorderRadius.circular(30),
+                                            ),
+                                            child: const Icon(Icons.favorite_border_outlined),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 35,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(80),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      spreadRadius: 2,
+                                      color: Colors.black12,
+                                    )
+                                  ],
+                                ),
+                                child: Image.network(
+                                  item.hinhAnhSP,
+                                  height: 140,
+                                  width: 140,
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  // * end card product
                   // * end phổ biến
 
+
+
+
+
+                  // * sản phẩm
+                  // const SizedBox(height: 10),
+                  // const Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Sản phẩm",
+                  //       style: TextStyle(
+                  //         color: Colors.black87,
+                  //         fontSize: 17,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // * end sản phẩm
                 ]
               ),
             ),
