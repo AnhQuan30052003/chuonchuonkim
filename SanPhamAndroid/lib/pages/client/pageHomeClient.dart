@@ -52,21 +52,21 @@ class PageHomeClient extends StatelessWidget {
           ),
         ],
       ),
-      body: GetBuilder<ChuonChuonKimController>(
-        init: ChuonChuonKimController.instance,
-        id: "client_products",
-        builder: (controller) {
-          var list = controller.listProduct;
-          print("Đã load page home client");
-          return const Padding(
-            padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Text("Text Widget"),
+      body: const Text("Text Widget"),
+      
+      // body: GetBuilder<ChuonChuonKimController>(
+      //   init: ChuonChuonKimController.instance,
+      //   id: "client_products",
+      //   builder: (controller) {
+      //     var list = controller.listProduct;
+      //     print("Đã load page home client");
+      //     return const Padding(
+      //       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+      //       child: SingleChildScrollView(
+      //         scrollDirection: Axis.vertical,
+      //         child: Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
                   // * search
                   // SizedBox(
                   //   height: 50,
@@ -332,12 +332,12 @@ class PageHomeClient extends StatelessWidget {
                   //         ),
                   //     )).toList(),
                   // ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+                // ],
+              // ),
+            // ),
+          // )
+        // },
+      // ),
     );
   }
 }
