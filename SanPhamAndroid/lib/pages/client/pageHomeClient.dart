@@ -230,10 +230,11 @@ class PageHomeClient extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              child: Image.network(
-                                item.hinhAnhSP,
-                                height: 140,
-                                width: 140,
+                              child: ClipOval(
+                                child: SizedBox.fromSize(
+                                  size: const Size.fromRadius(60), // Image radius
+                                  child: Image.network(item.hinhAnhSP, fit: BoxFit.cover),
+                                ),
                               ),
                             ),
                           )
