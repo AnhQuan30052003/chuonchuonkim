@@ -65,7 +65,7 @@ class PageHomeClient extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("abc");
+                  Text("abc"),
                 ]
               ),
             ),
