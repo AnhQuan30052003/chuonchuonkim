@@ -61,7 +61,6 @@ class PageHomeClient extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -269,7 +268,6 @@ class PageHomeClient extends StatelessWidget {
                   // * end sản phẩm
 
                   // * card product
-
                   GridView.extent(
                     maxCrossAxisExtent: 300,
                     crossAxisSpacing: 5,
