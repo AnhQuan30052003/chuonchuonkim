@@ -36,12 +36,14 @@ class UploadData extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Product type
-                deleteData(collectionPath: Firebase.colProductType);
-                for (var o in dbProductType) {
-                  ProductTypeSnapshot.add(o);
-                }
+                await deleteData(collectionPath: Firebase.colProductType)
+                .then((value) {
+                  for (var o in dbProductType) {
+                    ProductTypeSnapshot.add(o);
+                  }
+                });
 
                 // Product
                 // deleteData(collectionPath: Firebase.colProduct);
