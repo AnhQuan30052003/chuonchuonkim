@@ -332,7 +332,7 @@ class PageHomeClient extends StatelessWidget {
                 //       );
                 //     },
                 //   )
-                // ],
+                ],
               ),
             ),
           );
