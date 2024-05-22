@@ -99,7 +99,6 @@ class PageHomeClient extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         var item = controller.listProductType[index];
-                        print("abc");
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           height: 60,

@@ -22,7 +22,6 @@ class ChuonChuonKimController extends GetxController {
     getProductTypes();
   }
 
-
   // Lấy dữ liệu Product
   void getProducts() async {
     var data = await ProductSnapshot.futureData();
@@ -44,9 +43,6 @@ class ChuonChuonKimController extends GetxController {
   void updatePageHome() {
     update(["client_products"]);
   }
-
-
-
 
   // Thêm sản phẩm vào giỏ hàng
   void addToCart({required Product product}) {
@@ -81,7 +77,9 @@ class ChuonChuonKimController extends GetxController {
   }
 
   // Tổng tiền cả giỏ hàng
-  int sumPriceOfList({required List<CounterQuantityProductController> listCounter, required List<CheckProductController> listCheck}) {
+  int sumPriceOfList(
+      {required List<CounterQuantityProductController> listCounter,
+      required List<CheckProductController> listCheck}) {
     int sum = 0;
     for (int i = 0; i < listCart.length; i++) {
       if (listCheck[i].isChecked.value) {
@@ -90,7 +88,6 @@ class ChuonChuonKimController extends GetxController {
     }
     return sum;
   }
-
 
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
@@ -106,15 +103,10 @@ class ChuonChuonKimController extends GetxController {
   }
 }
 
-
-
 // Bindings..
 class ChuonChuonKimBindings extends Bindings {
-
   @override
   void dependencies() {
     Get.put(ChuonChuonKimController());
   }
 }
-
-
