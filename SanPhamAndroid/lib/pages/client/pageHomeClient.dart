@@ -88,6 +88,8 @@ class PageHomeClient extends StatelessWidget {
                   ),
                   // * end search
 
+                  const SizedBox(height: 10),
+
                   // * filter
                   SizedBox(
                     height: 70,
@@ -127,7 +129,7 @@ class PageHomeClient extends StatelessWidget {
                   ),
                   // * end filter
 
-                  
+
                 ]
               ),
             ),
