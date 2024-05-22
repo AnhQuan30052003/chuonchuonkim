@@ -148,7 +148,7 @@ class PageHomeClient extends StatelessWidget {
                   ],
                 ),
 
-                // * card product
+                // * card product phổ biến
                 SizedBox(
                   height: 250,
                   child: ListView.builder(
@@ -218,23 +218,22 @@ class PageHomeClient extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            left: 45,
+                            left: 35,
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(80),
                                 boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
-                                    spreadRadius: 4,
+                                    spreadRadius: 2,
                                     color: Colors.black12,
                                   )
                                 ],
                               ),
-                              child: ClipOval(
-                                child: SizedBox.fromSize(
-                                  size: const Size.fromRadius(60), // Image radius
-                                  child: Image.network(item.hinhAnhSP, fit: BoxFit.cover),
-                                ),
+                              child: Image.network(
+                                item.hinhAnhSP,
+                                height: 140,
+                                width: 140,
                               ),
                             ),
                           )
@@ -244,7 +243,7 @@ class PageHomeClient extends StatelessWidget {
                   ),
                 ),
                 // * end card product
-                // * end phổ biến
+                // * end phổ biến phổ biến
 
                 // * sản phẩm
                 const SizedBox(height: 10),
@@ -262,6 +261,75 @@ class PageHomeClient extends StatelessWidget {
                   ],
                 ),
                 // * end sản phẩm
+
+                // * card product
+
+                GridView.extent(
+                    maxCrossAxisExtent: 300,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    shrinkWrap: true,
+                    children: controller.listProduct.map((product) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(() => PageDetails(product: product));
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.5),
+                              width: 2,
+                            ),
+                          ),
+                          color: Colors.white,
+                          borderOnForeground: true,
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Expanded(child: Image.network(product.hinhAnhSP)),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.tenSP,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold, fontSize: 15),
+                                      ),
+                                      Text(product.moTaSP),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${product.giaSP}",
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Container(
+                                            height: 30,
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black12,
+                                              borderRadius: BorderRadius.circular(30),
+                                            ),
+                                            child: const Icon(Icons.favorite_border_outlined),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList())
+                // * end card product
               ]),
             ),
           );
