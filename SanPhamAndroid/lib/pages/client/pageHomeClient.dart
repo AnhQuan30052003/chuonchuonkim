@@ -81,7 +81,9 @@ class PageHomeClient extends StatelessWidget {
                         suffixIcon: const Icon(Icons.sort, color: Colors.redAccent),
                         hintText: "Tìm kiếm",
                       ),
-                      onChanged: (input) {},
+                      onChanged: (input) {
+                        print("Đã chạy lệnh trnog search frame");
+                      },
                     ),
                   ),
                   // * end search
@@ -97,6 +99,7 @@ class PageHomeClient extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         var item = controller.listProductType[index];
+                        print("abc");
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           height: 60,
