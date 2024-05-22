@@ -133,46 +133,6 @@
 // const SizedBox(height: 10),
 
 
-
-// * filter
-// SizedBox(
-//   height: 70,
-//   child: ListView.builder(
-//     scrollDirection: Axis.horizontal,
-//     itemCount: controller.listProductType.length,
-//     shrinkWrap: true,
-//     itemBuilder: (context, index) {
-//       var item = controller.listProductType[index];
-//       return Container(
-//         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-//         height: 60,
-//         width: 60,
-//         decoration: BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.circular(10),
-//           boxShadow: const [
-//             BoxShadow(
-//               color: Colors.black12,
-//               spreadRadius: 2,
-//               blurRadius: 4,
-//             ),
-//           ],
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(10),
-//           child: GestureDetector(
-//             child: Image.network(item.hinhAnhLSP),
-//             onTap: () {
-//               // controller.showProductType(idLSP: list[index].maLSP);
-//             },
-//           ),
-//         ),
-//       );
-//     },
-//   ),
-// ),
-// * end filter
-
 // GridView.extent(
 //   maxCrossAxisExtent: 300, // chiều rộng lớn nhất
 //   crossAxisSpacing: 5,
