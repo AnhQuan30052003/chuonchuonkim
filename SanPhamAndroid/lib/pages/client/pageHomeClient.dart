@@ -129,6 +129,29 @@ class PageHomeClient extends StatelessWidget {
                   ),
                   // * end filter
 
+                  // * Phổ biến
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Phổ biến",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          "Tất cả",
+                          style: TextStyle(color: Colors.redAccent, fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // * end phổ biến
 
                 ]
               ),
