@@ -58,13 +58,37 @@ class PageHomeClient extends StatelessWidget {
         builder: (controller) {
           var list = controller.listProduct;
           print("Đã load page home client");
-          return const Padding(
-            padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+          return Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text("abc"),
-              ]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // * search
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.redAccent,
+                        ),
+                        suffixIcon: const Icon(Icons.sort, color: Colors.redAccent),
+                        hintText: "Tìm kiếm",
+                      ),
+                      onChanged: (input) {
+
+                      },
+                    ),
+                  ),
+                  // * end search
+                ]
+              ),
             ),
           );
         },
