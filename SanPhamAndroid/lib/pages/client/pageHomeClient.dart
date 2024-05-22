@@ -57,6 +57,7 @@ class PageHomeClient extends StatelessWidget {
         id: "client_products",
         builder: (controller) {
           var list = controller.listProduct;
+          print("Đã load page home client");
           return Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: SingleChildScrollView(
