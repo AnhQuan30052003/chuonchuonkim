@@ -249,25 +249,21 @@ class PageHomeClient extends StatelessWidget {
                   // * end card product
                   // * end phổ biến
 
-
-
-
-
                   // * sản phẩm
-                  // const SizedBox(height: 10),
-                  // const Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Sản phẩm",
-                  //       style: TextStyle(
-                  //         color: Colors.black87,
-                  //         fontSize: 17,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  const SizedBox(height: 10),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Sản phẩm",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   // * end sản phẩm
                 ]
               ),
