@@ -1,11 +1,11 @@
 // * Đạt
 
 import 'dart:math';
-
 import 'package:chuonchuonkim_app/helper/distance.dart';
 import 'package:chuonchuonkim_app/helper/instruction.dart';
 import 'package:chuonchuonkim_app/helper/shortText.dart';
 import 'package:chuonchuonkim_app/pages/client/pageDetails.dart';
+import 'package:chuonchuonkim_app/pages/client/pageProductSearch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
@@ -57,22 +57,28 @@ class PageHomeClient extends StatelessWidget {
     }
 
     Widget buildSearch() {
+      TextEditingController c = TextEditingController();
       return SizedBox(
         height: 50,
         child: TextField(
+          controller: c,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            prefixIcon: const Icon(
-              Icons.search,
-              color: Colors.redAccent,
+            suffixIcon: GestureDetector(
+              child: const Icon(
+                Icons.search,
+                color: Colors.redAccent,
+              ),
+              onTap: () {
+                ChuonChuonKimController.instance.showProductSearch(search: c.text);
+                Get.to(PageProductSearch(search: c.text));
+              },
             ),
-            suffixIcon: const Icon(Icons.sort, color: Colors.redAccent),
             hintText: "Tìm kiếm",
           ),
-          onChanged: (input) {},
         ),
       );
     }
@@ -243,7 +249,7 @@ class PageHomeClient extends StatelessWidget {
               (product) {
                 return GestureDetector(
                     onTap: () {
-                      // Get.to(PageDetails(product: product));
+                      Get.to(PageDetails(product: product));
                     },
                     child: Container(
                       decoration: BoxDecoration(

@@ -17,6 +17,7 @@ class ChuonChuonKimController extends GetxController {
 
   List<Product> listProductsPopulator = [];
   List<Product> listProdutsGridView = [];
+  List<Product> listProductSeach= [];
 
   @override
   void onReady() {
@@ -24,6 +25,8 @@ class ChuonChuonKimController extends GetxController {
     getProducts();
     getProductTypes();
   }
+
+
 
   // * -------------------------------------
   // Lấy product populator
@@ -119,6 +122,8 @@ class ChuonChuonKimController extends GetxController {
     return sum;
   }
 
+
+
   // * -------------------------------------
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
@@ -138,6 +143,15 @@ class ChuonChuonKimController extends GetxController {
     }
     updateProductsPopulattor();
     updateGridView();
+  }
+
+  void showProductSearch({required String search}) {
+    listProductSeach = [];
+    for (var p in listProduct) {
+      if ((p.tenSP.toLowerCase().contains(search.toLowerCase())) || (p.moTaSP.toLowerCase().contains(search.toLowerCase()))) {
+        listProductSeach.add(p);
+      }
+    }
   }
 }
 
