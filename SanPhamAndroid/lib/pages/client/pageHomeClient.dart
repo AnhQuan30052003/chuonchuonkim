@@ -107,7 +107,7 @@ class PageHomeClient extends StatelessWidget {
                 child: GestureDetector(
                   child: Image.network(item.hinhAnhLSP),
                   onTap: () {
-                    // controller.showProductType(idLSP: list[index].maLSP);
+                    controller.showProductType(idLSP: item.maLSP);
                   },
                 ),
               ),
@@ -118,181 +118,179 @@ class PageHomeClient extends StatelessWidget {
     }
 
     Widget buildProductsPopulator() {
-      // Lấy toàn bộ product
-      var listProduct = ChuonChuonKimController.instance.listProduct;
-      var listProductType = ChuonChuonKimController.instance.listProductType;
-
-      // Lấy cái product đàu của từn loại
-      int requestQuantity = 1;
-      var list = [];
-      for (var pt in listProductType) {
-        int quantity = 0;
-        for (var p in listProduct) {
-          if (p.maLSP == pt.maLSP) {
-            list.add(p);
-            quantity += 1;
-            if (quantity == requestQuantity) break;
-          }
-        }
-      }
-
       double w = 200, h = 230, cir = 130, subSpace = 20;
 
-      return SizedBox(
-        height: h,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: list.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            var item = list[index];
+      return GetBuilder(
+        init: ChuonChuonKimController.instance,
+        id: "products_populator",
+        builder: (controller) {
+          var list = controller.listProductsPopulator;
+          return SizedBox(
+            height: h,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: list.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var item = list[index];
 
-            return Container(
-              width: w,
-              height: h,
-              margin: const EdgeInsets.only(right: 5.0),
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.red),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: w,
-                        height: h-subSpace,
-                        child: Column(
+                return Container(
+                  width: w,
+                  height: h,
+                  margin: const EdgeInsets.only(right: 5.0),
+                  child: GestureDetector(
+                    child: Stack(
+                      children: [
+                        Column(
                           children: [
-                            distance(double.infinity, (h-subSpace) * 0.55),
-                            SizedBox(
+                            const SizedBox(
                               width: double.infinity,
-                              height: (h-subSpace) * 0.4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(item.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
-                                        Text(shortText(text: item.moTaSP, lengthMax: 25), style: const TextStyle(color: Colors.black45, fontSize: 15)),
-                                      ],
+                              height: 20,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.red),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              width: w,
+                              height: h-subSpace,
+                              child: Column(
+                                children: [
+                                  distance(double.infinity, (h-subSpace) * 0.55),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: (h-subSpace) * 0.4,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(item.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
+                                              Text(shortText(text: item.moTaSP, lengthMax: 25), style: const TextStyle(color: Colors.black45, fontSize: 15)),
+                                            ],
+                                          ),
+                                          Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text("${item.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
+                                                Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
+                                              ]
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("${item.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                        Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                      ]
-                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                            height: h,
+                            width: w,
+                            top: -50,
+                            child: Center(
+                              child: Container(
+                                width: cir,
+                                height: cir,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      spreadRadius: 2,
+                                      color: Colors.black12,
+                                    )
                                   ],
+                                ),
+                                child: ClipOval(
+                                    child: Image.network(item.hinhAnhSP, fit: BoxFit.cover)
                                 ),
                               ),
                             )
-                          ],
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      Get.to(PageDetails(product: item));
+                    },
                   ),
-                  Positioned(
-                    height: h,
-                    width: w,
-                    top: -50,
-                    child: Center(
-                      child: Container(
-                        width: cir,
-                        height: cir,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1),
-                          borderRadius: BorderRadius.circular(100),
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              spreadRadius: 2,
-                              color: Colors.black12,
-                            )
-                          ],
-                        ),
-                        child: ClipOval(
-                          child: Image.network(item.hinhAnhSP, fit: BoxFit.cover)
-                        ),
-                      ),
-                    )
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                );
+              },
+            ),
+          );
+        },
       );
     }
 
     Widget buildGridViewProducts() {
-      var controller = ChuonChuonKimController.instance;
-      return GridView.extent(
-          maxCrossAxisExtent: 250,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: controller.listProduct.map(
-            (product) {
-              return GestureDetector(
-                onTap: () {
-                  // Get.to(PageDetails(product: product));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Expanded(
-                            child: Image.network(product.hinhAnhSP)
-                        ),
-                        distance(0, 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      return GetBuilder(
+        init: ChuonChuonKimController.instance,
+        id: "gridview_products",
+        builder: (controller) {
+          return GridView.extent(
+            maxCrossAxisExtent: 250,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: controller.listProdutsGridView.map(
+              (product) {
+                return GestureDetector(
+                    onTap: () {
+                      // Get.to(PageDetails(product: product));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.red, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
                           children: [
+                            Expanded(
+                                child: Image.network(product.hinhAnhSP)
+                            ),
+                            distance(0, 10),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(product.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
-                                Text(shortText(text: product.moTaSP, lengthMax: 25), style: const TextStyle(color: Colors.black45, fontSize: 15)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(product.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
+                                    Text(shortText(text: product.moTaSP, lengthMax: 25), style: const TextStyle(color: Colors.black45, fontSize: 15)),
+                                  ],
+                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("${product.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
+                                      Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
+                                    ]
+                                ),
                               ],
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("${product.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                  Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                ]
-                            ),
+                            )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                );
-            }
-          ).toList()
+                  );
+              }
+            ).toList()
+          );
+        }
       );
     }
     
     Widget buildBody() {
-      return GetBuilder<ChuonChuonKimController>(
+      return GetBuilder(
         init: ChuonChuonKimController.instance,
         id: "client_products",
         builder: (controller) {

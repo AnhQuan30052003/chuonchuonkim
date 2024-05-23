@@ -15,6 +15,9 @@ class ChuonChuonKimController extends GetxController {
   List<ProductFavorite> listProductFavorite = [];
   List<ProductType> listProductType = [];
 
+  List<Product> listProductsPopulator = [];
+  List<Product> listProdutsGridView = [];
+
   @override
   void onReady() {
     super.onReady();
@@ -22,11 +25,32 @@ class ChuonChuonKimController extends GetxController {
     getProductTypes();
   }
 
+  // * -------------------------------------
+  // Lấy product populator
+  void getProductsPopulator({required int requestQuantity}) {
+    listProductsPopulator = [];
+    for (var pt in listProductType) {
+      int quantity = 0;
+      for (var p in listProduct) {
+        if (p.maLSP == pt.maLSP) {
+          listProductsPopulator.add(p);
+          quantity += 1;
+          if (quantity == requestQuantity) break;
+        }
+      }
+    }
+  }
+
+
   // Lấy dữ liệu Product
   void getProducts() async {
     var data = await ProductSnapshot.futureData();
     listProduct = data.map((e) => e.product).toList();
     listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+
+    getProductsPopulator(requestQuantity: 1);
+    listProdutsGridView = listProduct;
+
     updatePageHome();
     print("Đã cập nhật Product. Số lượng: ${listProduct.length}");
   }
@@ -42,6 +66,14 @@ class ChuonChuonKimController extends GetxController {
 
   void updatePageHome() {
     update(["client_products"]);
+  }
+
+  void updateProductsPopulattor() {
+    update(["products_populator"]);
+  }
+
+  void updateGridView() {
+    update(["gridview_products"]);
   }
 
   // Thêm sản phẩm vào giỏ hàng
@@ -77,9 +109,7 @@ class ChuonChuonKimController extends GetxController {
   }
 
   // Tổng tiền cả giỏ hàng
-  int sumPriceOfList(
-      {required List<CounterQuantityProductController> listCounter,
-      required List<CheckProductController> listCheck}) {
+  int sumPriceOfList({required List<CounterQuantityProductController> listCounter, required List<CheckProductController> listCheck}) {
     int sum = 0;
     for (int i = 0; i < listCart.length; i++) {
       if (listCheck[i].isChecked.value) {
@@ -89,17 +119,25 @@ class ChuonChuonKimController extends GetxController {
     return sum;
   }
 
+  // * -------------------------------------
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
-    getProducts();
-    var listProductSave = listProduct;
-    listProduct = [];
-    for (var p in listProductSave) {
+    for (var p in listProductsPopulator) {
       if (p.maLSP == idLSP) {
-        listProduct.add(p);
+        Product temp = p;
+        listProductsPopulator.remove(p);
+        listProductsPopulator.insert(0, temp);
       }
     }
-    updatePageHome();
+
+    listProdutsGridView = [];
+    for (var p in listProduct) {
+      if (p.maLSP == idLSP) {
+        listProdutsGridView.add(p);
+      }
+    }
+    updateProductsPopulattor();
+    updateGridView();
   }
 }
 
