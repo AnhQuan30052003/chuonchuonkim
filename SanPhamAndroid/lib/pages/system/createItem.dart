@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/database/connect/setupFirebase.dart';
 import 'package:chuonchuonkim_app/database/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
@@ -81,7 +82,7 @@ List<String> hinhAnhSalad = [
   "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fsalad_10.png?alt=media&token=f3d5030e-1392-49cb-8ed8-69522fab7d3f",
 ];
 
-void buildProduct({required int soLuongTao, required String tenSPTao, required List<String> hinhAnhSPTao, required List<String> giaSPTao, required String maLSPTao}) {
+void buildProduct({required int soLuongTao, required String tenSPTao, required List<String> hinhAnhSPTao, required List<int> giaSPTao, required String maLSPTao}) {
   String maSP, tenSP, moTaSP, hinhAnhSP, maLSP;
   int giaSP;
 
@@ -89,9 +90,9 @@ void buildProduct({required int soLuongTao, required String tenSPTao, required L
   maLSP = maLSPTao;
 
   for (int i = 0; i < soLuongTao; i++) {
-    maSP = xayDungMa(i+1);
+    maSP = xayDungMa(Firebase.id++);
     tenSP = "$tenSPTao ${listTen[Random().nextInt(listTen.length)]}";
-    giaSP = int.parse(giaSPTao[Random().nextInt(giaSPTao.length)]);
+    giaSP = giaSPTao[Random().nextInt(giaSPTao.length)];
     hinhAnhSP = hinhAnhSPTao[Random().nextInt(hinhAnhSPTao.length)];
     dbProduct.add(Product(maSP: maSP, tenSP: tenSP, moTaSP: moTaSP, hinhAnhSP: hinhAnhSP, giaSP: giaSP, maLSP: maLSP));
   }

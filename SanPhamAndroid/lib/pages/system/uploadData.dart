@@ -49,12 +49,12 @@ class UploadData extends StatelessWidget {
                 await deleteData(collectionPath: Firebase.colProduct)
                 .then((value) {
                   int soLuongTao = 10, indexLSP = 0;
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Cơm sườn", hinhAnhSPTao: hinhAnhComSuon, giaSPTao: List.of(["20000", "25000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Hamburger", hinhAnhSPTao: hinhAnhHamburger, giaSPTao: List.of(["25000", "30000", "40000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Bún", hinhAnhSPTao: hinhAnhBun, giaSPTao: List.of(["15000", "20000", "25000", "30000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Phở", hinhAnhSPTao: hinhAnhPho, giaSPTao: List.of(["20000", "25000", "30000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Nước", hinhAnhSPTao: hinhAnhNuoc, giaSPTao: List.of(["10000", "15000", "20000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
-                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Sald", hinhAnhSPTao: hinhAnhSalad, giaSPTao: List.of(["10000", "15000"]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Cơm sườn", hinhAnhSPTao: hinhAnhComSuon, giaSPTao: List.of([20000, 25000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Hamburger", hinhAnhSPTao: hinhAnhHamburger, giaSPTao: List.of([25000, 30000, 40000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Bún", hinhAnhSPTao: hinhAnhBun, giaSPTao: List.of([15000, 20000, 25000, 30000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Phở", hinhAnhSPTao: hinhAnhPho, giaSPTao: List.of([20000, 25000, 30000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Nước", hinhAnhSPTao: hinhAnhNuoc, giaSPTao: List.of([10000, 15000, 20000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+                  buildProduct(soLuongTao: soLuongTao, tenSPTao: "Sald", hinhAnhSPTao: hinhAnhSalad, giaSPTao: List.of([10000, 15000]), maLSPTao: dbProductType[indexLSP++].maLSP);
                   for (var o in dbProduct) {
                     ProductSnapshot.add(o);
                   }

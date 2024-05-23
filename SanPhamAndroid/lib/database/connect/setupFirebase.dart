@@ -8,4 +8,6 @@ class Firebase {
   static String colCart = "Carts";
   static String colProductFavorite = "ProductFavorites";
   static String colUser = "Users";
+
+  static int id = 1;
 }
