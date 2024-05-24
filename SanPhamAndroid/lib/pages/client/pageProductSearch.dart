@@ -1,11 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../helper/distance.dart';
-import '../../helper/shortText.dart';
-import 'pageDetails.dart';
+import 'widgetClient.dart';
 
 class PageProductSearch extends StatelessWidget {
   final String search;
@@ -13,60 +9,7 @@ class PageProductSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PreferredSizeWidget buildAppBar() {
-      return AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white10,
-        title: const Text(
-          "Kết quả tìm kiếm",
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF3A3737),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Color(0xFF3A3737),
-            ),
-          ),
-        ],
-      );
-    }
-
-    Widget buildSearch() {
-      TextEditingController c = TextEditingController();
-      c.text = search;
-      return SizedBox(
-        height: 50,
-        child: TextField(
-          controller: c,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            suffixIcon: GestureDetector(
-              child: const Icon(
-                Icons.search,
-                color: Colors.redAccent,
-              ),
-              onTap: () {
-                ChuonChuonKimController.instance.showProductSearch(search: c.text);
-                Get.to(PageProductSearch(search: c.text));
-              },
-            ),
-            hintText: "Tìm kiếm",
-          ),
-        ),
-      );
-    }
-
     Widget buildBody() {
-      var controller = ChuonChuonKimController.instance;
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -74,58 +17,7 @@ class PageProductSearch extends StatelessWidget {
             children: [
               buildSearch(),
               distance(0, 10),
-              GridView.extent(
-                maxCrossAxisExtent: 250,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: controller.listProductSeach.map(
-                  (product) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(PageDetails(product: product));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                  child: Image.network(product.hinhAnhSP)
-                              ),
-                              distance(0, 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(product.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
-                                      Text(shortText(text: product.moTaSP, lengthMax: 25), style: const TextStyle(color: Colors.black45, fontSize: 15)),
-                                    ],
-                                  ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("${product.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                        Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                      ]
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                ).toList()
-              ),
+              buildGridViewProducts(),
             ],
           ),
         ),
@@ -133,7 +25,7 @@ class PageProductSearch extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(info: "Kết quả tìm kiếm"),
       body: buildBody(),
     );
   }
