@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
+import '../pages/client/pageCart.dart';
+import '../pages/client/pageNotification.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
 import '../pages/client/pageProductSearch.dart';
+import 'package:badges/badges.dart' as badges;
 
 PreferredSizeWidget buildAppBar({required String info}) {
   return AppBar(
@@ -16,12 +19,43 @@ PreferredSizeWidget buildAppBar({required String info}) {
       style: const TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
     ),
     actions: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.notifications_none,
-          color: Color(0xFF3A3737),
+      GestureDetector(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: badges.Badge(
+            onTap: () {
+              Get.to(const PageNotification());
+            },
+            badgeContent: GetBuilder(
+              init: ChuonChuonKimController.instance,
+              id: "badges_noficaton",
+              builder: (controller) => Text("${controller.listCart.length}", style: const TextStyle(color: Colors.white)),
+            ),
+            child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
+          ),
         ),
+        onTap: () {
+          Get.to(const PageNotification());
+        },
+      ),
+      GestureDetector(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: badges.Badge(
+            onTap: () {
+              // Get.to(const PageCart());
+            },
+            badgeContent: GetBuilder(
+              init: ChuonChuonKimController.instance,
+              id: "badges_cart",
+              builder: (controller) => Text("${controller.listCart.length}", style: const TextStyle(color: Colors.white)),
+            ),
+            child: const Icon(Icons.shopping_cart_outlined),
+          ),
+        ),
+        onTap: () {
+          // Get.to(const PageCart());
+        },
       ),
     ],
   );
@@ -67,6 +101,46 @@ Widget buildSearch({required BuildContext context}) {
   );
 }
 
+Widget buildFilter() {
+  var controller = ChuonChuonKimController.instance;
+  return SizedBox(
+    height: 70,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: controller.listProductType.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        var item = controller.listProductType[index];
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          height: 60,
+          width: 60,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                spreadRadius: 2,
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+              child: Image.network(item.hinhAnhLSP),
+              onTap: () {
+                controller.showProductType(idLSP: item.maLSP);
+              },
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}
+
 Widget buildGridViewProducts({required List<Product> list}) {
   if (list.isEmpty) {
     return const Column(
@@ -86,6 +160,7 @@ Widget buildGridViewProducts({required List<Product> list}) {
       (product) {
         return GestureDetector(
           onTap: () {
+            ChuonChuonKimController.instance.showSimilaProducts(product: product);
             Get.to(PageDetails(product: product));
           },
           child: Container(

@@ -16,7 +16,7 @@ class PageCart extends StatelessWidget {
     List<CounterQuantityProductController> listCounter = [];
     List<CheckProductController> listCheck = [];
     for (int i = 0; i < ChuonChuonKimController.instance.listCart.length; i++) {
-      listCounter.add(CounterQuantityProductController(ChuonChuonKimController.instance.listCart[i].soLuong));
+      listCounter.add(CounterQuantityProductController(ChuonChuonKimController.instance.listCart[i].cart.soLuong));
       listCheck.add(CheckProductController());
     }
 
@@ -26,50 +26,52 @@ class PageCart extends StatelessWidget {
           child: Text("Giỏ hàng của bạn")
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Obx(
-                () => ListView.separated(
-                  itemBuilder: (context, index) => Slidable(
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (value) {
-                            Get.to(PageDetails(product: ChuonChuonKimController.instance.getProductFromCart(index: index)!));
-                          },
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                          icon: Icons.info_outline,
-                          label: 'Chi tiết',
-                        ),
-                        SlidableAction(
-                          onPressed: (value) {
-                            listCheck.removeAt(index);
-                            ChuonChuonKimController.instance.deleteFromCart(index: index);
-                          },
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          icon: Icons.delete,
-                          label: 'Xoá',
-                        ),
-                      ],
-                    ),
-                    child: _buildCard(index, listCounter[index], listCheck[index]),
-                  ),
-                  separatorBuilder: (context,index) => const Divider(thickness: 1.5),
-                  itemCount: ChuonChuonKimController.instance.listCart.length
-                )
-              ),
-            ),
-            _buildBottomInfo(listCounter, listCheck, context)
-          ],
-        ),
-      ),
+      // body: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.end,
+      //     children: [
+      //       Expanded(
+      //         child: GetBuilder(
+      //           init: ChuonChuonKimController.instance,
+      //           id: "list_cart",
+      //           builder: (controller) => ListView.separated(
+      //             itemBuilder: (context, index) => Slidable(
+      //                 endActionPane: ActionPane(
+      //                   motion: const ScrollMotion(),
+      //                   children: [
+      //                     SlidableAction(
+      //                       onPressed: (value) {
+      //                         Get.to(PageDetails(product: ChuonChuonKimController.instance.getProductFromCart(index: index)!));
+      //                       },
+      //                       backgroundColor: Colors.blue,
+      //                       foregroundColor: Colors.white,
+      //                       icon: Icons.info_outline,
+      //                       label: 'Chi tiết',
+      //                     ),
+      //                     SlidableAction(
+      //                       onPressed: (value) {
+      //                         listCheck.removeAt(index);
+      //                         ChuonChuonKimController.instance.deleteFromCart(index: index);
+      //                       },
+      //                       backgroundColor: Colors.red,
+      //                       foregroundColor: Colors.white,
+      //                       icon: Icons.delete,
+      //                       label: 'Xoá',
+      //                     ),
+      //                   ],
+      //                 ),
+      //                 child: _buildCard(index, listCounter[index], listCheck[index]),
+      //               ),
+      //             separatorBuilder: (context,index) => const Divider(thickness: 1.5),
+      //             itemCount: ChuonChuonKimController.instance.listCart.length
+      //           ),
+      //         ),
+      //       ),
+      //       _buildBottomInfo(listCounter, listCheck, context)
+      //     ],
+      //   ),
+      // ),
     );
   }
 

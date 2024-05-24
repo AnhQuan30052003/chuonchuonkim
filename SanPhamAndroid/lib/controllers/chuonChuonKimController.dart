@@ -11,19 +11,22 @@ class ChuonChuonKimController extends GetxController {
 
   String idUser = "";
   List<Product> listProduct = [];
-  List<Cart> listCart = [];
-  List<ProductFavorite> listProductFavorite = [];
+  List<CartSnapshot> listCart = [];
+  List<ProductFavoriteSnapshot> listProductFavorite = [];
   List<ProductType> listProductType = [];
 
   List<Product> listProductsPopulator = [];
   List<Product> listProdutsGridView = [];
   List<Product> listProductSeach= [];
+  List<Product> listSimilarProducts= [];
 
   @override
   void onReady() {
     super.onReady();
-    getProducts();
     getProductTypes();
+    getProducts();
+    getCarts();
+    getFavorites();
   }
 
 
@@ -44,6 +47,15 @@ class ChuonChuonKimController extends GetxController {
     }
   }
 
+  // Lấy dữ liệu ListCart
+  void getCarts() {
+
+  }
+
+  // Lấy dữ liệu Favorite
+  void getFavorites() {
+
+  }
 
   // Lấy dữ liệu Product
   void getProducts() async {
@@ -81,14 +93,14 @@ class ChuonChuonKimController extends GetxController {
 
   // Thêm sản phẩm vào giỏ hàng
   void addToCart({required Product product}) {
-    for (var cart in listCart) {
-      if (cart.maSP == product.maSP) {
-        cart.soLuong += 1;
-        return;
-      }
-    }
+    // for (var cart in listCart) {
+    //   if (cart.maSP == product.maSP) {
+    //     cart.soLuong += 1;
+    //     return;
+    //   }
+    // }
 
-    listCart.add(Cart(idUser: idUser, maSP: product.maSP, soLuong: 1));
+    // listCart.add(Cart(idUser: idUser, maSP: product.maSP, soLuong: 1));
   }
 
   // Xoá sản phẩm khỏi giỏ hàng
@@ -98,11 +110,11 @@ class ChuonChuonKimController extends GetxController {
 
   // Lấy sản phẩm từ giỏ hàng
   Product? getProductFromCart({required int index}) {
-    for (var product in listProduct) {
-      if (product.maSP == listCart[index].maSP) {
-        return product;
-      }
-    }
+    // for (var product in listProduct) {
+    //   if (product.maSP == listCart[index].maSP) {
+    //     return product;
+    //   }
+    // }
     return null;
   }
 
@@ -150,6 +162,15 @@ class ChuonChuonKimController extends GetxController {
     for (var p in listProduct) {
       if ((p.tenSP.toLowerCase().contains(search.toLowerCase())) || (p.moTaSP.toLowerCase().contains(search.toLowerCase()))) {
         listProductSeach.add(p);
+      }
+    }
+  }
+
+  void showSimilaProducts({required Product product}) {
+    listSimilarProducts = [];
+    for (var p in listProduct) {
+      if (p.maLSP == product.maLSP) {
+        listSimilarProducts.add(p);
       }
     }
   }
