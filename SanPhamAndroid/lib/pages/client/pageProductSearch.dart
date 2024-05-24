@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../controllers/chuonChuonKimController.dart';
 import '../../helper/widget.dart';
 import '../../helper/widgetClient.dart';
 
@@ -14,9 +15,9 @@ class PageProductSearch extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           child: Column(
             children: [
-              buildSearch(context: context, search: ""),
+              buildSearch(context: context),
               space(0, 10),
-              buildGridViewProducts(),
+              buildGridViewProducts(list: ChuonChuonKimController.instance.listProductSeach),
             ],
           ),
         ),
@@ -24,7 +25,7 @@ class PageProductSearch extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: buildAppBar(info: "Kết quả tìm kiếm"),
+      appBar: buildAppBar(info: 'Tìm kiếm "$search"'),
       body: buildBody(),
     );
   }

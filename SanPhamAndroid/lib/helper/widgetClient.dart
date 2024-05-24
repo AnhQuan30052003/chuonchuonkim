@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
+import '../database/models/Product.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
 import '../pages/client/pageProductSearch.dart';
@@ -26,9 +27,18 @@ PreferredSizeWidget buildAppBar({required String info}) {
   );
 }
 
-Widget buildSearch({required BuildContext context, required String search}) {
+Widget buildSearch({required BuildContext context}) {
   TextEditingController c = TextEditingController();
-  c.text = search;
+
+  void startSearch() {
+    String textSearch = c.text;
+    c.clear;
+    ChuonChuonKimController.instance.showProductSearch(search: textSearch);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch))
+    );
+  }
 
   return SizedBox(
     height: 50,
@@ -45,28 +55,34 @@ Widget buildSearch({required BuildContext context, required String search}) {
             color: Colors.redAccent,
           ),
           onTap: () {
-            ChuonChuonKimController.instance.showProductSearch(search: c.text);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PageProductSearch(search: c.text))
-            );
+            startSearch();
           },
         ),
-        hintText: "Tìm kiếm",
+        hintText: "Tìm kiếm...",
       ),
+      onSubmitted: (value) {
+        startSearch();
+      },
     ),
   );
 }
 
-Widget buildGridViewProducts() {
-  var controller = ChuonChuonKimController.instance;
+Widget buildGridViewProducts({required List<Product> list}) {
+  if (list.isEmpty) {
+    return const Column(
+      children: [
+        Text("Rất tiếc...không có kết quả !", style: TextStyle(fontSize: 16)),
+      ],
+    );
+  }
+
   return GridView.extent(
     maxCrossAxisExtent: 250,
     crossAxisSpacing: 10,
     mainAxisSpacing: 10,
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
-    children: controller.listProdutsGridView.map(
+    children: list.map(
       (product) {
         return GestureDetector(
           onTap: () {
@@ -120,11 +136,7 @@ Widget buildInstruction({required String text}) {
     children: [
       Text(
         text,
-        style: const TextStyle(
-          color: Colors.black87,
-          fontSize: 17,
-          fontWeight: FontWeight.bold,
-        ),
+        style: const TextStyle(color: Colors.black87, fontSize: 17, fontWeight: FontWeight.bold),
       ),
     ],
   );

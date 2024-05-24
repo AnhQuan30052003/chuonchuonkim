@@ -173,7 +173,7 @@ class PageHomeClient extends StatelessWidget {
               child: Column(
                 children: [
                   // * search
-                  buildSearch(context: context, search: ""),
+                  buildSearch(context: context),
 
                   // * filter
                   space(0, 10),
@@ -197,7 +197,7 @@ class PageHomeClient extends StatelessWidget {
                     init: ChuonChuonKimController.instance,
                     id: "gridview_products",
                     builder: (controller) {
-                      return buildGridViewProducts();
+                      return buildGridViewProducts(list: controller.listProduct);
                     }
                   )
                 ]
