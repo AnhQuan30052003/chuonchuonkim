@@ -1,13 +1,12 @@
 // * Đạt
 
 import 'dart:math';
-import 'package:chuonchuonkim_app/helper/distance.dart';
-import 'package:chuonchuonkim_app/helper/shortText.dart';
+import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
-import 'widgetClient.dart';
+import '../../helper/widgetClient.dart';
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -174,26 +173,26 @@ class PageHomeClient extends StatelessWidget {
               child: Column(
                 children: [
                   // * search
-                  buildSearch(),
+                  buildSearch(context: context, search: ""),
 
                   // * filter
-                  distance(0, 10),
+                  space(0, 10),
                   buildFilter(),
 
                   // * Khung phổ biến
-                  distance(0, 10),
+                  space(0, 10),
                   buildInstruction(text: "Phổ biến"),
 
                   // * card product phổ biến
-                  distance(0, 10),
+                  space(0, 10),
                   buildProductsPopulator(),
 
                   // * Khung sản phẩm
-                  distance(0, 10),
+                  space(0, 10),
                   buildInstruction(text: "Sản phẩm"),
 
                   // * card product
-                  distance(0, 10),
+                  space(0, 10),
                   GetBuilder(
                     init: ChuonChuonKimController.instance,
                     id: "gridview_products",
