@@ -1,3 +1,5 @@
+import 'package:chuonchuonkim_app/database/models/Cart.dart';
+import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/database/models/Product.dart';
 import 'package:chuonchuonkim_app/database/models/ProductType.dart';
 import 'package:chuonchuonkim_app/pages/system/createItem.dart';
@@ -37,11 +39,28 @@ class UploadData extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () async {
+                thongBaoDangThucHien(context: context, info: "Uploading...");
                 // Product type
                 await deleteData(collectionPath: Firebase.colProductType)
                 .then((value) {
                   for (var o in dbProductType) {
                     ProductTypeSnapshot.add(o);
+                  }
+                });
+
+                // Carts
+                await deleteData(collectionPath: Firebase.colCart)
+                .then((value) {
+                  for (var o in dbCart) {
+                    CartSnapshot.add(o);
+                  }
+                });
+
+                // Notifications
+                await deleteData(collectionPath: Firebase.colNotification)
+                .then((value) {
+                  for (var o in dbNotification) {
+                    NotificationSnapshot.add(o);
                   }
                 });
 

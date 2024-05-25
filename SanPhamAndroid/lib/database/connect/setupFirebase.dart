@@ -6,6 +6,7 @@ class Firebase {
   static String colProduct = "Products";
   static String colProductType = "ProductTypes";
   static String colCart = "Carts";
+  static String colNotification = "Notifications";
   static String colProductFavorite = "ProductFavorites";
   static String colUser = "Users";
 
