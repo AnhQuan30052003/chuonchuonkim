@@ -273,9 +273,9 @@ Widget buildProductsPopulator() {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(top: 18.0),
                     child: Container(
-                      margin: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(right: 10),
                       height: h,
                       width: w,
                       decoration: BoxDecoration(
@@ -327,7 +327,7 @@ Widget buildProductsPopulator() {
                     ),
                   ),
                   Positioned(
-                    left: 45,
+                    left: 35,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(80),
