@@ -115,7 +115,8 @@ class _PageHomeClientState extends State<PageHomeClient> {
                   init: ChuonChuonKimController.instance,
                   id: "gridview_products",
                   builder: (controller) {
-                    return buildGridViewProducts(list: controller.listProdutsGridView);
+                    return buildGridViewProducts(
+                        list: controller.listProdutsGridView, showNotFound: false);
                   })
             ]),
           ),
