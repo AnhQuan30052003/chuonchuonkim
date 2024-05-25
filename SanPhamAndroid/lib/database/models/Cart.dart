@@ -3,10 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
 class Cart {
-  String idUser, maSP;
+  String idCart, idUser, maSP;
   int soLuong;
 
   Cart({
+    required this.idCart,
     required this.idUser,
     required this.maSP,
     required this.soLuong,
@@ -14,6 +15,7 @@ class Cart {
 
   Map<String, dynamic> toJson() {
     return {
+      'idCart': idCart,
       'idUser': idUser,
       'maSP': maSP,
       'soLuong': soLuong,
@@ -22,6 +24,7 @@ class Cart {
 
   factory Cart.fromJson(Map<String, dynamic> map) {
     return Cart(
+      idCart: map['idCart'] as String,
       idUser: map['idUser'] as String,
       maSP: map['maSP'] as String,
       soLuong: map['soLuong'] as int,
@@ -77,7 +80,7 @@ class CartSnapshot {
 }
 
 List<Cart> dbCart = [
-  Cart(idUser: "001", maSP: "001", soLuong: 1),
-  Cart(idUser: "001", maSP: "002", soLuong: 1),
-  Cart(idUser: "001", maSP: "003", soLuong: 5),
+  Cart(idCart: "0001", idUser: "0001", maSP: "0001", soLuong: 1),
+  Cart(idCart: "0002", idUser: "0001", maSP: "0002", soLuong: 1),
+  Cart(idCart: "0003", idUser: "0001", maSP: "0003", soLuong: 5),
 ];

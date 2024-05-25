@@ -3,15 +3,17 @@ import '../../controllers/chuonChuonKimController.dart';
 import '../connect/setupFirebase.dart';
 
 class ProductFavorite {
-  String idUser, maSP;
+  String idPF, idUser, maSP;
 
   ProductFavorite({
+    required this.idPF,
     required this.idUser,
     required this.maSP,
   });
 
   Map<String, dynamic> toJson() {
     return {
+      'idPF': idPF,
       'idUser': idUser,
       'maSP': maSP,
     };
@@ -19,6 +21,7 @@ class ProductFavorite {
 
   factory ProductFavorite.fromJson(Map<String, dynamic> map) {
     return ProductFavorite(
+      idPF: map['idPF'] as String,
       idUser: map['idUser'] as String,
       maSP: map['maSP'] as String,
     );
@@ -73,5 +76,7 @@ class ProductFavoriteSnapshot {
 }
 
 List<ProductFavorite> dbProductFavorite = [
-  ProductFavorite(idUser: "0000001", maSP: "001"),
+  ProductFavorite(idPF: "0001", idUser: "0001", maSP: "0001"),
+  ProductFavorite(idPF: "0002", idUser: "0001", maSP: "0002"),
+  ProductFavorite(idPF: "0002", idUser: "0001", maSP: "0003"),
 ];

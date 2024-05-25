@@ -95,7 +95,15 @@ class PageDetails extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       var c = ChuonChuonKimController.instance;
-                      Cart cart = Cart(idUser: c.idUser, maSP: product.maSP, soLuong: 1);
+
+                      String id = "0";
+                      var lastCartSnapshot = c.listCart.lastOrNull;
+                      if (lastCartSnapshot != null) {
+                        id = lastCartSnapshot.cart.idCart;
+                      }
+
+                      int number = int.parse(id) + 1;
+                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.idUser, maSP: product.maSP, soLuong: 1);
                       c.addToCart(cartNew: cart);
                       thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
                     },

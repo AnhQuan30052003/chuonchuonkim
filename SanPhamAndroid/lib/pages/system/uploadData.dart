@@ -1,6 +1,7 @@
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/database/models/Product.dart';
+import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/database/models/ProductType.dart';
 import 'package:chuonchuonkim_app/pages/system/createItem.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,14 @@ class UploadData extends StatelessWidget {
                   }
                 });
 
+                // Product favorite
+                await deleteData(collectionPath: Firebase.colProductFavorite)
+                .then((value) {
+                  for (var o in dbProductFavorite) {
+                    ProductFavoriteSnapshot.add(o);
+                  }
+                });
+
                 // Notifications
                 await deleteData(collectionPath: Firebase.colNotification)
                 .then((value) {
@@ -67,7 +76,7 @@ class UploadData extends StatelessWidget {
                 // Product
                 await deleteData(collectionPath: Firebase.colProduct)
                 .then((value) {
-                  int soLuongTao = 10, indexLSP = 0;
+                  int soLuongTao = 20, indexLSP = 0;
                   buildProduct(soLuongTao: soLuongTao, tenSPTao: "Cơm sườn", hinhAnhSPTao: hinhAnhComSuon, giaSPTao: List.of([20000, 25000]), maLSPTao: dbProductType[indexLSP++].maLSP);
                   buildProduct(soLuongTao: soLuongTao, tenSPTao: "Hamburger", hinhAnhSPTao: hinhAnhHamburger, giaSPTao: List.of([25000, 30000, 40000]), maLSPTao: dbProductType[indexLSP++].maLSP);
                   buildProduct(soLuongTao: soLuongTao, tenSPTao: "Bún", hinhAnhSPTao: hinhAnhBun, giaSPTao: List.of([15000, 20000, 25000, 30000]), maLSPTao: dbProductType[indexLSP++].maLSP);
@@ -80,7 +89,7 @@ class UploadData extends StatelessWidget {
                 });
 
                 thongBaoThucHienXong(context: context, info: "Upload done.");
-                print("Thêm thành công lên Firebase.");
+                print("Thêm dữ liệu thành công lên Firebase.");
               },
               child: const Text("Add data to firebase"),
             ),

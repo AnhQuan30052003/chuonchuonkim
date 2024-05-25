@@ -43,13 +43,8 @@ class PageCart extends StatelessWidget {
             );
           }
 
-          var list = [];
-          try {
-            list = snapshot.data!;
-          }
-          catch (error) {
-            list = [];
-          }
+          var list = (snapshot.data! ?? []);
+          list.sort((CartSnapshot a, CartSnapshot b) => (a.cart.idCart.compareTo(b.cart.idCart)));
 
           return Padding(
             padding: const EdgeInsets.all(8.0),

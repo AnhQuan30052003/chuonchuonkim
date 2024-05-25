@@ -3,16 +3,12 @@ import 'package:chuonchuonkim_app/database/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 
-List<String> listTen = ["Hà Nội", "Hồ Chí Minh", "Nghệ An", "Vũng Tàu", "5 ngon", "Phú Quốc", "Vạn Giã"];
+import '../../helper/widget.dart';
 
-String xayDungMa(int index) {
-  if (index < 10) {
-    return "00$index";
-  } else if (index < 100) {
-    return "0$index";
-  }
-  return "$index";
-}
+List<String> listTen = [
+  "Hà Nội", "Hồ Chí Minh", "Nghệ An", "Vũng Tàu", "5 ngon",
+  "Phú Quốc", "Vạn Giã", "Xuân Bắc", "Khánh Hoà", "Thái Nguyên",
+];
 
 List<String> hinhAnhBun = [
   "https://firebasestorage.googleapis.com/v0/b/chuonchuonkim-a7c61.appspot.com/o/ChuonChuonKimApp%2FProducts%2Fbun_1.jpg?alt=media&token=6bb1c591-e095-4c4b-963a-ffbbf3c902e0",
@@ -90,7 +86,7 @@ void buildProduct({required int soLuongTao, required String tenSPTao, required L
   maLSP = maLSPTao;
 
   for (int i = 0; i < soLuongTao; i++) {
-    maSP = xayDungMa(Firebase.id++);
+    maSP = getIdToString(Firebase.id++);
     tenSP = "$tenSPTao ${listTen[Random().nextInt(listTen.length)]}";
     giaSP = giaSPTao[Random().nextInt(giaSPTao.length)];
     hinhAnhSP = hinhAnhSPTao[Random().nextInt(hinhAnhSPTao.length)];

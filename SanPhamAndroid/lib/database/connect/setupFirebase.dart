@@ -10,5 +10,5 @@ class Firebase {
   static String colProductFavorite = "ProductFavorites";
   static String colUser = "Users";
 
-  static int id = 1;
+  static int id = 0;
 }

@@ -3,10 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
 class Notification {
-  String idUser, maSP, text;
+  String idNoti, idUser, maSP, text;
   bool seen;
 
   Notification({
+    required this.idNoti,
     required this.idUser,
     required this.maSP,
     required this.text,
@@ -15,6 +16,7 @@ class Notification {
 
   Map<String, dynamic> toJson() {
     return {
+      'idNoti': idNoti,
       'idUser': idUser,
       'maSP': maSP,
       'String': text,
@@ -24,6 +26,7 @@ class Notification {
 
   factory Notification.fromJson(Map<String, dynamic> map) {
     return Notification(
+      idNoti: map['idNoti'] as String,
       idUser: map['idUser'] as String,
       maSP: map['maSP'] as String,
       text: map['String'] as String,
@@ -80,8 +83,9 @@ class NotificationSnapshot {
 }
 
 List<Notification> dbNotification = [
-  Notification(idUser: "001", maSP: "001", text: "Đã xác nhận đơn hàng", seen: false),
-  Notification(idUser: "001", maSP: "002", text: "Đã xác nhận đơn hàng", seen: false),
-  Notification(idUser: "001", maSP: "003", text: "Đã xác nhận đơn hàng", seen: false),
-  Notification(idUser: "001", maSP: "002", text: "Đã giao", seen: true),
+  Notification(idNoti: "0001", idUser: "0001", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true),
+  Notification(idNoti: "0002", idUser: "0001", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true),
+  Notification(idNoti: "0003", idUser: "0001", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true),
+  Notification(idNoti: "0004", idUser: "0001", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false),
+  Notification(idNoti: "0005", idUser: "0001", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false),
 ];
