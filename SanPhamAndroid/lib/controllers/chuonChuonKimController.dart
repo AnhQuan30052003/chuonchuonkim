@@ -26,8 +26,8 @@ class ChuonChuonKimController extends GetxController {
     super.onReady();
     getProductTypes();
     getProducts();
-    getCarts();
-    getFavorites();
+    // getCarts();
+    // getFavorites();
   }
 
 
@@ -140,20 +140,27 @@ class ChuonChuonKimController extends GetxController {
   // * -------------------------------------
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
-    for (var p in listProductsPopulator) {
-      if (p.maLSP == idLSP) {
-        Product temp = p;
-        listProductsPopulator.remove(p);
-        listProductsPopulator.insert(0, temp);
+    if (idLSP.isEmpty) {
+      listProdutsGridView = listProduct;
+      listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+    }
+    else {
+      for (var p in listProductsPopulator) {
+        if (p.maLSP == idLSP) {
+          Product temp = p;
+          listProductsPopulator.remove(p);
+          listProductsPopulator.insert(0, temp);
+        }
+      }
+
+      listProdutsGridView = [];
+      for (var p in listProduct) {
+        if (p.maLSP == idLSP) {
+          listProdutsGridView.add(p);
+        }
       }
     }
 
-    listProdutsGridView = [];
-    for (var p in listProduct) {
-      if (p.maLSP == idLSP) {
-        listProdutsGridView.add(p);
-      }
-    }
     updateProductsPopulattor();
     updateGridView();
   }

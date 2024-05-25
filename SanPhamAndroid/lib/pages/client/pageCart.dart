@@ -22,8 +22,11 @@ class PageCart extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("Giỏ hàng của bạn")
+        elevation: 0,
+        backgroundColor: Colors.white10,
+        title: const Text(
+          "Giỏ hàng của bạn",
+          style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
         ),
       ),
       // body: Padding(

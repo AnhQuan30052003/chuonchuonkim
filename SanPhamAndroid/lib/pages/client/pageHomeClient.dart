@@ -73,9 +73,12 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   _buildBody(BuildContext context, int index) {
+    if (index == 0) {
+      ChuonChuonKimController.instance.showProductType(idLSP: "");
+      return home();
+    }
     if (index == 1) return favorite();
-    if (index == 2) return me();
-    return home();
+    return me();
   }
 
   Widget home() {
