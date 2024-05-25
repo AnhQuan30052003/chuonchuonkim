@@ -29,7 +29,7 @@ Widget account(BuildContext context) {
                     children: [
                       Text("Tên khách hàng",
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      Text("Chữ ký...",
+                      Text("Tài khoản",
                           style: TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                     ],
                   ),
