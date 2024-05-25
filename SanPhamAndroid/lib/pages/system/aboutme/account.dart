@@ -24,14 +24,16 @@ Widget account(BuildContext context) {
                   ),
                 ),
                 const Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("Tên khách hàng",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      Text("Tài khoản",
-                          style: TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Tên khách hàng", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        Text("Tài khoản", style: TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
+                      ],
+                    ),
                   ),
                 ),
               ],
