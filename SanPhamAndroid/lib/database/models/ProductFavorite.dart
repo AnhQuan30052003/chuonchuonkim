@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../controllers/chuonChuonKimController.dart';
 import '../connect/setupFirebase.dart';
 
 class ProductFavorite {
@@ -47,6 +48,17 @@ class ProductFavoriteSnapshot {
 
   Future<void> update(ProductFavorite object) async {
     await docRef.update(object.toJson());
+  }
+
+  static Stream<List<ProductFavoriteSnapshot>> streamData() {
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).snapshots();
+    var list = querySnapshot.map(
+      (qsn) => qsn.docs.map(
+          (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)
+      ).toList()
+    );
+
+    return list;
   }
 
   static Future<List<ProductFavoriteSnapshot>> futureData() async {

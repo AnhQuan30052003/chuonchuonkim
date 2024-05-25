@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
@@ -51,6 +52,17 @@ class CartSnapshot {
 
   Future<void> update(Cart object) async {
     await docRef.update(object.toJson());
+  }
+
+  static Stream<List<CartSnapshot>> streamData() {
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).snapshots();
+    var list = querySnapshot.map(
+      (qsn) => qsn.docs.map(
+        (docSnap) => CartSnapshot.fromDocSnap(docSnap)
+      ).toList()
+    );
+
+    return list;
   }
 
   static Future<List<CartSnapshot>> futureData() async {

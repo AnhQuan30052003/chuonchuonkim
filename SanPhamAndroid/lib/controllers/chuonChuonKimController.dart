@@ -17,6 +17,7 @@ class ChuonChuonKimController extends GetxController {
 
   List<Product> listProductsPopulator = [];
   List<Product> listProdutsGridView = [];
+
   List<Product> listProductSeach= [];
   List<Product> listSimilarProducts= [];
 

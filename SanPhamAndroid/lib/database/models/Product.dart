@@ -65,8 +65,11 @@ class ProductSnapshot {
 
   static Stream<List<ProductSnapshot>> streamData() {
     var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProduct).snapshots();
-    var list = querySnapshot
-        .map((qsn) => qsn.docs.map((docSnap) => ProductSnapshot.fromDocSnap(docSnap)).toList());
+    var list = querySnapshot.map(
+      (qsn) => qsn.docs.map(
+        (docSnap) => ProductSnapshot.fromDocSnap(docSnap)
+      ).toList()
+    );
 
     return list;
   }

@@ -1,13 +1,11 @@
 // * Đạt
 
-import 'dart:math';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../helper/widgetClient.dart';
-import 'pageDetails.dart';
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -25,119 +23,64 @@ class ClientConnect extends StatelessWidget {
   }
 }
 
-class PageHomeClient extends StatelessWidget {
+class PageHomeClient extends StatefulWidget {
   const PageHomeClient({super.key});
 
   @override
+  State<PageHomeClient> createState() => _PageHomeClientState();
+}
+
+class _PageHomeClientState extends State<PageHomeClient> {
+  int index = 0;
+
+  @override
   Widget build(BuildContext context) {
-    Widget buildProductsPopulator() {
-      double w = 190, h = 230;
-
-      return GetBuilder(
-        init: ChuonChuonKimController.instance,
-        id: "products_populator",
-        builder: (controller) {
-          var list = controller.listProductsPopulator;
-          return SizedBox(
-            height: h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: list.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                var item = list[index];
-
-                return GestureDetector(
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          height: h,
-                          width: w,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 4,
-                                spreadRadius: 2,
-                                color: Colors.black12,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const SizedBox(height: 7),
-                                Text(
-                                  item.tenSP,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                                ),
-                                Text(shortText(text: item.moTaSP, lengthMax: 20), style: const TextStyle(color: Colors.black45, fontSize: 15)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("${item.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal),),
-                                    Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 45,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(80),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 4,
-                                spreadRadius: 2,
-                                color: Colors.black12,
-                              )
-                            ],
-                          ),
-                          child: ClipOval(
-                            child: SizedBox.fromSize(
-                              size: const Size.fromRadius(60), // Image radius
-                              child: Image.network(item.hinhAnhSP, fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  onTap: () {
-                    controller.showSimilaProducts(product: item);
-                    Get.to(PageDetails(product: item));
-                  },
-                );
-              },
-            ),
-          );
+    return Scaffold(
+      appBar: buildAppBar(info: "Bạn muốn ăn gì?"),
+      body: _buildBody(context, index),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        items: const [
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.home, color: Colors.blue),
+            icon: Icon(Icons.home, color: Colors.grey),
+            label: "Trang chủ",
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.favorite, color: Colors.blue),
+            icon: Icon(Icons.favorite, color: Colors.grey),
+            label: "Yêu thích",
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.person, color: Colors.blue),
+            icon: Icon(Icons.person, color: Colors.grey),
+            label: "Tôi",
+          ),
+        ],
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
         },
-      );
-    }
-    
-    Widget buildBody() {
-      return GetBuilder(
-        init: ChuonChuonKimController.instance,
-        id: "client_products",
-        builder: (controller) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: SingleChildScrollView(
-              child: Column(
+      ),
+    );
+  }
+
+  _buildBody(BuildContext context, int index) {
+    if (index == 1) return favorite();
+    if (index == 2) return me();
+    return home();
+  }
+
+  Widget home() {
+    return GetBuilder(
+      init: ChuonChuonKimController.instance,
+      id: "client_products",
+      builder: (controller) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: SingleChildScrollView(
+            child: Column(
                 children: [
                   // * search
                   buildSearch(context: context),
@@ -161,23 +104,25 @@ class PageHomeClient extends StatelessWidget {
                   // * card product
                   space(0, 10),
                   GetBuilder(
-                    init: ChuonChuonKimController.instance,
-                    id: "gridview_products",
-                    builder: (controller) {
-                      return buildGridViewProducts(list: controller.listProdutsGridView);
-                    }
+                      init: ChuonChuonKimController.instance,
+                      id: "gridview_products",
+                      builder: (controller) {
+                        return buildGridViewProducts(list: controller.listProdutsGridView);
+                      }
                   )
                 ]
-              ),
             ),
-          );
-        },
-      );
-    }
-
-    return Scaffold(
-      appBar: buildAppBar(info: "Bạn muốn ăn gì?"),
-      body: buildBody(),
+          ),
+        );
+      },
     );
+  }
+
+  Widget favorite() {
+    return Container();
+  }
+
+  Widget me() {
+    return Container();
   }
 }

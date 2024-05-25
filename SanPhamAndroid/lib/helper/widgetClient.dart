@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
-import '../pages/client/pageCart.dart';
 import '../pages/client/pageNotification.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
@@ -214,5 +213,104 @@ Widget buildInstruction({required String text}) {
         style: const TextStyle(color: Colors.black87, fontSize: 17, fontWeight: FontWeight.bold),
       ),
     ],
+  );
+}
+
+Widget buildProductsPopulator() {
+  double w = 190, h = 230;
+
+  return GetBuilder(
+    init: ChuonChuonKimController.instance,
+    id: "products_populator",
+    builder: (controller) {
+      var list = controller.listProductsPopulator;
+      return SizedBox(
+        height: h,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: list.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            var item = list[index];
+
+            return GestureDetector(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      height: h,
+                      width: w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const SizedBox(height: 7),
+                            Text(
+                              item.tenSP,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(shortText(text: item.moTaSP, lengthMax: 20), style: const TextStyle(color: Colors.black45, fontSize: 15)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${item.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal),),
+                                Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 45,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80),
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                            color: Colors.black12,
+                          )
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: SizedBox.fromSize(
+                          size: const Size.fromRadius(60), // Image radius
+                          child: Image.network(item.hinhAnhSP, fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                controller.showSimilaProducts(product: item);
+                Get.to(PageDetails(product: item));
+              },
+            );
+          },
+        ),
+      );
+    },
   );
 }
