@@ -58,7 +58,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
           tabBackgroundColor: Colors.black38,
           tabBorderRadius: 20,
           tabs: const [
-            GButton(icon: CupertinoIcons.home, text: "Home"),
+            GButton(icon: CupertinoIcons.home, text: "Trang chủ"),
             GButton(icon: Icons.favorite_border, text: "Yêu thích"),
             GButton(icon: Icons.person_outline_outlined, text: "Tôi"),
           ],
@@ -112,11 +112,11 @@ class _PageHomeClientState extends State<PageHomeClient> {
               // * card product
               space(0, 10),
               GetBuilder(
-                  init: ChuonChuonKimController.instance,
-                  id: "gridview_products",
-                  builder: (controller) {
-                    return buildGridViewProducts(list: controller.listProdutsGridView);
-                  })
+                init: ChuonChuonKimController.instance,
+                id: "gridview_products",
+                builder: (controller) {
+                  return buildGridViewProducts(list: controller.listProdutsGridView, showNotFound: false);
+                })
             ]),
           ),
         );
