@@ -1,6 +1,7 @@
+import 'package:chuonchuonkim_app/pages/system/aboutme/personalInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 void main() {
   return runApp(const App());
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: "App", debugShowCheckedModeBanner: false, home: MyAccount());
+    return const GetMaterialApp(title: "App", debugShowCheckedModeBanner: false, home: MyAccount());
   }
 }
 
@@ -79,11 +80,13 @@ class MyAccount extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           color: Colors.white,
                         ),
-                        child: const Icon(Icons.person_2_outlined),
+                        child: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(const PersonalInfo());
+                        },
                       ),
                     ),
                     ListTile(
@@ -96,7 +99,7 @@ class MyAccount extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           color: Colors.white,
                         ),
-                        child: const Icon(CupertinoIcons.location_solid),
+                        child: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue),
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
@@ -124,7 +127,7 @@ class MyAccount extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           color: Colors.white,
                         ),
-                        child: const Icon(Icons.person_2_outlined),
+                        child: const Icon(Icons.logout_rounded, color: Colors.redAccent),
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
