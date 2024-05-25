@@ -3,15 +3,34 @@
 import 'dart:math';
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
+import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
 
-class PageDetails extends StatelessWidget {
+class PageDetails extends StatefulWidget {
   final Product product;
   const PageDetails({required this.product, super.key});
+
+  @override
+  State<PageDetails> createState() => _PageDetailsState();
+}
+
+class _PageDetailsState extends State<PageDetails> {
+  bool tym = false;
+
+  @override
+  void initState() {
+    List<ProductFavoriteSnapshot> list = ChuonChuonKimController.instance.listProductFavoriteSnapshot;
+    for (var pfn in list) {
+      if (pfn.productFavorite.maSP == widget.product.maSP) {
+        tym = true;
+        return;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,33 +51,33 @@ class PageDetails extends StatelessWidget {
               SizedBox(
                 height: 350,
                 width: MediaQuery.of(context).size.width,
-                child: Image.network(product.hinhAnhSP),
+                child: Image.network(widget.product.hinhAnhSP),
               ),
-              
+
               space(0, 20),
               Row(
                 children: [
                   Text(
-                    "${product.giaSP}đ",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                    )
+                      "${widget.product.giaSP}đ",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      )
                   ),
                   space(10, 0),
                   Text(
-                    "${product.giaSP * 1.25}đ",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      decoration: TextDecoration.lineThrough
-                    )
+                      "${widget.product.giaSP * 1.25}đ",
+                      style: const TextStyle(
+                          fontSize: 15,
+                          decoration: TextDecoration.lineThrough
+                      )
                   ),
                 ],
               ),
 
               Row(
                 children: [
-                  Text(product.moTaSP, style: const TextStyle(fontSize: 20)),
+                  Text(widget.product.moTaSP, style: const TextStyle(fontSize: 20)),
                 ],
               ),
 
@@ -79,9 +98,35 @@ class PageDetails extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.favorite, color: Colors.black26),
+                        icon: tym ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite, color: Colors.black26),
                         onPressed: () {
+                          tym = !tym;
+                          setState(() {});
 
+                          var c = ChuonChuonKimController.instance;
+                          if (tym) {
+                            String id = "0";
+                            var lastProductFavoriteSnapshot = c.listProductFavoriteSnapshot.lastOrNull;
+                            if (lastProductFavoriteSnapshot != null) {
+                              id = lastProductFavoriteSnapshot.productFavorite.maSP;
+                            }
+
+                            int number = int.parse(id) + 1;
+                            ProductFavorite pf = ProductFavorite(idPF: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP);
+                            ProductFavoriteSnapshot.add(pf);
+                            thongBaoThucHienXong(context: context, info: "Đã thêm vào yêu thích.");
+                          }
+                          else {
+                            for (var pfn in c.listProductFavoriteSnapshot) {
+                              if (pfn.productFavorite.maSP == widget.product.maSP) {
+                                pfn.delete();
+                                break;
+                              }
+                            }
+                            thongBaoThucHienXong(context: context, info: "Đã xoá khỏi yêu thích.");
+                          }
+
+                          c.getProductFavoriteSnapshot();
                         },
                       ),
                     ],
@@ -97,13 +142,13 @@ class PageDetails extends StatelessWidget {
                       var c = ChuonChuonKimController.instance;
 
                       String id = "0";
-                      var lastCartSnapshot = c.listCart.lastOrNull;
+                      var lastCartSnapshot = c.listCartSnapshot.lastOrNull;
                       if (lastCartSnapshot != null) {
                         id = lastCartSnapshot.cart.idCart;
                       }
 
                       int number = int.parse(id) + 1;
-                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.idUser, maSP: product.maSP, soLuong: 1);
+                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP, soLuong: 1);
                       c.addToCart(cartNew: cart);
                       thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
                     },
@@ -116,10 +161,10 @@ class PageDetails extends StatelessWidget {
                     )
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                      onPressed: () {
 
-                    },
-                    child: const Text("Mua ngay")
+                      },
+                      child: const Text("Mua ngay")
                   ),
                 ],
               ),

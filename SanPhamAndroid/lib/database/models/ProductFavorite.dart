@@ -42,7 +42,7 @@ class ProductFavoriteSnapshot {
   }
 
   static Future<DocumentReference> add(ProductFavorite object) async {
-    return FirebaseFirestore.instance.collection(Firebase.colProductFavorite).add(object.toJson());
+    return await FirebaseFirestore.instance.collection(Firebase.colProductFavorite).add(object.toJson());
   }
 
   Future<void> delete() async {

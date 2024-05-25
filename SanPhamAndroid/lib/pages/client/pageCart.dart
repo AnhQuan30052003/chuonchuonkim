@@ -20,8 +20,8 @@ class PageCart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CounterQuantityProductController> listCounter = [];
     List<CheckProductController> listCheck = [];
-    for (int i = 0; i < ChuonChuonKimController.instance.listCart.length; i++) {
-      listCounter.add(CounterQuantityProductController(ChuonChuonKimController.instance.listCart[i].cart.soLuong));
+    for (int i = 0; i < ChuonChuonKimController.instance.listCartSnapshot.length; i++) {
+      listCounter.add(CounterQuantityProductController(ChuonChuonKimController.instance.listCartSnapshot[i].cart.soLuong));
       listCheck.add(CheckProductController());
     }
 
@@ -187,7 +187,7 @@ class PageCart extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 String text = "Hãy thêm sản phẩm vào giỏ hàng !";
-                if (ChuonChuonKimController.instance.listCart.isNotEmpty) {
+                if (ChuonChuonKimController.instance.listCartSnapshot.isNotEmpty) {
                   text = "Đặt hàng thành công";
                 }
                 info(context, text);
