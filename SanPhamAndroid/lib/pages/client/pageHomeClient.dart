@@ -8,6 +8,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../helper/widgetClient.dart';
+import '../system/account.dart';
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -78,7 +79,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
       return home();
     }
     if (index == 1) return favorite();
-    return me();
+    return account(context);
   }
 
   Widget home() {
@@ -112,14 +113,16 @@ class _PageHomeClientState extends State<PageHomeClient> {
               // * card product
               space(0, 10),
               GetBuilder(
-                  init: ChuonChuonKimController.instance,
-                  id: "gridview_products",
-                  builder: (controller) {
-                    return buildGridViewProducts(
-                        context: context,
-                        list: controller.listProdutsGridView,
-                        showNotFound: false);
-                  })
+                init: ChuonChuonKimController.instance,
+                id: "gridview_products",
+                builder: (controller) {
+                  return buildGridViewProducts(
+                    context: context,
+                    list: controller.listProdutsGridView,
+                    showNotFound: false
+                  );
+                }
+              )
             ]),
           ),
         );
@@ -133,9 +136,16 @@ class _PageHomeClientState extends State<PageHomeClient> {
     );
   }
 
-  Widget me() {
-    return Container(
-      child: const Text("me"),
+  Widget account(BuildContext context) {
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text("title of account"),
+    //   ),
+    // );
+    return const MaterialApp(
+      title: "My Account",
+      debugShowCheckedModeBanner: false,
+      home: MyAccount(),
     );
   }
 }
