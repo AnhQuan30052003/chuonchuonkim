@@ -65,7 +65,7 @@ class ProductFavoriteSnapshot {
   }
 
   static Future<List<ProductFavoriteSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorite).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).get();
 
     var list = qs.docs.map(
       (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)

@@ -31,7 +31,15 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: StreamBuilder(
               stream: NotificationSnapshot.streamData(),
               builder: (context, snapshot) {
-                var list = (snapshot.data! ?? []);
+                List<NotificationSnapshot> list = [];
+
+                try {
+                  list = snapshot.data!;
+                }
+                catch (error) {
+                  list = [];
+                }
+
                 int count = 0;
                 for (var no in list) {
                   if (no.notification.seen == false) count += 1;
@@ -57,7 +65,15 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: StreamBuilder(
               stream: CartSnapshot.streamData(),
               builder: (context, snapshot) {
-                var list = (snapshot.data! ?? []);
+                List<CartSnapshot> list = [];
+
+                try {
+                  list = snapshot.data!;
+                }
+                catch (error) {
+                  list = [];
+                }
+
                 return Text("${list.length}", style: const TextStyle(color: Colors.white));
               },
             ),

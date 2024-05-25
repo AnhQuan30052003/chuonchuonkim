@@ -1,5 +1,8 @@
 // * Đạt
 
+import 'dart:math';
+
+import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
+import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
 
 class ClientConnect extends StatelessWidget {
@@ -80,7 +84,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
       return home();
     }
     if (index == 1) return favorite();
-    return account(context);
+    return account();
   }
 
   Widget home() {
@@ -132,12 +136,62 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   Widget favorite() {
-    return Container(
-      child: const Text("favorite"),
+    // Lấy 20 sản phẩm ngẫu nhiên
+
+    var c = ChuonChuonKimController.instance;
+    c.listProdutsGridView = [];
+    int count = 1;
+    do {
+      c.listProdutsGridView.add(c.listProduct[Random().nextInt(c.listProduct.length)]);
+      count += 1;
+    } while (count <= 30);
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Column(
+          children: [
+            StreamBuilder(
+              stream: ProductFavoriteSnapshot.streamData(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                List<ProductFavoriteSnapshot> list = [];
+
+                try {
+                  list = snapshot.data!;
+                }
+                catch (error) {
+                  list = [];
+                }
+                list.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => (a.productFavorite.maSP.compareTo(b.productFavorite.maSP)));
+
+                List<Product> listProduct = [];
+                for (var pf in list) {
+                  for (var p in ChuonChuonKimController.instance.listProduct) {
+                    if (p.maSP == pf.productFavorite.maSP) {
+                      listProduct.add(p);
+                    }
+                  }
+                }
+                listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+                return buildGridViewProducts(context: context, list: listProduct, showNotFound: false);
+              }
+            ),
+            space(0, 20),
+            buildInstruction(text: "Có thể bạn cũng thích"),
+            buildGridViewProducts(context: context, list: c.listProdutsGridView, showNotFound: false),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget account(BuildContext context) {
+  Widget account() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10),
