@@ -32,13 +32,8 @@ class _PageNotificationState extends State<PageNotification> {
             );
           }
 
-          var list = [];
-          try {
-            list = snapshot.data!;
-          }
-          catch (error) {
-            list = [];
-          }
+          var list = (snapshot.data! ?? []);
+          list.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
 
           return Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -48,7 +43,7 @@ class _PageNotificationState extends State<PageNotification> {
                   color: e.notification.seen ? Colors.white38 : Colors.lightBlueAccent,
                   child: GestureDetector(
                     child: ListTile(
-                      title: Text("${e.notification.text}"),
+                      title: Text(e.notification.text),
                     ),
                     onTap: () {
                       e.notification.seen = true;

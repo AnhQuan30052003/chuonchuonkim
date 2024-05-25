@@ -1,19 +1,16 @@
 import 'package:get/get.dart';
 import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
-import '../database/models/ProductFavorite.dart';
 import '../database/models/ProductType.dart';
-import '../helper/dialog.dart';
 import 'checkProductController.dart';
 import 'counterQuantityProductController.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
 
-  String idUser = "001";
+  String idUser = "0001";
   List<Product> listProduct = [];
   List<CartSnapshot> listCart = [];
-  List<ProductFavoriteSnapshot> listProductFavorite = [];
   List<ProductType> listProductType = [];
 
   List<Product> listProductsPopulator = [];
@@ -28,7 +25,6 @@ class ChuonChuonKimController extends GetxController {
     getProductTypes();
     getProducts();
     getCarts();
-    // getFavorites();
   }
 
 
@@ -52,13 +48,9 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu ListCart
   void getCarts() async {
     listCart = await CartSnapshot.futureData();
+    listCart.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
   }
 
-  // Lấy dữ liệu Favorite
-  void getFavorites() async {
-    // var data = await CartSnapshot.futureData();
-    // notificationNumber = data.length;
-  }
 
   // Lấy dữ liệu Product
   void getProducts() async {
@@ -70,7 +62,6 @@ class ChuonChuonKimController extends GetxController {
     listProdutsGridView = listProduct;
 
     updatePageHome();
-    print("Đã cập nhật Product. Số lượng: ${listProduct.length}");
   }
 
   // Lấy dữ liệu ProductType
@@ -79,7 +70,6 @@ class ChuonChuonKimController extends GetxController {
     listProductType = data.map((e) => e.productType).toList();
     listProductType.sort((ProductType a, ProductType b) => a.maLSP.compareTo(b.maLSP));
     updatePageHome();
-    print("Đã cập nhật Product Type. Số lượng: ${listProductType.length}");
   }
 
   void updatePageHome() {

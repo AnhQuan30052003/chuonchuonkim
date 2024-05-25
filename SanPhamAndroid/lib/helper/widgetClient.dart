@@ -31,7 +31,8 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: StreamBuilder(
               stream: NotificationSnapshot.streamData(),
               builder: (context, snapshot) {
-                var list = [];
+                List<NotificationSnapshot> list = [];
+
                 try {
                   list = snapshot.data!;
                 }
@@ -44,9 +45,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
                   if (no.notification.seen == false) count += 1;
                 }
 
-                return Text(
-                  "$count",
-                  style: const TextStyle(color: Colors.white));
+                return Text("$count", style: const TextStyle(color: Colors.white));
               },
             ),
             child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
@@ -66,7 +65,8 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: StreamBuilder(
               stream: CartSnapshot.streamData(),
               builder: (context, snapshot) {
-                var list = [];
+                List<CartSnapshot> list = [];
+
                 try {
                   list = snapshot.data!;
                 }
@@ -74,10 +74,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
                   list = [];
                 }
 
-                return Text(
-                "${list.length}",
-                style: const TextStyle(color: Colors.white)
-              );
+                return Text("${list.length}", style: const TextStyle(color: Colors.white));
               },
             ),
             child: const Icon(Icons.shopping_cart_outlined),
