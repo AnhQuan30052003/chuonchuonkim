@@ -2,6 +2,8 @@
 
 import 'dart:math';
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/database/models/Cart.dart';
+import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import '../../database/models/Product.dart';
@@ -92,7 +94,10 @@ class PageDetails extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-
+                      var c = ChuonChuonKimController.instance;
+                      Cart cart = Cart(idUser: c.idUser, maSP: product.maSP, soLuong: 1);
+                      c.addToCart(cartNew: cart);
+                      thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
                     },
                     child: Row(
                       children: [
@@ -114,14 +119,12 @@ class PageDetails extends StatelessWidget {
               space(0, 10),
               buildInstruction(text: "Sản phẩm tương tự"),
               space(0, 10),
-              buildGridViewProducts(list: ChuonChuonKimController.instance.listSimilarProducts, showNotFound: false),
+              buildGridViewProducts(context: context, list: ChuonChuonKimController.instance.listSimilarProducts, showNotFound: false),
             ],
           ),
         ),
       );
     }
-
-
 
     return Scaffold(
       appBar: buildAppBar(info: "Chi tiết"),

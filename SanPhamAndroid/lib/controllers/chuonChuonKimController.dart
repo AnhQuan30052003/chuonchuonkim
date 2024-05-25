@@ -3,13 +3,14 @@ import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductFavorite.dart';
 import '../database/models/ProductType.dart';
+import '../helper/dialog.dart';
 import 'checkProductController.dart';
 import 'counterQuantityProductController.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
 
-  String idUser = "";
+  String idUser = "001";
   List<Product> listProduct = [];
   List<CartSnapshot> listCart = [];
   List<ProductFavoriteSnapshot> listProductFavorite = [];
@@ -26,7 +27,7 @@ class ChuonChuonKimController extends GetxController {
     super.onReady();
     getProductTypes();
     getProducts();
-    // getCarts();
+    getCarts();
     // getFavorites();
   }
 
@@ -49,13 +50,14 @@ class ChuonChuonKimController extends GetxController {
   }
 
   // Lấy dữ liệu ListCart
-  void getCarts() {
-
+  void getCarts() async {
+    listCart = await CartSnapshot.futureData();
   }
 
   // Lấy dữ liệu Favorite
-  void getFavorites() {
-
+  void getFavorites() async {
+    // var data = await CartSnapshot.futureData();
+    // notificationNumber = data.length;
   }
 
   // Lấy dữ liệu Product
@@ -93,15 +95,18 @@ class ChuonChuonKimController extends GetxController {
   }
 
   // Thêm sản phẩm vào giỏ hàng
-  void addToCart({required Product product}) {
-    // for (var cart in listCart) {
-    //   if (cart.maSP == product.maSP) {
-    //     cart.soLuong += 1;
-    //     return;
-    //   }
-    // }
+  void addToCart({required Cart cartNew}) {
+    for (var cn in listCart) {
+      if ((cn.cart.maSP == cartNew.maSP) && (idUser == cartNew.idUser)) {
+        Cart c = cn.cart;
+        c.soLuong += 1;
+        cn.update(c);
+        return;
+      }
+    }
 
-    // listCart.add(Cart(idUser: idUser, maSP: product.maSP, soLuong: 1));
+    CartSnapshot.add(cartNew);
+    getCarts();
   }
 
   // Xoá sản phẩm khỏi giỏ hàng
@@ -110,18 +115,18 @@ class ChuonChuonKimController extends GetxController {
   }
 
   // Lấy sản phẩm từ giỏ hàng
-  Product? getProductFromCart({required int index}) {
-    // for (var product in listProduct) {
-    //   if (product.maSP == listCart[index].maSP) {
-    //     return product;
-    //   }
-    // }
+  Product? getProductFromCart({required String maSP}) {
+    for (var product in listProduct) {
+      if (product.maSP == maSP) {
+        return product;
+      }
+    }
     return null;
   }
 
   // Tổng giá của sản phẩm
-  int sumPirceOfProduct({required int index, required int quantity}) {
-    return getProductFromCart(index: index)!.giaSP * quantity;
+  int sumPirceOfProduct({required Product product, required int quantity}) {
+    return product.giaSP * quantity;
   }
 
   // Tổng tiền cả giỏ hàng
@@ -129,7 +134,7 @@ class ChuonChuonKimController extends GetxController {
     int sum = 0;
     for (int i = 0; i < listCart.length; i++) {
       if (listCheck[i].isChecked.value) {
-        sum += sumPirceOfProduct(index: i, quantity: listCounter[i].count.value);
+        sum += sumPirceOfProduct(product: getProductFromCart(maSP: listCart[i].cart.maSP)!, quantity: listCounter[i].count.value);
       }
     }
     return sum;

@@ -1,11 +1,15 @@
 // Quân
 
+import 'package:chuonchuonkim_app/helper/dialog.dart';
+
 import '../../controllers/chuonChuonKimController.dart';
 import '../../controllers/checkProductController.dart';
 import '../../controllers/counterQuantityProductController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import '../../database/models/Cart.dart';
+import '../../database/models/Product.dart';
 import 'pageDetails.dart';
 
 class PageCart extends StatelessWidget {
@@ -29,56 +33,84 @@ class PageCart extends StatelessWidget {
           style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.end,
-      //     children: [
-      //       Expanded(
-      //         child: GetBuilder(
-      //           init: ChuonChuonKimController.instance,
-      //           id: "list_cart",
-      //           builder: (controller) => ListView.separated(
-      //             itemBuilder: (context, index) => Slidable(
-      //                 endActionPane: ActionPane(
-      //                   motion: const ScrollMotion(),
-      //                   children: [
-      //                     SlidableAction(
-      //                       onPressed: (value) {
-      //                         Get.to(PageDetails(product: ChuonChuonKimController.instance.getProductFromCart(index: index)!));
-      //                       },
-      //                       backgroundColor: Colors.blue,
-      //                       foregroundColor: Colors.white,
-      //                       icon: Icons.info_outline,
-      //                       label: 'Chi tiết',
-      //                     ),
-      //                     SlidableAction(
-      //                       onPressed: (value) {
-      //                         listCheck.removeAt(index);
-      //                         ChuonChuonKimController.instance.deleteFromCart(index: index);
-      //                       },
-      //                       backgroundColor: Colors.red,
-      //                       foregroundColor: Colors.white,
-      //                       icon: Icons.delete,
-      //                       label: 'Xoá',
-      //                     ),
-      //                   ],
-      //                 ),
-      //                 child: _buildCard(index, listCounter[index], listCheck[index]),
-      //               ),
-      //             separatorBuilder: (context,index) => const Divider(thickness: 1.5),
-      //             itemCount: ChuonChuonKimController.instance.listCart.length
-      //           ),
-      //         ),
-      //       ),
-      //       _buildBottomInfo(listCounter, listCheck, context)
-      //     ],
-      //   ),
-      // ),
+      body: StreamBuilder(
+        stream: CartSnapshot.streamData(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          var list = [];
+          try {
+            list = snapshot.data!;
+          }
+          catch (error) {
+            list = [];
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      var item = list[index];
+                      return Slidable(
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          children: [
+                            SlidableAction(
+                              onPressed: (value) {
+                                var c = ChuonChuonKimController.instance;
+                                Product p = c.getProductFromCart(maSP: item.cart.maSP)!;
+                                c.showSimilaProducts(product: p);
+                                Get.to(PageDetails(product: p));
+                              },
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              icon: Icons.info_outline,
+                              label: 'Chi tiết',
+                            ),
+                            SlidableAction(
+                              onPressed: (value) async {
+                                thongBaoDangThucHien(context: context, info: "Đang xoá khỏi giỏ hàng...");
+                                listCheck.removeAt(index);
+                                listCounter.removeAt(index);
+                                ChuonChuonKimController.instance.deleteFromCart(index: index);
+                                await item.delete()
+                                .then((value) {
+                                  thongBaoThucHienXong(context: context, info: "Đã xoá.");
+                                });
+                              },
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              icon: Icons.delete,
+                              label: 'Xoá',
+                            ),
+                          ],
+                        ),
+                        child: _buildCard(item.cart.maSP, listCounter[index], listCheck[index]),
+                      );
+                    },
+                    separatorBuilder: (context,index) => const Divider(thickness: 1.5),
+                    itemCount: list.length
+                  )
+                ),
+                _buildBottomInfo(listCounter, listCheck, context)
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Card _buildCard(int index, CounterQuantityProductController counterQuantity, CheckProductController checkProduct) {
+  Card _buildCard(String maSP, CounterQuantityProductController counterQuantity, CheckProductController checkProduct) {
+    Product p = ChuonChuonKimController.instance.getProductFromCart(maSP: maSP)!;
     return Card(
       child: Row(
         children: [
@@ -98,19 +130,17 @@ class PageCart extends StatelessWidget {
               leading: SizedBox(
                 width: 50,
                 height: 100,
-                child: GestureDetector(
-                    onTap: () => Get.to(PageDetails(product: ChuonChuonKimController.instance.getProductFromCart(index: index)!)),
-                    child: Image.network("${ChuonChuonKimController.instance.getProductFromCart(index: index)?.hinhAnhSP}")
-                )
+                child: Image.network(p.hinhAnhSP)
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${ChuonChuonKimController.instance.getProductFromCart(index: index)?.tenSP}"),
-                  Text("${ChuonChuonKimController.instance.getProductFromCart(index: index)?.giaSP}"),
+                  Text(p.tenSP),
+                  Text("${p.giaSP}đ"),
                 ],
               ),
               subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
@@ -125,9 +155,8 @@ class PageCart extends StatelessWidget {
                       )
                     ]
                   ),
-                  const SizedBox(width: 10),
                   Obx(() => Text(
-                    "Tổng: ${ChuonChuonKimController.instance.sumPirceOfProduct(index: index, quantity: counterQuantity.count.value)} đ",
+                    "Tổng: ${ChuonChuonKimController.instance.sumPirceOfProduct(product: p, quantity: counterQuantity.count.value)}đ",
                     style: const TextStyle(color: Colors.red))
                   ),
                 ],

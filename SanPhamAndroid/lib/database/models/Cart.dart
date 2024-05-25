@@ -43,7 +43,7 @@ class CartSnapshot {
   }
 
   static Future<DocumentReference> add(Cart object) async {
-    return FirebaseFirestore.instance.collection(Firebase.colCart).add(object.toJson());
+    return await FirebaseFirestore.instance.collection(Firebase.colCart).add(object.toJson());
   }
 
   Future<void> delete() async {
@@ -66,7 +66,7 @@ class CartSnapshot {
   }
 
   static Future<List<CartSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colCart).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).get();
 
     var list = qs.docs.map(
       (docSnap) => CartSnapshot.fromDocSnap(docSnap)
@@ -77,5 +77,7 @@ class CartSnapshot {
 }
 
 List<Cart> dbCart = [
-  Cart(idUser: "0000001", maSP: "001", soLuong: 1),
+  Cart(idUser: "001", maSP: "001", soLuong: 1),
+  Cart(idUser: "001", maSP: "002", soLuong: 1),
+  Cart(idUser: "001", maSP: "003", soLuong: 5),
 ];
