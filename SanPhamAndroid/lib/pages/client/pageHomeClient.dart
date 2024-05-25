@@ -8,7 +8,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../helper/widgetClient.dart';
-import '../system/account.dart';
 
 class ClientConnect extends StatelessWidget {
   const ClientConnect({super.key});
@@ -38,8 +37,10 @@ class _PageHomeClientState extends State<PageHomeClient> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> title = ["Bạn muốn ăn gì ?", "Sản phẩm yêu thích", "Tài khoản của tôi"];
+
     return Scaffold(
-      appBar: buildAppBar(info: "Bạn muốn ăn gì?"),
+      appBar: buildAppBar(info: title[index]),
       body: _buildBody(context, index),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(10),
@@ -137,15 +138,132 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   Widget account(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: const Text("title of account"),
-    //   ),
-    // );
-    return const MaterialApp(
-      title: "My Account",
-      debugShowCheckedModeBanner: false,
-      home: MyAccount(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 100,
+              width: 272,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(50), // Image radius
+                      child: Image.network("https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg", fit: BoxFit.cover),
+                    ),
+                  ),
+                  const Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Tên khách hàng", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        Text("Tài khoản", style: TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: const Color.fromRGBO(246, 248, 250, 1),
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ListTile(
+                    horizontalTitleGap: 10,
+                    title: const Text("Thông tin cá nhân"),
+                    leading: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                      child: const Icon(Icons.person_2_outlined),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
+                      onPressed: () {},
+                    ),
+                  ),
+                  ListTile(
+                    horizontalTitleGap: 10,
+                    title: const Text("Địa chỉ nhận hàng"),
+                    leading: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                      child: const Icon(CupertinoIcons.location_solid),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              color: const Color.fromRGBO(246, 248, 250, 1),
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ListTile(
+                    horizontalTitleGap: 10,
+                    title: const Text("Đổi mật kẩu"),
+                    leading: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                      child: const Icon(Icons.vpn_key),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
+                      onPressed: () {},
+                    ),
+                  ),
+                  ListTile(
+                    horizontalTitleGap: 10,
+                    title: const Text("Đăng xuất"),
+                    leading: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                      child: const Icon(Icons.person_2_outlined),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
