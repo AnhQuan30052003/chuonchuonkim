@@ -17,7 +17,7 @@ class PageProductSearch extends StatelessWidget {
             children: [
               buildSearch(context: context),
               space(0, 10),
-              buildGridViewProducts(list: ChuonChuonKimController.instance.listProductSeach),
+              buildGridViewProducts(list: ChuonChuonKimController.instance.listProductSeach, showNotFound: true),
             ],
           ),
         ),

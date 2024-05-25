@@ -114,7 +114,7 @@ class PageDetails extends StatelessWidget {
               space(0, 10),
               buildInstruction(text: "Sản phẩm tương tự"),
               space(0, 10),
-              buildGridViewProducts(list: ChuonChuonKimController.instance.listSimilarProducts),
+              buildGridViewProducts(list: ChuonChuonKimController.instance.listSimilarProducts, showNotFound: false),
             ],
           ),
         ),

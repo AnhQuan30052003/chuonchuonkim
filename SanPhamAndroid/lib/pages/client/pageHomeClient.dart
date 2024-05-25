@@ -67,9 +67,12 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   _buildBody(BuildContext context, int index) {
+    if (index == 0) {
+      ChuonChuonKimController.instance.showProductType(idLSP: "");
+      return home();
+    }
     if (index == 1) return favorite();
-    if (index == 2) return me();
-    return home();
+    return me();
   }
 
   Widget home() {
@@ -81,36 +84,36 @@ class _PageHomeClientState extends State<PageHomeClient> {
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           child: SingleChildScrollView(
             child: Column(
-                children: [
-                  // * search
-                  buildSearch(context: context),
+              children: [
+                // * search
+                buildSearch(context: context),
 
-                  // * filter
-                  space(0, 10),
-                  buildFilter(),
+                // * filter
+                space(0, 10),
+                buildFilter(),
 
-                  // * Khung phổ biến
-                  space(0, 10),
-                  buildInstruction(text: "Phổ biến"),
+                // * Khung phổ biến
+                space(0, 10),
+                buildInstruction(text: "Phổ biến"),
 
-                  // * card product phổ biến
-                  space(0, 10),
-                  buildProductsPopulator(),
+                // * card product phổ biến
+                space(0, 10),
+                buildProductsPopulator(),
 
-                  // * Khung sản phẩm
-                  space(0, 10),
-                  buildInstruction(text: "Sản phẩm"),
+                // * Khung sản phẩm
+                space(0, 10),
+                buildInstruction(text: "Sản phẩm"),
 
-                  // * card product
-                  space(0, 10),
-                  GetBuilder(
-                      init: ChuonChuonKimController.instance,
-                      id: "gridview_products",
-                      builder: (controller) {
-                        return buildGridViewProducts(list: controller.listProdutsGridView);
-                      }
-                  )
-                ]
+                // * card product
+                space(0, 10),
+                GetBuilder(
+                  init: ChuonChuonKimController.instance,
+                  id: "gridview_products",
+                  builder: (controller) {
+                    return buildGridViewProducts(list: controller.listProdutsGridView, showNotFound: false);
+                  }
+                )
+              ]
             ),
           ),
         );

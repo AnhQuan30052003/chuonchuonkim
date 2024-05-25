@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
+import '../pages/client/pageCart.dart';
 import '../pages/client/pageNotification.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
@@ -42,7 +43,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
             onTap: () {
-              // Get.to(const PageCart());
+              Get.to(const PageCart());
             },
             badgeContent: GetBuilder(
               init: ChuonChuonKimController.instance,
@@ -53,7 +54,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
           ),
         ),
         onTap: () {
-          // Get.to(const PageCart());
+          Get.to(const PageCart());
         },
       ),
     ],
@@ -140,8 +141,8 @@ Widget buildFilter() {
   );
 }
 
-Widget buildGridViewProducts({required List<Product> list}) {
-  if (list.isEmpty) {
+Widget buildGridViewProducts({required List<Product> list, required bool showNotFound}) {
+  if (list.isEmpty && showNotFound) {
     return const Column(
       children: [
         Text("Rất tiếc...không có kết quả !", style: TextStyle(fontSize: 16)),
