@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
@@ -28,7 +29,8 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: GetBuilder(
               init: ChuonChuonKimController.instance,
               id: "badges_noficaton",
-              builder: (controller) => Text("${controller.listCart.length}", style: const TextStyle(color: Colors.white)),
+              builder: (controller) => Text("${controller.listCart.length}",
+                  style: const TextStyle(color: Colors.white)),
             ),
             child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
           ),
@@ -47,7 +49,8 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: GetBuilder(
               init: ChuonChuonKimController.instance,
               id: "badges_cart",
-              builder: (controller) => Text("${controller.listCart.length}", style: const TextStyle(color: Colors.white)),
+              builder: (controller) => Text("${controller.listCart.length}",
+                  style: const TextStyle(color: Colors.white)),
             ),
             child: const Icon(Icons.shopping_cart_outlined),
           ),
@@ -68,9 +71,7 @@ Widget buildSearch({required BuildContext context}) {
     c.clear;
     ChuonChuonKimController.instance.showProductSearch(search: textSearch);
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch))
-    );
+        context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
   }
 
   return SizedBox(
@@ -150,58 +151,70 @@ Widget buildGridViewProducts({required List<Product> list}) {
   }
 
   return GridView.extent(
-    maxCrossAxisExtent: 250,
-    crossAxisSpacing: 10,
-    mainAxisSpacing: 10,
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    children: list.map(
-      (product) {
+      maxCrossAxisExtent: 300,
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 10,
+      shrinkWrap: true,
+      childAspectRatio: 0.8,
+      physics: const NeverScrollableScrollPhysics(),
+      children: list.map((product) {
         return GestureDetector(
           onTap: () {
             ChuonChuonKimController.instance.showSimilaProducts(product: product);
             Get.to(PageDetails(product: product));
           },
           child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.red, width: 1),
+            child: PhysicalModel(
               borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Image.network(product.hinhAnhSP)
-                  ),
-                  space(0, 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(product.tenSP, style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
-                          Text(shortText(text: product.moTaSP, lengthMax: 20), style: const TextStyle(color: Colors.black45, fontSize: 15)),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("${product.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal)),
-                          Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
-                        ]
-                      ),
-                    ],
-                  )
-                ],
+              color: Colors.white,
+              elevation: 4,
+              shadowColor: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Expanded(child: Image.network(product.hinhAnhSP)),
+                    space(0, 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              product.tenSP,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              // shortText(text: product.moTaSP, lengthMax: 20),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              product.moTaSP,
+                              style: const TextStyle(color: Colors.black45, fontSize: 15),
+                            ),
+                          ],
+                        ),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text(
+                            "${product.giaSP}đ",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, color: Colors.redAccent),
+                          ),
+                          Text("Đã bán: ${Random().nextInt(400)}",
+                              style: const TextStyle(fontWeight: FontWeight.normal)),
+                        ]),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
         );
-      }
-    ).toList()
-  );
+      }).toList());
 }
 
 Widget buildInstruction({required String text}) {
@@ -261,18 +274,28 @@ Widget buildProductsPopulator() {
                           children: [
                             const SizedBox(height: 7),
                             Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                               item.tenSP,
                               style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
+                                  color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
                             ),
-                            Text(shortText(text: item.moTaSP, lengthMax: 20), style: const TextStyle(color: Colors.black45, fontSize: 15)),
+                            Text(
+                              item.moTaSP,
+                              style: const TextStyle(color: Colors.black45, fontSize: 15),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${item.giaSP}đ", style: const TextStyle(fontWeight: FontWeight.normal),),
-                                Text("Đã bán: ${Random().nextInt(400)}", style: const TextStyle(fontWeight: FontWeight.normal)),
+                                Text(
+                                  "${item.giaSP}đ",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500, color: Colors.redAccent),
+                                ),
+                                Text("Đã bán: ${Random().nextInt(400)}",
+                                    style: const TextStyle(fontWeight: FontWeight.normal)),
                               ],
                             )
                           ],

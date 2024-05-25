@@ -1,8 +1,10 @@
 // * Đạt
 
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../helper/widgetClient.dart';
@@ -38,30 +40,34 @@ class _PageHomeClientState extends State<PageHomeClient> {
     return Scaffold(
       appBar: buildAppBar(info: "Bạn muốn ăn gì?"),
       body: _buildBody(context, index),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        items: const [
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home, color: Colors.blue),
-            icon: Icon(Icons.home, color: Colors.grey),
-            label: "Trang chủ",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.favorite, color: Colors.blue),
-            icon: Icon(Icons.favorite, color: Colors.grey),
-            label: "Yêu thích",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.person, color: Colors.blue),
-            icon: Icon(Icons.person, color: Colors.grey),
-            label: "Tôi",
-          ),
-        ],
-        onTap: (value) {
-          setState(() {
-            index = value;
-          });
-        },
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.black87,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: GNav(
+          activeColor: Colors.white,
+          gap: 5,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.all(10),
+          style: GnavStyle.google,
+          haptic: true,
+          color: Colors.white70,
+          tabBackgroundColor: Colors.black38,
+          tabBorderRadius: 20,
+          tabs: const [
+            GButton(icon: CupertinoIcons.home, text: "Home"),
+            GButton(icon: Icons.favorite_border, text: "Yêu thích"),
+            GButton(icon: Icons.person_outline_outlined, text: "Tôi"),
+          ],
+          onTabChange: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+        ),
       ),
     );
   }
@@ -80,38 +86,35 @@ class _PageHomeClientState extends State<PageHomeClient> {
         return Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           child: SingleChildScrollView(
-            child: Column(
-                children: [
-                  // * search
-                  buildSearch(context: context),
+            child: Column(children: [
+              // * search
+              buildSearch(context: context),
 
-                  // * filter
-                  space(0, 10),
-                  buildFilter(),
+              // * filter
+              space(0, 10),
+              buildFilter(),
 
-                  // * Khung phổ biến
-                  space(0, 10),
-                  buildInstruction(text: "Phổ biến"),
+              // * Khung phổ biến
+              space(0, 10),
+              buildInstruction(text: "Phổ biến"),
 
-                  // * card product phổ biến
-                  space(0, 10),
-                  buildProductsPopulator(),
+              // * card product phổ biến
+              space(0, 10),
+              buildProductsPopulator(),
 
-                  // * Khung sản phẩm
-                  space(0, 10),
-                  buildInstruction(text: "Sản phẩm"),
+              // * Khung sản phẩm
+              space(0, 10),
+              buildInstruction(text: "Sản phẩm"),
 
-                  // * card product
-                  space(0, 10),
-                  GetBuilder(
-                      init: ChuonChuonKimController.instance,
-                      id: "gridview_products",
-                      builder: (controller) {
-                        return buildGridViewProducts(list: controller.listProdutsGridView);
-                      }
-                  )
-                ]
-            ),
+              // * card product
+              space(0, 10),
+              GetBuilder(
+                  init: ChuonChuonKimController.instance,
+                  id: "gridview_products",
+                  builder: (controller) {
+                    return buildGridViewProducts(list: controller.listProdutsGridView);
+                  })
+            ]),
           ),
         );
       },
@@ -119,10 +122,14 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   Widget favorite() {
-    return Container();
+    return Container(
+      child: const Text("favorite"),
+    );
   }
 
   Widget me() {
-    return Container();
+    return Container(
+      child: const Text("me"),
+    );
   }
 }
