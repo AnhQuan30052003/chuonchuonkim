@@ -1,6 +1,7 @@
 // Quân
 
 import 'package:chuonchuonkim_app/helper/dialog.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../controllers/chuonChuonKimController.dart';
 import '../../controllers/checkProductController.dart';
@@ -135,7 +136,7 @@ class PageCart extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(p.tenSP),
+                  Expanded(child: Text(p.tenSP)),
                   Text("${p.giaSP}đ"),
                 ],
               ),
