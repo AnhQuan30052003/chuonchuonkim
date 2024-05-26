@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../helper/widget.dart';
-import 'personalInfo.dart';
+import 'address/address.dart';
+import 'infor/personalInfo.dart';
 
 class WidgetTest extends StatelessWidget {
   const WidgetTest({super.key});
@@ -16,7 +17,7 @@ class WidgetTest extends StatelessWidget {
 Widget account(BuildContext context) {
   List<GestureDetector> above = [
     _buildGestureDetector(icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent), label: "Thông tin cá nhân", widget: const PersonalInfo()),
-    _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const WidgetTest()),
+    _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
   ];
 
   List<GestureDetector> bellow = [

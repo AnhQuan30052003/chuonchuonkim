@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
@@ -8,7 +9,7 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit profile")),
+      appBar: AppBar(title: const Text("Chỉnh sửa thông tin")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -119,10 +120,15 @@ class EditProfile extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.all(20),
         // padding: const EdgeInsets.symmetric(horizontal: 10),
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orangeAccent,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              )),
           onPressed: () {},
-          child: const Text("Lưu thông tin"),
+          child: const Text("LƯU THÔNG TIN", style: TextStyle(color: Colors.white, fontSize: 15)),
         ),
       ),
     );

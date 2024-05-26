@@ -10,7 +10,7 @@ class PersonalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Personal Infor"),
+        title: const Text("Thông tin cá nhân"),
         actions: [
           InkWell(
             onTap: () {
@@ -19,7 +19,7 @@ class PersonalInfo extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 20),
               child: const Text(
-                "Edit",
+                "Sửa",
                 style: TextStyle(
                     decoration: TextDecoration.underline,
                     fontSize: 15,
