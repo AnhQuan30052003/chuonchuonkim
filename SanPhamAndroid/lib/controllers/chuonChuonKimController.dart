@@ -11,8 +11,8 @@ class ChuonChuonKimController extends GetxController {
 
   String idUser = "0001";
   List<Product> listProduct = [];
-  List<CartSnapshot> listCartSnapshot = [];
   List<ProductType> listProductType = [];
+  List<CartSnapshot> listCartSnapshot = [];
   List<ProductFavoriteSnapshot> listProductFavoriteSnapshot = [];
 
   List<Product> listProductsPopulator = [];
@@ -20,6 +20,13 @@ class ChuonChuonKimController extends GetxController {
 
   List<Product> listProductSeach= [];
   List<Product> listSimilarProducts= [];
+
+  Map<String, bool> getData = {
+    "product": false,
+    "productType": false,
+    "productFavoriteSnapshot": false,
+    "listCartSnapshot": false,
+  };
 
   @override
   void onReady() {
@@ -54,11 +61,13 @@ class ChuonChuonKimController extends GetxController {
   void getCartSnapshot() async {
     listCartSnapshot = await CartSnapshot.futureData();
     listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+    getData["listCartSnapshot"] = true;
   }
 
   // Lấy dữ liệu ListCart
   void getProductFavoriteSnapshot() async {
     listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
+    getData["productFavoriteSnapshot"] = true;
   }
 
   // Lấy dữ liệu Product
@@ -66,6 +75,7 @@ class ChuonChuonKimController extends GetxController {
     var data = await ProductSnapshot.futureData();
     listProduct = data.map((e) => e.product).toList();
     listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+    getData["product"] = true;
 
     getProductsPopulator(requestQuantity: 1);
     listProdutsGridView = listProduct;
@@ -78,6 +88,7 @@ class ChuonChuonKimController extends GetxController {
     var data = await ProductTypeSnapshot.futureData();
     listProductType = data.map((e) => e.productType).toList();
     listProductType.sort((ProductType a, ProductType b) => a.maLSP.compareTo(b.maLSP));
+    getData["productType"] = true;
     updatePageHome();
   }
 
@@ -91,6 +102,10 @@ class ChuonChuonKimController extends GetxController {
 
   void updateGridView() {
     update(["gridview_products"]);
+  }
+
+  void updateProductTym({required String id}) {
+    update([id]);
   }
 
 

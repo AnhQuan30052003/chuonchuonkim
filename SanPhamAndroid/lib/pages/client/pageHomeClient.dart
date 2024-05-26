@@ -1,7 +1,6 @@
 // * Đạt
 
 import 'dart:math';
-
 import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,7 +68,24 @@ class _PageHomeClientState extends State<PageHomeClient> {
             GButton(icon: Icons.favorite_border, text: "Yêu thích"),
             GButton(icon: Icons.person_outline_outlined, text: "Tôi"),
           ],
-          onTabChange: (value) {
+          onTabChange: (value) async {
+            if (value == 1) {
+              var c = ChuonChuonKimController.instance;
+              if (c.getData["product"] == false) {
+                // Lấy 20 sản phẩm ngẫu nhiên bỏ vào trong page yêu thích
+                var data = await ProductSnapshot.futureData();
+                c.listProduct = data.map((e) => e.product).toList();
+                c.listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+                c.listProdutsGridView = [];
+
+                int count = 1;
+                do {
+                  c.listProdutsGridView.add(c.listProduct[Random().nextInt(c.listProduct.length)]);
+                  count += 1;
+                } while (count <= 30);
+              }
+            }
+
             setState(() {
               index = value;
             });
@@ -80,11 +96,14 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   _buildBody(BuildContext context, int index) {
+    var c = ChuonChuonKimController.instance;
     if (index == 0) {
-      ChuonChuonKimController.instance.showProductType(idLSP: "");
+      c.showProductType(idLSP: "");
       return home();
     }
-    if (index == 1) return favorite();
+    if (index == 1) {
+      return favorite();
+    }
     return account(context);
   }
 
@@ -137,15 +156,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   Widget favorite() {
-    // Lấy 20 sản phẩm ngẫu nhiên
-
     var c = ChuonChuonKimController.instance;
-    c.listProdutsGridView = [];
-    int count = 1;
-    do {
-      c.listProdutsGridView.add(c.listProduct[Random().nextInt(c.listProduct.length)]);
-      count += 1;
-    } while (count <= 30);
 
     return SingleChildScrollView(
       child: Padding(
@@ -161,30 +172,33 @@ class _PageHomeClientState extends State<PageHomeClient> {
                   );
                 }
 
+                var c = ChuonChuonKimController.instance;
                 List<ProductFavoriteSnapshot> list = [];
+                List<Product> listProduct = [];
 
                 try {
                   list = snapshot.data!;
+                  list.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => (a.productFavorite.idPF.compareTo(b.productFavorite.idPF)));
+                  c.listProductFavoriteSnapshot = list;
+
+                  for (var pf in list) {
+                    for (var p in c.listProduct) {
+                      if (p.maSP == pf.productFavorite.maSP) {
+                        listProduct.add(p);
+                      }
+                    }
+                  }
                 }
                 catch (error) {
                   list = [];
                 }
-                list.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => (a.productFavorite.maSP.compareTo(b.productFavorite.maSP)));
 
-                List<Product> listProduct = [];
-                for (var pf in list) {
-                  for (var p in ChuonChuonKimController.instance.listProduct) {
-                    if (p.maSP == pf.productFavorite.maSP) {
-                      listProduct.add(p);
-                    }
-                  }
-                }
-                listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
                 return buildGridViewProducts(context: context, list: listProduct, showNotFound: false);
               }
             ),
             space(0, 20),
             buildInstruction(text: "Có thể bạn cũng thích"),
+            space(0, 10),
             buildGridViewProducts(context: context, list: c.listProdutsGridView, showNotFound: false),
           ],
         ),

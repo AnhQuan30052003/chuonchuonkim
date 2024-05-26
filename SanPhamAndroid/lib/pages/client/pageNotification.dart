@@ -32,8 +32,15 @@ class _PageNotificationState extends State<PageNotification> {
             );
           }
 
-          var list = (snapshot.data! ?? []);
-          list.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+          List<NotificationSnapshot> list = [];
+
+          try {
+            list = snapshot.data!;
+            list.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+          }
+          catch (error) {
+            list = [];
+          }
 
           return Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),

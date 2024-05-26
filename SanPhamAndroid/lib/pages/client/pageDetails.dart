@@ -7,6 +7,7 @@ import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
 
@@ -58,19 +59,19 @@ class _PageDetailsState extends State<PageDetails> {
               Row(
                 children: [
                   Text(
-                      "${widget.product.giaSP}đ",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.red,
-                      )
+                    "${widget.product.giaSP}đ",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.red,
+                    )
                   ),
                   space(10, 0),
                   Text(
-                      "${widget.product.giaSP * 1.25}đ",
-                      style: const TextStyle(
-                          fontSize: 15,
-                          decoration: TextDecoration.lineThrough
-                      )
+                    "${widget.product.giaSP * 1.25}đ",
+                    style: const TextStyle(
+                        fontSize: 15,
+                        decoration: TextDecoration.lineThrough
+                    )
                   ),
                 ],
               ),
@@ -98,12 +99,18 @@ class _PageDetailsState extends State<PageDetails> {
                   Row(
                     children: [
                       IconButton(
-                        icon: tym ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite, color: Colors.black26),
+                        icon: GetBuilder(
+                          init: ChuonChuonKimController.instance,
+                          id: widget.product.maSP,
+                          builder: (controller) {
+                            return tym ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite, color: Colors.black26);
+                          },
+                        ),
                         onPressed: () {
-                          tym = !tym;
-                          setState(() {});
-
                           var c = ChuonChuonKimController.instance;
+                          tym = !tym;
+                          c.updateProductTym(id: widget.product.maSP);
+
                           if (tym) {
                             String id = "0";
                             var lastProductFavoriteSnapshot = c.listProductFavoriteSnapshot.lastOrNull;
@@ -120,6 +127,7 @@ class _PageDetailsState extends State<PageDetails> {
                             for (var pfn in c.listProductFavoriteSnapshot) {
                               if (pfn.productFavorite.maSP == widget.product.maSP) {
                                 pfn.delete();
+                                c.listProductFavoriteSnapshot.remove(pfn);
                                 break;
                               }
                             }
@@ -161,10 +169,10 @@ class _PageDetailsState extends State<PageDetails> {
                     )
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                    onPressed: () {
 
-                      },
-                      child: const Text("Mua ngay")
+                    },
+                    child: const Text("Mua ngay")
                   ),
                 ],
               ),

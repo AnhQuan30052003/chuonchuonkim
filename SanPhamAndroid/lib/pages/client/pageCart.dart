@@ -20,6 +20,7 @@ class PageCart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CounterQuantityProductController> listCounter = [];
     List<CheckProductController> listCheck = [];
+
     for (int i = 0; i < ChuonChuonKimController.instance.listCartSnapshot.length; i++) {
       listCounter.add(CounterQuantityProductController(ChuonChuonKimController.instance.listCartSnapshot[i].cart.soLuong));
       listCheck.add(CheckProductController());
@@ -43,8 +44,15 @@ class PageCart extends StatelessWidget {
             );
           }
 
-          var list = (snapshot.data! ?? []);
-          list.sort((CartSnapshot a, CartSnapshot b) => (a.cart.idCart.compareTo(b.cart.idCart)));
+          List<CartSnapshot> list = [];
+
+          try {
+            list = snapshot.data!;
+            list.sort((CartSnapshot a, CartSnapshot b) => (a.cart.idCart.compareTo(b.cart.idCart)));
+          }
+          catch (error) {
+            list = [];
+          }
 
           return Padding(
             padding: const EdgeInsets.all(8.0),

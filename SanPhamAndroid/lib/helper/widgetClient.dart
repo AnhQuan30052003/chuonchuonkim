@@ -175,17 +175,18 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
   }
 
   return GridView.extent(
-      maxCrossAxisExtent: 300,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 10,
-      shrinkWrap: true,
-      childAspectRatio: 0.8,
-      physics: const NeverScrollableScrollPhysics(),
-      children: list.map((product) {
+    maxCrossAxisExtent: 300,
+    crossAxisSpacing: 12,
+    mainAxisSpacing: 10,
+    shrinkWrap: true,
+    childAspectRatio: 0.8,
+    physics: const NeverScrollableScrollPhysics(),
+    children: list.map(
+      (product) {
         return GestureDetector(
           onTap: () {
             ChuonChuonKimController.instance.showSimilaProducts(product: product);
-            Get.to(PageDetails(product: product));
+            // Get.to(PageDetails(product: product));
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageDetails(product: product)));
           },
           child: PhysicalModel(
@@ -237,7 +238,9 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
             ),
           ),
         );
-      }).toList());
+      }
+    ).toList()
+  );
 }
 
 Widget buildInstruction({required String text}) {
