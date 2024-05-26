@@ -1,8 +1,10 @@
 // Quân
 
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../database/connect/firebaseConnect.dart';
 
 class AdminConnect extends StatelessWidget {
@@ -47,35 +49,35 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
         ],
       ),
       body: _buildBody(context, index),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        items: const [
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.food_bank_outlined, color: Colors.blue),
-            icon: Icon(Icons.food_bank_outlined, color: Colors.grey),
-            label: "Đồ ăn",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.people, color: Colors.blue),
-            icon: Icon(Icons.people, color: Colors.grey),
-            label: "Người dùng",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.event_busy, color: Colors.blue),
-            icon: Icon(Icons.event_busy, color: Colors.grey),
-            label: "Đơn hàng",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.person, color: Colors.blue),
-            icon: Icon(Icons.person, color: Colors.grey),
-            label: "Tôi",
-          ),
-        ],
-        onTap: (value) {
-          setState(() {
-            index = value;
-          });
-        },
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.black87,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: GNav(
+          activeColor: Colors.white,
+          gap: 5,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.all(10),
+          style: GnavStyle.google,
+          haptic: true,
+          color: Colors.white70,
+          tabBackgroundColor: Colors.black38,
+          tabBorderRadius: 20,
+          tabs: const [
+            GButton(icon: Icons.fastfood_rounded, text: "Sản phẩm"),
+            GButton(icon: Icons.people, text: "Khách hàng"),
+            GButton(icon: Icons.shopping_bag_sharp, text: "Đơn hàng"),
+            GButton(icon: Icons.person_outline_outlined, text: "Tôi"),
+          ],
+          onTabChange: (value) async {
+            setState(() {
+              index = value;
+            });
+          },
+        ),
       ),
     );
   }
@@ -89,23 +91,17 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
 
   _buildHome(BuildContext context, [String textString = "text"]) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(textString, style: const TextStyle(fontSize: 40))
-        ],
-      )
-    );
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Text(textString, style: const TextStyle(fontSize: 40))],
+    ));
   }
 
   _buildSMS(BuildContext context, [String textString = "text"]) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(textString, style: const TextStyle(fontSize: 40))
-        ],
-      )
-    );
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Text(textString, style: const TextStyle(fontSize: 40))],
+    ));
   }
 }

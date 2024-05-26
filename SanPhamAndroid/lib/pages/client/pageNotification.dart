@@ -36,35 +36,37 @@ class _PageNotificationState extends State<PageNotification> {
 
           try {
             list = snapshot.data!;
-            list.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
-          }
-          catch (error) {
+            list.sort((NotificationSnapshot a, NotificationSnapshot b) =>
+                (b.notification.idNoti.compareTo(a.notification.idNoti)));
+          } catch (error) {
             list = [];
           }
 
           return Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Column(
-              children: list.map(
-                (e) => Card(
-                  color: e.notification.seen ? Colors.white38 : Colors.lightBlueAccent,
-                  child: GestureDetector(
-                    child: ListTile(
-                      title: Text(e.notification.text),
-                    ),
-                    onTap: () {
-                      e.notification.seen = true;
-                      e.update(e.notification);
-                    },
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: SingleChildScrollView(
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  separatorBuilder: (context, index) => const Divider(
+                    thickness: 1.5,
                   ),
-                )
-              ).toList(),
-            ),
-          );
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(list[index].notification.text),
+                      trailing: list[index].notification.seen
+                          ? const Text("")
+                          : const Icon(Icons.mark_as_unread, color: Colors.redAccent),
+                      onTap: () {
+                        list[index].notification.seen = true;
+                        list[index].update(list[index].notification);
+                      },
+                    );
+                  },
+                ),
+              ));
         },
       ),
     );
   }
 }
-
-
