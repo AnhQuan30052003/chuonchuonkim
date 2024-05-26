@@ -32,6 +32,8 @@ class ChuonChuonKimController extends GetxController {
 
 
 
+
+
   // * -------------------------------------
   // Lấy product populator
   void getProductsPopulator({required int requestQuantity}) {
@@ -91,6 +93,11 @@ class ChuonChuonKimController extends GetxController {
     update(["gridview_products"]);
   }
 
+
+
+
+
+  // * -------------------------------------
   // Thêm sản phẩm vào giỏ hàng
   void addToCart({required Cart cartNew}) {
     for (var cn in listCartSnapshot) {
@@ -122,21 +129,7 @@ class ChuonChuonKimController extends GetxController {
     return null;
   }
 
-  // Tổng giá của sản phẩm
-  int sumPirceOfProduct({required Product product, required int quantity}) {
-    return product.giaSP * quantity;
-  }
 
-  // Tổng tiền cả giỏ hàng
-  int sumPriceOfList({required List<CounterQuantityProductController> listCounter, required List<CheckProductController> listCheck}) {
-    int sum = 0;
-    for (int i = 0; i < listCartSnapshot.length; i++) {
-      if (listCheck[i].isChecked.value) {
-        sum += sumPirceOfProduct(product: getProductFromCart(maSP: listCartSnapshot[i].cart.maSP)!, quantity: listCounter[i].count.value);
-      }
-    }
-    return sum;
-  }
 
 
 
@@ -186,6 +179,10 @@ class ChuonChuonKimController extends GetxController {
     }
   }
 }
+
+
+
+
 
 // Bindings..
 class ChuonChuonKimBindings extends Bindings {

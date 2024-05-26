@@ -107,6 +107,7 @@ class PageCart extends StatelessWidget {
 
   Card _buildCard(String maSP, CounterQuantityProductController counterQuantity, CheckProductController checkProduct) {
     Product p = ChuonChuonKimController.instance.getProductFromCart(maSP: maSP)!;
+
     return Card(
       child: Row(
         children: [
@@ -132,7 +133,7 @@ class PageCart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(child: Text(p.tenSP)),
-                  Text("${p.giaSP}đ"),
+                  Text("${p.giaSP} đ"),
                 ],
               ),
               subtitle: Row(
@@ -152,7 +153,7 @@ class PageCart extends StatelessWidget {
                     ]
                   ),
                   Obx(() => Text(
-                    "Tổng: ${ChuonChuonKimController.instance.sumPirceOfProduct(product: p, quantity: counterQuantity.count.value)}đ",
+                    "Tổng: ${sumPirceOfProduct(product: p, quantity: counterQuantity.count.value)} đ",
                     style: const TextStyle(color: Colors.red))
                   ),
                 ],
@@ -176,29 +177,28 @@ class PageCart extends StatelessWidget {
             color: Colors.grey,
           ),
           const SizedBox(height: 10),
-          Obx(
-            () =>
-              Text(
-              "Tổng tiền: ${ChuonChuonKimController.instance.sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
+          Obx(() => Text(
+              "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
               style: const TextStyle(color: Colors.red)
             ),
           ),
           const SizedBox(height: 15),
           ElevatedButton(
-              onPressed: () {
-                String text = "Hãy thêm sản phẩm vào giỏ hàng !";
-                if (ChuonChuonKimController.instance.listCartSnapshot.isNotEmpty) {
-                  text = "Đặt hàng thành công";
-                }
-                info(context, text);
-              },
-              child: const Text("Đặt hàng")
+            onPressed: () {
+              String text = "Hãy thêm sản phẩm vào giỏ hàng !";
+              if (ChuonChuonKimController.instance.listCartSnapshot.isNotEmpty) {
+                text = "Đặt hàng thành công";
+              }
+              info(context, text);
+            },
+            child: const Text("Đặt hàng")
           )
         ],
       ),
     );
   }
 
+  // Hiên thị thông báo
   void info(BuildContext context, String text) {
     showDialog(
         context: context,
@@ -213,5 +213,22 @@ class PageCart extends StatelessWidget {
           ],
         )
     );
+  }
+
+  // Tổng giá của sản phẩm
+  int sumPirceOfProduct({required Product product, required int quantity}) {
+    return product.giaSP * quantity;
+  }
+
+  // Tổng tiền cả giỏ hàng
+  int sumPriceOfList({required List<CounterQuantityProductController> listCounter, required List<CheckProductController> listCheck}) {
+    int sum = 0;
+    var c = ChuonChuonKimController.instance;
+    for (int i = 0; i < c.listCartSnapshot.length; i++) {
+      if (listCheck[i].isChecked.value) {
+        sum += sumPirceOfProduct(product: c.getProductFromCart(maSP: c.listCartSnapshot[i].cart.maSP)!, quantity: listCounter[i].count.value);
+      }
+    }
+    return sum;
   }
 }
