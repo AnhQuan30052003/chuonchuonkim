@@ -1,10 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../../helper/widget.dart';
 import 'personalInfo.dart';
 
+class WidgetTest extends StatelessWidget {
+  const WidgetTest({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 Widget account(BuildContext context) {
+  List<GestureDetector> above = [
+    _buildGestureDetector(icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent), label: "Thông tin cá nhân", widget: const PersonalInfo()),
+    _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const WidgetTest()),
+  ];
+
+  List<GestureDetector> bellow = [
+    _buildGestureDetector(icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent), label: "Đổi mật khẩu", widget: const WidgetTest()),
+    _buildGestureDetector(icon: const Icon(Icons.logout_rounded, color: Colors.redAccent), label: "Đăng xuất", widget: const WidgetTest()),
+  ];
+
   return SingleChildScrollView(
     child: Padding(
       padding: const EdgeInsets.all(10),
@@ -39,95 +58,53 @@ Widget account(BuildContext context) {
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: const Color.fromRGBO(246, 248, 250, 1),
-            ),
-            child: ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                GestureDetector(
-                  child: ListTile(
-                    horizontalTitleGap: 10,
-                    title: const Text("Thông tin cá nhân"),
-                    leading: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      child: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
-                      onPressed: () {
-                        Get.to(const PersonalInfo());
-                      },
-                    ),
-                  ),
-                  onTap: () => Get.to(const PersonalInfo()),
-                ),
-                GestureDetector(
-                  child: ListTile(
-                    horizontalTitleGap: 10,
-                    title: const Text("Địa chỉ nhận hàng"),
-                    leading: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      child: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
-                      onPressed: () {},
-                    ),
-                  ),
-                  onTap: () {},
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            color: const Color.fromRGBO(246, 248, 250, 1),
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                GestureDetector(
-                  child: ListTile(
-                    horizontalTitleGap: 10,
-                    title: const Text("Đăng xuất"),
-                    leading: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      child: const Icon(Icons.logout_rounded, color: Colors.redAccent),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
-                      onPressed: () {},
-                    ),
-                  ),
-                  onTap: () {},
-                ),
-              ],
-            ),
-          )
+
+          space(0, 20),
+          _buildContainerFrame(context, above),
+
+          space(0, 20),
+          _buildContainerFrame(context, bellow),
         ],
       ),
     ),
+  );
+}
+
+Container _buildContainerFrame(BuildContext context, List<GestureDetector> list) {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      color: const Color.fromRGBO(246, 248, 250, 1),
+    ),
+    child: ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: list.toList(),
+    ),
+  );
+}
+
+GestureDetector _buildGestureDetector({required Icon icon, required String label, required Widget widget}) {
+  return GestureDetector(
+    child: ListTile(
+      horizontalTitleGap: 10,
+      title: Text(label),
+      leading: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.white,
+        ),
+        child: icon,
+        // child: Icon(Icons.logout_rounded, color: Colors.redAccent),
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
+        onPressed: () => Get.to(widget),
+      ),
+    ),
+    onTap: () => Get.to(widget),
   );
 }
