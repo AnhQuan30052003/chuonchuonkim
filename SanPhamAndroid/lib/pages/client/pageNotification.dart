@@ -2,16 +2,13 @@
 
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:chuonchuonkim_app/helper/widgetClient.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class PageNotification extends StatefulWidget {
+class PageNotification extends StatelessWidget {
   const PageNotification({super.key});
 
-  @override
-  State<PageNotification> createState() => _PageNotificationState();
-}
-
-class _PageNotificationState extends State<PageNotification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,41 +29,115 @@ class _PageNotificationState extends State<PageNotification> {
             );
           }
 
-          List<NotificationSnapshot> list = [];
+          List<NotificationSnapshot> list = [], listNew = [], listOld = [];
 
           try {
             list = snapshot.data!;
-            list.sort((NotificationSnapshot a, NotificationSnapshot b) =>
-                (b.notification.idNoti.compareTo(a.notification.idNoti)));
+
+            for (NotificationSnapshot l in list) {
+              if (l.notification.seen) {
+                listOld.add(l);
+              } else {
+                listNew.add(l);
+              }
+            }
+
+            listNew.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+            listOld.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
           } catch (error) {
             list = [];
           }
 
-          return Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: SingleChildScrollView(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  separatorBuilder: (context, index) => const Divider(
-                    thickness: 1.5,
+          double spacePading = 5.0;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(left: spacePading, right: spacePading),
+              child: Column(
+                children: [
+                  _buildTinTucThongBao(spacePading, "Mới${listNew.length}"),
+                  Column(
+                    children: listNew.map(
+                      (ns) {
+                        return GestureDetector(
+                          child: Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 35,
+                                    child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
+                                  ),
+                                  space(10, 0),
+                                  SizedBox(
+                                      height: 50,
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
+                                      )
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            // Chuyển page..
+                            ns.notification.seen = true;
+                            await ns.update(ns.notification);
+                          },
+                        );
+                      }
+                    ).toList(),
                   ),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(list[index].notification.text),
-                      trailing: list[index].notification.seen
-                          ? const Text("")
-                          : const Icon(Icons.mark_as_unread, color: Colors.redAccent),
-                      onTap: () {
-                        list[index].notification.seen = true;
-                        list[index].update(list[index].notification);
-                      },
-                    );
-                  },
-                ),
-              ));
+
+                  _buildTinTucThongBao(spacePading, "Trước đó(${listOld.length})"),
+                  Column(
+                    children: listOld.map(
+                      (ns) {
+                        return GestureDetector(
+                          child: Card(
+                            color: Colors.black12,
+                            child: SizedBox(
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 35,
+                                    child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
+                                  ),
+                                  space(10, 0),
+                                  SizedBox(
+                                      height: 50,
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
+                                      )
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            // Chuyển page..
+                          },
+                        );
+                      }
+                    ).toList(),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
+    );
+  }
+
+  Padding _buildTinTucThongBao(double spacePading, String text) {
+    return Padding(
+      padding: EdgeInsets.only(left: spacePading),
+      child: buildInstruction(text: text),
     );
   }
 }

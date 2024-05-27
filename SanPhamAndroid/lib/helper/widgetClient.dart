@@ -80,7 +80,11 @@ PreferredSizeWidget buildAppBar({required String info}) {
             child: const Icon(Icons.shopping_cart_outlined),
           ),
         ),
-        onTap: () {
+        onTap: () async {
+          var c = ChuonChuonKimController.instance;
+          c.listCartSnapshot = await CartSnapshot.futureData();
+          c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+          c.getData["listCartSnapshot"] = true;
           Get.to(const PageCart());
         },
       ),
