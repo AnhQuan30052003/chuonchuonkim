@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../database/models/Product.dart';
+import 'pageUpdateSP.dart';
 
 class AdminConnect extends StatelessWidget {
   const AdminConnect({super.key});
@@ -124,7 +125,9 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: (context) async {},
+                          onPressed: (context) async {
+                            Get.to(PageUpdate(ps));
+                          },
                           backgroundColor: const Color(0xFF7BC043),
                           foregroundColor: Colors.white,
                           icon: Icons.archive,
