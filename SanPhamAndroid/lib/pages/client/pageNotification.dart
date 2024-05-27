@@ -4,7 +4,6 @@ import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:chuonchuonkim_app/helper/widgetClient.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class PageNotification extends StatelessWidget {
   const PageNotification({super.key});
