@@ -117,6 +117,7 @@ class PageCart extends StatelessWidget {
     Product p = ChuonChuonKimController.instance.getProductFromCart(maSP: maSP)!;
 
     return Card(
+      color: Colors.white,
       child: Row(
         children: [
           SizedBox(

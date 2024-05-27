@@ -53,7 +53,7 @@ class PageNotification extends StatelessWidget {
               padding: EdgeInsets.only(left: spacePading, right: spacePading),
               child: Column(
                 children: [
-                  _buildTinTucThongBao(spacePading, "Mới${listNew.length}"),
+                  _buildTinTucThongBao(spacePading, "Mới(${listNew.length})"),
                   Column(
                     children: listNew.map(
                       (ns) {
