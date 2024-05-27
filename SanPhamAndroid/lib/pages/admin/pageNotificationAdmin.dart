@@ -3,8 +3,8 @@
 import 'package:chuonchuonkim_app/helper/widgetClient.dart';
 import 'package:flutter/material.dart';
 
-class PageNotification extends StatelessWidget {
-  const PageNotification({super.key});
+class PageNotificationAdmin extends StatelessWidget {
+  const PageNotificationAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
