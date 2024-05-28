@@ -26,16 +26,16 @@ class _PageAddProductState extends State<PageAddProduct> {
   @override
   void initState() {
     var c = ChuonChuonKimController.instance;
-    // txtMaLSP.text = c.listProductType[0].maLSP;
-  //
+    txtMaLSP.text = c.listProductTypeSnapshot[0].productType.maLSP;
 
+    int number = 1 + int.parse(c.listProductSnapshot.last.product.maSP);
+    txtId.text = getIdToString(number);
   }
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     var c = ChuonChuonKimController.instance;
-    var list = c.listProductTypeSnapshot;
 
     return Scaffold(
       appBar: AppBar(
@@ -101,10 +101,10 @@ class _PageAddProductState extends State<PageAddProduct> {
               DropdownButton(
                 isExpanded: true,
                 value: txtMaLSP.text,
-                items: list.map(
-                  (e) => DropdownMenuItem(
-                    value: e.productType.maLSP,
-                    child: Text(e.productType.tenLSP),
+                items: c.listProductTypeSnapshot.map(
+                  (pts) => DropdownMenuItem(
+                    value: pts.productType.maLSP,
+                    child: Text(pts.productType.tenLSP),
                   )
                 ).toList(),
                 onChanged: (value) {

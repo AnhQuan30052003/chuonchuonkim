@@ -37,5 +37,5 @@ Future<void> deleteImage({required List<String> folders, required String fileNam
   }
   reference = reference.child(fileName);
 
-  return reference.delete();
+  return await reference.delete();
 }

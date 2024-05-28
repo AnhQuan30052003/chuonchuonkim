@@ -60,7 +60,7 @@ class ChuonChuonKimController extends GetxController {
     listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
     listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
     updateNameId(nameId: "filter");
-
+    updateNameId(nameId: "productAllAdmin");
   }
 
   // Lấy dữ liệu user
@@ -133,6 +133,18 @@ class ChuonChuonKimController extends GetxController {
     return null;
   }
 
+  // Lấy tên loại sản phẩm từ mã
+  String getTenLSP({required Product product}) {
+    String text = "";
+    for (var pts in listProductTypeSnapshot) {
+      if (pts.productType.maLSP == product.maLSP) {
+        text = pts.productType.tenLSP;
+        break;
+      }
+    }
+
+    return text;
+  }
 
 
 

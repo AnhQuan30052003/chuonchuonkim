@@ -31,8 +31,8 @@ Future<String> khungLuaChon({required BuildContext context, required List<String
       actions: listLuaChon.map(
         (luaChon) => ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop();
             chonCuoiCung = luaChon;
+            Navigator.of(context).pop();
           },
           child: Text(luaChon)
         )
