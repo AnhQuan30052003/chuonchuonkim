@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
+import '../pages/admin/pageNotificationAdmin.dart';
 import '../pages/client/pageCart.dart';
 import '../pages/client/pageNotification.dart';
 import 'widget.dart';
@@ -65,10 +66,13 @@ PreferredSizeWidget buildAppBar({required String info}) {
             badgeContent: StreamBuilder(
               stream: CartSnapshot.streamData(),
               builder: (context, snapshot) {
+                var c = ChuonChuonKimController.instance;
                 List<CartSnapshot> list = [];
 
                 try {
                   list = snapshot.data!;
+                  c.listCartSnapshot = list;
+                  c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
                 }
                 catch (error) {
                   list = [];
@@ -81,11 +85,54 @@ PreferredSizeWidget buildAppBar({required String info}) {
           ),
         ),
         onTap: () async {
-          var c = ChuonChuonKimController.instance;
-          c.listCartSnapshot = await CartSnapshot.futureData();
-          c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-          c.getData["listCartSnapshot"] = true;
           Get.to(const PageCart());
+        },
+      ),
+    ],
+  );
+}
+
+PreferredSizeWidget buildAppBarAdmin({required String info}) {
+  return AppBar(
+    elevation: 0,
+    backgroundColor: Colors.white10,
+    title: Text(
+      info,
+      style: const TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
+    ),
+    actions: [
+      GestureDetector(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: badges.Badge(
+            onTap: () {
+              Get.to(const PageNotificationAdmin());
+            },
+            badgeContent: StreamBuilder(
+              stream: NotificationSnapshot.streamData(),
+              builder: (context, snapshot) {
+                List<NotificationSnapshot> list = [];
+
+                try {
+                  list = snapshot.data!;
+                }
+                catch (error) {
+                  list = [];
+                }
+
+                int count = 0;
+                for (var no in list) {
+                  if (no.notification.seen == false) count += 1;
+                }
+
+                return Text("$count", style: const TextStyle(color: Colors.white));
+              },
+            ),
+            child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
+          ),
+        ),
+        onTap: () {
+          Get.to(const PageNotificationAdmin());
         },
       ),
     ],
@@ -106,6 +153,7 @@ Widget buildSearch({required BuildContext context}) {
     height: 50,
     child: TextField(
       controller: c,
+      autofocus: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
         border: OutlineInputBorder(
@@ -131,6 +179,7 @@ Widget buildSearch({required BuildContext context}) {
 
 Widget buildFilter() {
   var controller = ChuonChuonKimController.instance;
+
   return SizedBox(
     height: 70,
     child: ListView.builder(
@@ -189,8 +238,7 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
       (product) {
         return GestureDetector(
           onTap: () {
-            ChuonChuonKimController.instance.showSimilaProducts(product: product);
-            // Get.to(PageDetails(product: product));
+            ChuonChuonKimController.instance.showSimilarProducts(product: product);
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageDetails(product: product)));
           },
           child: PhysicalModel(
@@ -357,7 +405,7 @@ Widget buildProductsPopulator() {
                 ],
               ),
               onTap: () {
-                controller.showSimilaProducts(product: item);
+                controller.showSimilarProducts(product: item);
                 Get.to(PageDetails(product: item));
               },
             );

@@ -1,8 +1,6 @@
 // Quân
 
 import 'package:chuonchuonkim_app/helper/dialog.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../../controllers/chuonChuonKimController.dart';
 import '../../controllers/checkProductController.dart';
 import '../../controllers/counterQuantityProductController.dart';
@@ -48,7 +46,9 @@ class PageCart extends StatelessWidget {
 
           try {
             list = snapshot.data!;
-            list.sort((CartSnapshot a, CartSnapshot b) => (a.cart.idCart.compareTo(b.cart.idCart)));
+            var c = ChuonChuonKimController.instance;
+            c.listCartSnapshot = list;
+            c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
           }
           catch (error) {
             list = [];
@@ -71,7 +71,7 @@ class PageCart extends StatelessWidget {
                               onPressed: (value) {
                                 var c = ChuonChuonKimController.instance;
                                 Product p = c.getProductFromCart(maSP: item.cart.maSP)!;
-                                c.showSimilaProducts(product: p);
+                                c.showSimilarProducts(product: p);
                                 Get.to(PageDetails(product: p));
                               },
                               backgroundColor: Colors.blue,
@@ -84,7 +84,9 @@ class PageCart extends StatelessWidget {
                                 thongBaoDangThucHien(context: context, info: "Đang xoá khỏi giỏ hàng...");
                                 listCheck.removeAt(index);
                                 listCounter.removeAt(index);
-                                ChuonChuonKimController.instance.deleteFromCart(index: index);
+                                var c = ChuonChuonKimController.instance;
+                                c.deleteFromCart(index: index);
+
                                 await item.delete()
                                 .then((value) {
                                   thongBaoThucHienXong(context: context, info: "Đã xoá.");

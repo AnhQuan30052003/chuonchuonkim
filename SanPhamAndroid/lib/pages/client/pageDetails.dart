@@ -24,9 +24,10 @@ class _PageDetailsState extends State<PageDetails> {
 
   @override
   void initState() {
-    List<ProductFavoriteSnapshot> list = ChuonChuonKimController.instance.listProductFavoriteSnapshot;
-    for (var pfn in list) {
-      if (pfn.productFavorite.maSP == widget.product.maSP) {
+    var c = ChuonChuonKimController.instance;
+    List<ProductFavoriteSnapshot> list = c.listProductFavoriteSnapshot;
+    for (var pfs in list) {
+      if (pfs.productFavorite.maSP == widget.product.maSP) {
         tym = true;
         return;
       }
@@ -106,10 +107,10 @@ class _PageDetailsState extends State<PageDetails> {
                             return tym ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite, color: Colors.black26);
                           },
                         ),
-                        onPressed: () {
-                          var c = ChuonChuonKimController.instance;
+                        onPressed: () async {
                           tym = !tym;
-                          c.updateProductTym(id: widget.product.maSP);
+                          var c = ChuonChuonKimController.instance;
+                          c.updateNameId(nameId: widget.product.maSP);
 
                           if (tym) {
                             String id = "0";
@@ -120,21 +121,21 @@ class _PageDetailsState extends State<PageDetails> {
 
                             int number = int.parse(id) + 1;
                             ProductFavorite pf = ProductFavorite(idPF: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP);
-                            ProductFavoriteSnapshot.add(pf);
-                            thongBaoThucHienXong(context: context, info: "Đã thêm vào yêu thích.");
+                            await ProductFavoriteSnapshot.add(pf)
+                            .then((value) {
+                              thongBaoThucHienXong(context: context, info: "Đã thêm vào yêu thích.");
+                            });
                           }
                           else {
                             for (var pfn in c.listProductFavoriteSnapshot) {
                               if (pfn.productFavorite.maSP == widget.product.maSP) {
-                                pfn.delete();
+                                await pfn.delete();
                                 c.listProductFavoriteSnapshot.remove(pfn);
                                 break;
                               }
                             }
                             thongBaoThucHienXong(context: context, info: "Đã xoá khỏi yêu thích.");
                           }
-
-                          c.getProductFavoriteSnapshot();
                         },
                       ),
                     ],
@@ -146,7 +147,7 @@ class _PageDetailsState extends State<PageDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       var c = ChuonChuonKimController.instance;
 
                       String id = "0";
@@ -157,8 +158,10 @@ class _PageDetailsState extends State<PageDetails> {
 
                       int number = int.parse(id) + 1;
                       Cart cart = Cart(idCart: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP, soLuong: 1);
-                      c.addToCart(cartNew: cart);
-                      thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
+                      await c.addToCart(cartNew: cart)
+                      .then((value) {
+                        thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
+                      });
                     },
                     child: Row(
                       children: [

@@ -3,46 +3,83 @@ import 'package:get/get.dart';
 import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
-import 'checkProductController.dart';
-import 'counterQuantityProductController.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
 
-  String idUser = "0001";
+  List<ProductSnapshot> listProductSnapshot = [];
   List<Product> listProduct = [];
+
+  List<ProductTypeSnapshot> listProductTypeSnapshot = [];
   List<ProductType> listProductType = [];
+
   List<CartSnapshot> listCartSnapshot = [];
+  List<Cart> listCart = [];
+
   List<ProductFavoriteSnapshot> listProductFavoriteSnapshot = [];
+  List<ProductFavorite> listProductFavorite = [];
 
   List<Product> listProductsPopulator = [];
   List<Product> listProdutsGridView = [];
-
   List<Product> listProductSeach= [];
   List<Product> listSimilarProducts= [];
 
-  Map<String, bool> getData = {
-    "product": false,
-    "productType": false,
-    "productFavoriteSnapshot": false,
-    "listCartSnapshot": false,
-  };
+  String idUser = "0001";
 
   @override
   void onReady() {
     super.onReady();
-    getProductTypes();
-    getProducts();
-    getCartSnapshot();
-    getProductFavoriteSnapshot();
+
+    getProductType();
+    getProduct();
+    getProductFavorite();
+    getCart();
+    getUser();
+    // getNotification();
   }
 
-
-
-
-
   // * -------------------------------------
-  // Lấy product populator
+  // Lấy dữ liệu cart
+  Future<void> getCart() async {
+    listCartSnapshot = await CartSnapshot.futureData();
+    listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+    listCart = listCartSnapshot.map((e) => e.cart).toList();
+  }
+
+  // Lấy dữ liệu product favorite
+  Future<void> getProductFavorite() async {
+    listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
+    listProductFavoriteSnapshot.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => a.productFavorite.idPF.compareTo(b.productFavorite.idPF));
+    listProductFavorite = listProductFavoriteSnapshot.map((e) => e.productFavorite).toList();
+  }
+
+  // Lấy dữ liệu product
+  Future<void> getProduct() async {
+    listProductSnapshot = await ProductSnapshot.futureData();
+    listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+    listProduct = listProductSnapshot.map((e) => e.product).toList();
+
+    getProductsPopulator(requestQuantity: 1);
+    listProdutsGridView = listProduct;
+  }
+
+  // Lấy dữ liệu product Type
+  Future<void> getProductType() async {
+    listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
+    listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
+    listProductType = listProductTypeSnapshot.map((e) => e.productType).toList();
+  }
+
+  // Lấy dữ liệu user
+  Future<void> getUser() async {
+
+  }
+
+  // Lấy dữ liệu notification
+  Future<void> getNotification() async {
+
+  }
+
   void getProductsPopulator({required int requestQuantity}) {
     listProductsPopulator = [];
     for (var pt in listProductType) {
@@ -55,58 +92,18 @@ class ChuonChuonKimController extends GetxController {
         }
       }
     }
+
+    updateNameId(nameId: "products_populator");
   }
 
-  // Lấy dữ liệu ListCart
-  void getCartSnapshot() async {
-    listCartSnapshot = await CartSnapshot.futureData();
-    listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-    getData["listCartSnapshot"] = true;
+  void updateNameId({required String nameId}) {
+    update([nameId]);
   }
 
-  // Lấy dữ liệu ListCart
-  void getProductFavoriteSnapshot() async {
-    listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
-    getData["productFavoriteSnapshot"] = true;
-  }
 
-  // Lấy dữ liệu Product
-  void getProducts() async {
-    var data = await ProductSnapshot.futureData();
-    listProduct = data.map((e) => e.product).toList();
-    listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
-    getData["product"] = true;
 
-    getProductsPopulator(requestQuantity: 1);
-    listProdutsGridView = listProduct;
 
-    updatePageHome();
-  }
 
-  // Lấy dữ liệu ProductType
-  void getProductTypes() async {
-    var data = await ProductTypeSnapshot.futureData();
-    listProductType = data.map((e) => e.productType).toList();
-    listProductType.sort((ProductType a, ProductType b) => a.maLSP.compareTo(b.maLSP));
-    getData["productType"] = true;
-    updatePageHome();
-  }
-
-  void updatePageHome() {
-    update(["client_products"]);
-  }
-
-  void updateProductsPopulattor() {
-    update(["products_populator"]);
-  }
-
-  void updateGridView() {
-    update(["gridview_products"]);
-  }
-
-  void updateProductTym({required String id}) {
-    update([id]);
-  }
 
 
 
@@ -114,18 +111,17 @@ class ChuonChuonKimController extends GetxController {
 
   // * -------------------------------------
   // Thêm sản phẩm vào giỏ hàng
-  void addToCart({required Cart cartNew}) {
+  Future<void> addToCart({required Cart cartNew}) async {
     for (var cn in listCartSnapshot) {
-      if ((cn.cart.maSP == cartNew.maSP) && (idUser == cartNew.idUser)) {
-        Cart c = cn.cart;
-        c.soLuong += 1;
-        cn.update(c);
+      if (cn.cart.maSP == cartNew.maSP) {
+        cn.cart.soLuong += 1;
+        cn.update(cn.cart);
         return;
       }
     }
 
-    CartSnapshot.add(cartNew);
-    getCartSnapshot();
+    await CartSnapshot.add(cartNew);
+    // getCartSnapshot();
   }
 
   // Xoá sản phẩm khỏi giỏ hàng
@@ -136,13 +132,18 @@ class ChuonChuonKimController extends GetxController {
 
   // Lấy sản phẩm từ giỏ hàng
   Product? getProductFromCart({required String maSP}) {
-    for (var product in listProduct) {
-      if (product.maSP == maSP) {
-        return product;
+    for (var ps in listProductSnapshot) {
+      if (ps.product.maSP == maSP) {
+        return ps.product;
       }
     }
     return null;
   }
+
+
+
+
+
 
 
 
@@ -172,8 +173,8 @@ class ChuonChuonKimController extends GetxController {
       }
     }
 
-    updateProductsPopulattor();
-    updateGridView();
+    // updateProductsPopulattor();
+    // updateGridView();
   }
 
   void showProductSearch({required String search}) {
@@ -185,7 +186,7 @@ class ChuonChuonKimController extends GetxController {
     }
   }
 
-  void showSimilaProducts({required Product product}) {
+  void showSimilarProducts({required Product product}) {
     listSimilarProducts = [];
     for (var p in listProduct) {
       if (p.maLSP == product.maLSP) {
@@ -194,6 +195,11 @@ class ChuonChuonKimController extends GetxController {
     }
   }
 }
+
+
+
+
+
 
 
 

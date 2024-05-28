@@ -71,16 +71,15 @@ class _PageHomeClientState extends State<PageHomeClient> {
           onTabChange: (value) async {
             if (value == 1) {
               var c = ChuonChuonKimController.instance;
-              if (c.getData["product"] == false) {
+              if (c.listProductSnapshot.isEmpty) {
                 // Lấy 20 sản phẩm ngẫu nhiên bỏ vào trong page yêu thích
-                var data = await ProductSnapshot.futureData();
-                c.listProduct = data.map((e) => e.product).toList();
-                c.listProduct.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
+                c.listProductSnapshot = await ProductSnapshot.futureData();
+                c.listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
                 c.listProdutsGridView = [];
 
                 int count = 1;
                 do {
-                  c.listProdutsGridView.add(c.listProduct[Random().nextInt(c.listProduct.length)]);
+                  c.listProdutsGridView.add(c.listProductSnapshot[Random().nextInt(c.listProductSnapshot.length)].product);
                   count += 1;
                 } while (count <= 30);
               }
@@ -111,7 +110,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
     return GetBuilder(
       init: ChuonChuonKimController.instance,
       id: "client_products",
-      builder: (controller) {
+      builder: (controller) { 
         return Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           child: SingleChildScrollView(
