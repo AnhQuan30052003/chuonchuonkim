@@ -26,15 +26,16 @@ class _PageAddProductState extends State<PageAddProduct> {
   @override
   void initState() {
     var c = ChuonChuonKimController.instance;
-    txtMaLSP.text = c.listProductType[0].maLSP;
-
+    // txtMaLSP.text = c.listProductType[0].maLSP;
+  //
 
   }
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    var list = ChuonChuonKimController.instance.listProductType;
+    var c = ChuonChuonKimController.instance;
+    var list = c.listProductTypeSnapshot;
 
     return Scaffold(
       appBar: AppBar(
@@ -102,8 +103,8 @@ class _PageAddProductState extends State<PageAddProduct> {
                 value: txtMaLSP.text,
                 items: list.map(
                   (e) => DropdownMenuItem(
-                    value: e.maLSP,
-                    child: Text(e.tenLSP),
+                    value: e.productType.maLSP,
+                    child: Text(e.productType.tenLSP),
                   )
                 ).toList(),
                 onChanged: (value) {

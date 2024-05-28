@@ -8,16 +8,9 @@ class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
 
   List<ProductSnapshot> listProductSnapshot = [];
-  List<Product> listProduct = [];
-
   List<ProductTypeSnapshot> listProductTypeSnapshot = [];
-  List<ProductType> listProductType = [];
-
   List<CartSnapshot> listCartSnapshot = [];
-  List<Cart> listCart = [];
-
   List<ProductFavoriteSnapshot> listProductFavoriteSnapshot = [];
-  List<ProductFavorite> listProductFavorite = [];
 
   List<Product> listProductsPopulator = [];
   List<Product> listProdutsGridView = [];
@@ -43,31 +36,27 @@ class ChuonChuonKimController extends GetxController {
   Future<void> getCart() async {
     listCartSnapshot = await CartSnapshot.futureData();
     listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-    listCart = listCartSnapshot.map((e) => e.cart).toList();
   }
 
   // Lấy dữ liệu product favorite
   Future<void> getProductFavorite() async {
     listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
     listProductFavoriteSnapshot.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => a.productFavorite.idPF.compareTo(b.productFavorite.idPF));
-    listProductFavorite = listProductFavoriteSnapshot.map((e) => e.productFavorite).toList();
   }
 
   // Lấy dữ liệu product
   Future<void> getProduct() async {
     listProductSnapshot = await ProductSnapshot.futureData();
     listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
-    listProduct = listProductSnapshot.map((e) => e.product).toList();
 
     getProductsPopulator(requestQuantity: 1);
-    listProdutsGridView = listProduct;
+    listProdutsGridView = listProductSnapshot.map((e) => e.product).toList();
   }
 
   // Lấy dữ liệu product Type
   Future<void> getProductType() async {
     listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
     listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
-    listProductType = listProductTypeSnapshot.map((e) => e.productType).toList();
   }
 
   // Lấy dữ liệu user
@@ -82,11 +71,11 @@ class ChuonChuonKimController extends GetxController {
 
   void getProductsPopulator({required int requestQuantity}) {
     listProductsPopulator = [];
-    for (var pt in listProductType) {
+    for (var pts in listProductTypeSnapshot) {
       int quantity = 0;
-      for (var p in listProduct) {
-        if (p.maLSP == pt.maLSP) {
-          listProductsPopulator.add(p);
+      for (var ps in listProductSnapshot) {
+        if (ps.product.maLSP == pts.productType.maLSP) {
+          listProductsPopulator.add(ps.product);
           quantity += 1;
           if (quantity == requestQuantity) break;
         }
@@ -153,7 +142,7 @@ class ChuonChuonKimController extends GetxController {
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
     if (idLSP.isEmpty) {
-      listProdutsGridView = listProduct;
+      listProdutsGridView = listProductSnapshot.map((e) => e.product).toList();
       listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
     }
     else {
@@ -166,9 +155,9 @@ class ChuonChuonKimController extends GetxController {
       }
 
       listProdutsGridView = [];
-      for (var p in listProduct) {
-        if (p.maLSP == idLSP) {
-          listProdutsGridView.add(p);
+      for (var ps in listProductSnapshot) {
+        if (ps.product.maLSP == idLSP) {
+          listProdutsGridView.add(ps.product);
         }
       }
     }
@@ -179,18 +168,24 @@ class ChuonChuonKimController extends GetxController {
 
   void showProductSearch({required String search}) {
     listProductSeach = [];
-    for (var p in listProduct) {
-      if ((p.tenSP.toLowerCase().contains(search.toLowerCase())) || (p.moTaSP.toLowerCase().contains(search.toLowerCase()))) {
-        listProductSeach.add(p);
+    search = search.toLowerCase();
+
+    for (var ps in listProductSnapshot) {
+      bool searchMaSP = ps.product.maSP.toLowerCase().contains(search);
+      bool searchName = ps.product.tenSP.toLowerCase().contains(search);
+      bool searchMota= ps.product.moTaSP.toLowerCase().contains(search);
+
+      if (searchMaSP || searchName || searchMota) {
+        listProductSeach.add(ps.product);
       }
     }
   }
 
   void showSimilarProducts({required Product product}) {
     listSimilarProducts = [];
-    for (var p in listProduct) {
-      if (p.maLSP == product.maLSP) {
-        listSimilarProducts.add(p);
+    for (var ps in listProductSnapshot) {
+      if (ps.product.maLSP == product.maLSP) {
+        listSimilarProducts.add(ps.product);
       }
     }
   }

@@ -184,10 +184,10 @@ Widget buildFilter() {
     height: 70,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: controller.listProductType.length,
+      itemCount: controller.listProductTypeSnapshot.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        var item = controller.listProductType[index];
+        var item = controller.listProductTypeSnapshot[index].productType;
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           height: 60,

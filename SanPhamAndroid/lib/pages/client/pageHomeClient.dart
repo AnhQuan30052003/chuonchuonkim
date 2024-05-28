@@ -180,10 +180,10 @@ class _PageHomeClientState extends State<PageHomeClient> {
                   list.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => (a.productFavorite.idPF.compareTo(b.productFavorite.idPF)));
                   c.listProductFavoriteSnapshot = list;
 
-                  for (var pf in list) {
-                    for (var p in c.listProduct) {
-                      if (p.maSP == pf.productFavorite.maSP) {
-                        listProduct.add(p);
+                  for (var pfs in list) {
+                    for (var ps in c.listProductSnapshot) {
+                      if (ps.product.maSP == pfs.productFavorite.maSP) {
+                        listProduct.add(ps.product);
                       }
                     }
                   }

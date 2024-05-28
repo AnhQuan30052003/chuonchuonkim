@@ -202,9 +202,9 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                           ProductSnapshot ps = products[index];
 
                           String tenLSP = "";
-                          for (ProductType pt in c.listProductType) {
-                            if (pt.maLSP == ps.product.maLSP) {
-                              tenLSP = pt.tenLSP;
+                          for (var pts in c.listProductTypeSnapshot) {
+                            if (pts.productType.maLSP == ps.product.maLSP) {
+                              tenLSP = pts.productType.tenLSP;
                               break;
                             }
                           }
