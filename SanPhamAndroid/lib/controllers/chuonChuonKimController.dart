@@ -13,9 +13,10 @@ class ChuonChuonKimController extends GetxController {
   List<ProductFavoriteSnapshot> listProductFavoriteSnapshot = [];
 
   List<Product> listProductsPopulator = [];
-  List<Product> listProdutsGridView = [];
-  List<Product> listProductSeach= [];
+  List<Product> listProductsGridView = [];
+  List<Product> listProductSearch= [];
   List<Product> listSimilarProducts= [];
+  List<Product> productYouCanLike= [];
 
   String idUser = "0001";
 
@@ -50,13 +51,16 @@ class ChuonChuonKimController extends GetxController {
     listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
 
     getProductsPopulator(requestQuantity: 1);
-    listProdutsGridView = listProductSnapshot.map((e) => e.product).toList();
+    listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
+    updateNameId(nameId: "gridview_products");
   }
 
   // Lấy dữ liệu product Type
   Future<void> getProductType() async {
     listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
     listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
+    updateNameId(nameId: "filter");
+
   }
 
   // Lấy dữ liệu user
@@ -142,7 +146,7 @@ class ChuonChuonKimController extends GetxController {
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
     if (idLSP.isEmpty) {
-      listProdutsGridView = listProductSnapshot.map((e) => e.product).toList();
+      listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
       listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
     }
     else {
@@ -154,20 +158,20 @@ class ChuonChuonKimController extends GetxController {
         }
       }
 
-      listProdutsGridView = [];
+      listProductsGridView = [];
       for (var ps in listProductSnapshot) {
         if (ps.product.maLSP == idLSP) {
-          listProdutsGridView.add(ps.product);
+          listProductsGridView.add(ps.product);
         }
       }
     }
 
-    // updateProductsPopulattor();
-    // updateGridView();
+    updateNameId(nameId: "products_populator");
+    updateNameId(nameId: "gridview_products");
   }
 
   void showProductSearch({required String search}) {
-    listProductSeach = [];
+    listProductSearch = [];
     search = search.toLowerCase();
 
     for (var ps in listProductSnapshot) {
@@ -176,7 +180,7 @@ class ChuonChuonKimController extends GetxController {
       bool searchMota= ps.product.moTaSP.toLowerCase().contains(search);
 
       if (searchMaSP || searchName || searchMota) {
-        listProductSeach.add(ps.product);
+        listProductSearch.add(ps.product);
       }
     }
   }

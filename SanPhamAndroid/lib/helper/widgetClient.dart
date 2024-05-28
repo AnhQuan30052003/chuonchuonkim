@@ -140,10 +140,10 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
 }
 
 Widget buildSearch({required BuildContext context}) {
-  TextEditingController c = TextEditingController();
-
+TextEditingController c = TextEditingController();
   void startSearch() {
     String textSearch = c.text;
+    if (textSearch.isEmpty) return;
     c.clear;
     ChuonChuonKimController.instance.showProductSearch(search: textSearch);
     Navigator.push(context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
@@ -153,7 +153,6 @@ Widget buildSearch({required BuildContext context}) {
     height: 50,
     child: TextField(
       controller: c,
-      autofocus: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
         border: OutlineInputBorder(
@@ -178,43 +177,47 @@ Widget buildSearch({required BuildContext context}) {
 }
 
 Widget buildFilter() {
-  var controller = ChuonChuonKimController.instance;
-
-  return SizedBox(
-    height: 70,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: controller.listProductTypeSnapshot.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        var item = controller.listProductTypeSnapshot[index].productType;
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                spreadRadius: 2,
-                blurRadius: 4,
+  return GetBuilder(
+    init: ChuonChuonKimController.instance,
+    id: "filter",
+    builder: (controller) {
+      return SizedBox(
+        height: 70,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.listProductTypeSnapshot.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            var item = controller.listProductTypeSnapshot[index].productType;
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: GestureDetector(
-              child: Image.network(item.hinhAnhLSP),
-              onTap: () {
-                controller.showProductType(idLSP: item.maLSP);
-              },
-            ),
-          ),
-        );
-      },
-    ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: GestureDetector(
+                  child: Image.network(item.hinhAnhLSP),
+                  onTap: () {
+                    controller.showProductType(idLSP: item.maLSP);
+                  },
+                ),
+              ),
+            );
+          },
+        ),
+    );
+    },
   );
 }
 
@@ -330,7 +333,7 @@ Widget buildProductsPopulator() {
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),
                     child: Container(
-                      margin: const EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 5, left: 5),
                       height: h,
                       width: w,
                       decoration: BoxDecoration(

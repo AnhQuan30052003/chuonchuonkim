@@ -75,11 +75,11 @@ class _PageHomeClientState extends State<PageHomeClient> {
                 // Lấy 20 sản phẩm ngẫu nhiên bỏ vào trong page yêu thích
                 c.listProductSnapshot = await ProductSnapshot.futureData();
                 c.listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
-                c.listProdutsGridView = [];
+                c.listProductsGridView = [];
 
                 int count = 1;
                 do {
-                  c.listProdutsGridView.add(c.listProductSnapshot[Random().nextInt(c.listProductSnapshot.length)].product);
+                  c.listProductsGridView.add(c.listProductSnapshot[Random().nextInt(c.listProductSnapshot.length)].product);
                   count += 1;
                 } while (count <= 30);
               }
@@ -107,50 +107,52 @@ class _PageHomeClientState extends State<PageHomeClient> {
   }
 
   Widget home() {
-    return GetBuilder(
-      init: ChuonChuonKimController.instance,
-      id: "client_products",
-      builder: (controller) { 
-        return Padding(
-          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: SingleChildScrollView(
-            child: Column(children: [
-              // * search
-              buildSearch(context: context),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: Column(
+        children: [
+          // * search
+          buildSearch(context: context),
 
-              // * filter
-              space(0, 10),
-              buildFilter(),
+          // * filter
+          space(0, 10),
+          buildFilter(),
+          space(0, 10),
 
-              // * Khung phổ biến
-              space(0, 10),
-              buildInstruction(text: "Phổ biến"),
-
-              // * card product phổ biến
-              space(0, 10),
-              buildProductsPopulator(),
-
-              // * Khung sản phẩm
-              space(0, 10),
-              buildInstruction(text: "Sản phẩm"),
-
-              // * card product
-              space(0, 10),
-              GetBuilder(
-                init: ChuonChuonKimController.instance,
-                id: "gridview_products",
-                builder: (controller) {
-                  return buildGridViewProducts(
-                    context: context,
-                    list: controller.listProdutsGridView,
-                    showNotFound: false
-                  );
-                }
-              )
-            ]),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // * Khung phổ biến
+                  buildInstruction(text: "Phổ biến"),
+            
+                  // * card product phổ biến
+                  space(0, 10),
+                  buildProductsPopulator(),
+            
+                  // * Khung sản phẩm
+                  space(0, 10),
+                  buildInstruction(text: "Sản phẩm"),
+            
+                  // * card product
+                  space(0, 10),
+                  GetBuilder(
+                    init: ChuonChuonKimController.instance,
+                    id: "gridview_products",
+                    builder: (controller) {
+                      return buildGridViewProducts(
+                        context: context,
+                        list: controller.listProductsGridView,
+                        showNotFound: false
+                      );
+                    }
+                  )
+                ],
+              ),
+            ),
           ),
-        );
-      },
+        ]
+      ),
     );
   }
 
@@ -198,7 +200,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
             space(0, 20),
             buildInstruction(text: "Có thể bạn cũng thích"),
             space(0, 10),
-            buildGridViewProducts(context: context, list: c.listProdutsGridView, showNotFound: false),
+            buildGridViewProducts(context: context, list: c.listProductsGridView, showNotFound: false),
           ],
         ),
       ),
