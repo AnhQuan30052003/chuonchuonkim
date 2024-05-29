@@ -1,23 +1,11 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../admin/pageHomeAdmin.dart';
 import 'signup.dart';
-
-void main() => runApp(const App());
-
-class App extends StatelessWidget {
-  const App({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      title: "App",
-      debugShowCheckedModeBanner: false,
-      home: PageSignup(),
-    );
-  }
-}
 
 class PageLogin extends StatefulWidget {
   const PageLogin({super.key});
@@ -27,12 +15,14 @@ class PageLogin extends StatefulWidget {
 }
 
 class _PageLoginState extends State<PageLogin> {
-  bool showPass = false;
+  bool showPass = true;
+  String messageError = "";
+
+  TextEditingController txtUser = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController txtUser = TextEditingController();
-    TextEditingController txtPass = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -43,28 +33,35 @@ class _PageLoginState extends State<PageLogin> {
               children: [
                 space(0, 50),
                 Image.asset("assets/freed.png"),
+
+                Text(
+                  messageError,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
                 space(0, 50),
                 TextFormField(
-                  keyboardType: TextInputType.phone,
                   controller: txtUser,
                   decoration: const InputDecoration(
-                      labelText: "Số điện thoại",
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.phone_android)),
+                    labelText: "Tài khoản",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person)),
                 ),
+
                 space(0, 15),
                 TextFormField(
-                  obscureText: showPass,
                   controller: txtPass,
+                  obscureText: showPass,
                   decoration: InputDecoration(
                     labelText: "Mật khẩu",
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       onPressed: () {
-                        setState(() {
-                          showPass = !showPass;
-                        });
+                        showPass = !showPass;
+                        setState(() {});
                       },
                       icon: const Icon(Icons.remove_red_eye),
                     ),
@@ -84,7 +81,27 @@ class _PageLoginState extends State<PageLogin> {
                 ),
                 space(0, 50),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    thongBaoDangThucHien(context: context, info: "Đang đăng nhập...");
+                    var c = ChuonChuonKimController.instance;
+                    await c.login(user: txtUser.text.trim(), password: txtPass.text.trim())
+                    .then((value) {
+                      if (value == false) {
+                        thongBaoThucHienXong(context: context, info: "Đăng nhập thất bại.");
+                        messageError = "Tài khoản hoặc mẫu không chính xác !";
+                        setState(() {});
+                        return;
+                      }
+
+                      thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
+                      if (c.userSnapshot!.user.id == "0000") {
+                        Get.offAll(const PageHomeAdmin());
+                      }
+                      else {
+                        Get.offAll(const PageHomeClient());
+                      }
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(55),
                     backgroundColor: Colors.redAccent,
@@ -92,8 +109,7 @@ class _PageLoginState extends State<PageLogin> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child:
-                      const Text("Đăng nhập", style: TextStyle(fontSize: 18, color: Colors.white)),
+                  child: const Text("Đăng nhập", style: TextStyle(fontSize: 18, color: Colors.white)),
                 ),
                 space(0, 20),
                 Row(

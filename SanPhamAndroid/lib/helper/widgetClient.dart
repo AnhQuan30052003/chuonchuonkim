@@ -59,6 +59,8 @@ PreferredSizeWidget buildAppBar({required String info}) {
           ),
         ),
         onTap: () {
+          var c = ChuonChuonKimController.instance;
+          c.toLogin();
           Get.to(const PageNotification());
         },
       ),
@@ -94,7 +96,9 @@ PreferredSizeWidget buildAppBar({required String info}) {
             child: const Icon(Icons.shopping_cart_outlined),
           ),
         ),
-        onTap: () async {
+        onTap: () {
+          var c = ChuonChuonKimController.instance;
+          c.toLogin();
           Get.to(const PageCart());
         },
       ),

@@ -4,9 +4,13 @@ import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
+import '../pages/system/sign/login.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
+
+  bool isLogin = false;
+  UserSnapshot? userSnapshot;
 
   List<ProductSnapshot> listProductSnapshot = [];
   List<ProductTypeSnapshot> listProductTypeSnapshot = [];
@@ -19,8 +23,6 @@ class ChuonChuonKimController extends GetxController {
   List<Product> listProductSearch= [];
   List<Product> listSimilarProducts= [];
   List<Product> productYouCanLike= [];
-
-  UserSnapshot? userSnapshot;
 
   @override
   void onReady() {
@@ -80,6 +82,7 @@ class ChuonChuonKimController extends GetxController {
         break;
       }
     }
+    isLogin = true;
   }
 
 
@@ -215,6 +218,23 @@ class ChuonChuonKimController extends GetxController {
       if (ps.product.maLSP == product.maLSP) {
         listSimilarProducts.add(ps.product);
       }
+    }
+  }
+
+  Future<bool> login({required String user, required String password}) async {
+    for (var us in listUserSnapshot) {
+      var u = us.user;
+      if (u.user == user && u.pass == password) {
+        userSnapshot = us;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void toLogin() {
+    if (isLogin == false) {
+      Get.to(const PageLogin());
     }
   }
 }

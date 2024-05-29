@@ -2,36 +2,38 @@ import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/pages/system/aboutme/editPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helper/dialog.dart';
 import '../../../helper/widget.dart';
+import '../sign/login.dart';
 import 'infor/personalInfo.dart';
-
-class WidgetTest extends StatelessWidget {
-  const WidgetTest({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 Widget account(BuildContext context) {
   List<GestureDetector> above = [
     _buildGestureDetector(
+        context: context,
         icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
         label: "Thông tin cá nhân",
-        widget: const PersonalInfo()),
+        widget: const PersonalInfo(),
+        logout: false,
+    ),
     // _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
   ];
 
   List<GestureDetector> bellow = [
     _buildGestureDetector(
+        context: context,
         icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent),
         label: "Đổi mật khẩu",
-        widget: const EditPassword()),
+        widget: const EditPassword(),
+        logout: false,
+    ),
     _buildGestureDetector(
+        context: context,
         icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
         label: "Đăng xuất",
-        widget: const WidgetTest()),
+        widget: const PageLogin(),
+        logout: true,
+    ),
   ];
 
   var c = ChuonChuonKimController.instance;
@@ -105,8 +107,7 @@ Container _buildContainerFrame(BuildContext context, List<GestureDetector> list)
   );
 }
 
-GestureDetector _buildGestureDetector(
-    {required Icon icon, required String label, required Widget widget}) {
+GestureDetector _buildGestureDetector({required BuildContext context, required Icon icon, required String label, required Widget widget, required logout}) {
   return GestureDetector(
     child: ListTile(
       horizontalTitleGap: 10,
@@ -126,6 +127,23 @@ GestureDetector _buildGestureDetector(
         onPressed: () => Get.to(widget),
       ),
     ),
-    onTap: () => Get.to(widget),
+    onTap: () async {
+      if (logout == false) {
+        Get.to(widget);
+        return;
+      }
+
+      List<String> list = ["Xác nhận", "Huỷ"];
+      String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
+      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
+      .then((value) {
+        if (value == list[0]) {
+          var c = ChuonChuonKimController.instance;
+          c.isLogin = false;
+          c.userSnapshot = null;
+          Get.to(widget);
+        }
+      });
+    },
   );
 }

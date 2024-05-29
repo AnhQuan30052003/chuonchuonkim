@@ -100,6 +100,10 @@ class _PageHomeClientState extends State<PageHomeClient> {
       c.showProductType(idLSP: "");
       return home();
     }
+    else {
+      c.toLogin();
+    }
+
     if (index == 1) {
       return favorite();
     }
