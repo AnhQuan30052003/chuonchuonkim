@@ -1,10 +1,8 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/pages/system/aboutme/editPassword.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../helper/widget.dart';
-import 'address/address.dart';
 import 'infor/personalInfo.dart';
 
 class WidgetTest extends StatelessWidget {
