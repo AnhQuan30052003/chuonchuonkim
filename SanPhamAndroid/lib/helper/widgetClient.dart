@@ -31,25 +31,28 @@ PreferredSizeWidget buildAppBar({required String info}) {
             onTap: () {
               Get.to(const PageNotification());
             },
-            badgeContent: StreamBuilder(
-              stream: NotificationSnapshot.streamData(),
-              builder: (context, snapshot) {
-                List<NotificationSnapshot> list = [];
+            badgeContent: (ChuonChuonKimController.instance.userSnapshot == null
+              ? const Text("0", style: TextStyle(color: Colors.white))
+              : StreamBuilder(
+                stream: NotificationSnapshot.streamData(),
+                builder: (context, snapshot) {
+                  List<NotificationSnapshot> list = [];
 
-                try {
-                  list = snapshot.data!;
-                }
-                catch (error) {
-                  list = [];
-                }
+                  try {
+                    list = snapshot.data!;
+                  }
+                  catch (error) {
+                    list = [];
+                  }
 
-                int count = 0;
-                for (var no in list) {
-                  if (no.notification.seen == false) count += 1;
-                }
+                  int count = 0;
+                  for (var no in list) {
+                    if (no.notification.seen == false) count += 1;
+                  }
 
-                return Text("$count", style: const TextStyle(color: Colors.white));
-              },
+                  return Text("$count", style: const TextStyle(color: Colors.white));
+                },
+              )
             ),
             child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
           ),
@@ -65,23 +68,26 @@ PreferredSizeWidget buildAppBar({required String info}) {
             onTap: () {
               Get.to(const PageCart());
             },
-            badgeContent: StreamBuilder(
-              stream: CartSnapshot.streamData(),
-              builder: (context, snapshot) {
-                var c = ChuonChuonKimController.instance;
-                List<CartSnapshot> list = [];
+            badgeContent: (ChuonChuonKimController.instance.userSnapshot == null
+              ? const Text("0", style: TextStyle(color: Colors.white))
+              : StreamBuilder(
+                stream: CartSnapshot.streamData(),
+                builder: (context, snapshot) {
+                  var c = ChuonChuonKimController.instance;
+                  List<CartSnapshot> list = [];
 
-                try {
-                  list = snapshot.data!;
-                  c.listCartSnapshot = list;
-                  c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-                }
-                catch (error) {
-                  list = [];
-                }
+                  try {
+                    list = snapshot.data!;
+                    c.listCartSnapshot = list;
+                    c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+                  }
+                  catch (error) {
+                    list = [];
+                  }
 
-                return Text("${list.length}", style: const TextStyle(color: Colors.white));
-              },
+                  return Text("${list.length}", style: const TextStyle(color: Colors.white));
+                },
+              )
             ),
             child: const Icon(Icons.shopping_cart_outlined),
           ),

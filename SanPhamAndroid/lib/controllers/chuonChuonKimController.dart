@@ -25,8 +25,11 @@ class ChuonChuonKimController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    getData();
+  }
 
-    getUser();
+  void getData() async {
+    await getUser();
     getProductType();
     getProduct();
     getProductFavorite();
