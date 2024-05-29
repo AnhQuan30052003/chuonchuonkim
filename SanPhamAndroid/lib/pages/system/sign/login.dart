@@ -60,15 +60,17 @@ class _PageLoginState extends State<PageLogin> {
                         IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Quên mật khẩu",
-                      style: TextStyle(fontSize: 15, color: Colors.redAccent),
-                    ),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Quên mật khẩu",
+                        style: TextStyle(fontSize: 15, color: Colors.redAccent),
+                      ),
+                    )
+                  ],
                 ),
                 space(0, 50),
                 ElevatedButton(
