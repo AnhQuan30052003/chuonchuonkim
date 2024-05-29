@@ -58,7 +58,9 @@ class CartSnapshot {
   }
 
   static Stream<List<CartSnapshot>> streamData() {
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.userSnapshot!.user.id).snapshots();
+    var c = ChuonChuonKimController.instance.userSnapshot;
+    String id = (c == null ? "" : c.user.id);
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: id).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
         (docSnap) => CartSnapshot.fromDocSnap(docSnap)

@@ -30,6 +30,7 @@ class ChuonChuonKimController extends GetxController {
 
   void getData() async {
     await getUser();
+    updateNameId(nameId: "appBar");
     getProductType();
     getProduct();
     getProductFavorite();

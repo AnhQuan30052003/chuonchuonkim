@@ -31,9 +31,10 @@ PreferredSizeWidget buildAppBar({required String info}) {
             onTap: () {
               Get.to(const PageNotification());
             },
-            badgeContent: (ChuonChuonKimController.instance.userSnapshot == null
-              ? const Text("0", style: TextStyle(color: Colors.white))
-              : StreamBuilder(
+            badgeContent: GetBuilder(
+              init: ChuonChuonKimController.instance,
+              id: "appBar",
+              builder: (controller) => StreamBuilder(
                 stream: NotificationSnapshot.streamData(),
                 builder: (context, snapshot) {
                   List<NotificationSnapshot> list = [];
@@ -52,7 +53,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
 
                   return Text("$count", style: const TextStyle(color: Colors.white));
                 },
-              )
+              ),
             ),
             child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
           ),
@@ -68,9 +69,10 @@ PreferredSizeWidget buildAppBar({required String info}) {
             onTap: () {
               Get.to(const PageCart());
             },
-            badgeContent: (ChuonChuonKimController.instance.userSnapshot == null
-              ? const Text("0", style: TextStyle(color: Colors.white))
-              : StreamBuilder(
+            badgeContent: GetBuilder(
+              init: ChuonChuonKimController.instance,
+              id: "appBar",
+              builder: (controller) => StreamBuilder(
                 stream: CartSnapshot.streamData(),
                 builder: (context, snapshot) {
                   var c = ChuonChuonKimController.instance;
@@ -87,7 +89,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
 
                   return Text("${list.length}", style: const TextStyle(color: Colors.white));
                 },
-              )
+              ),
             ),
             child: const Icon(Icons.shopping_cart_outlined),
           ),

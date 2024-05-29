@@ -142,6 +142,7 @@ class _EditProfileState extends State<EditProfile> {
               await c.userSnapshot!.update(temp)
               .then((value) {
                 thongBaoThucHienXong(context: context, info: "Đã cập nhật.");
+                c.updateNameId(nameId: "account");
                 print("Cập nhật thành công.");
                 Get.back();
               });

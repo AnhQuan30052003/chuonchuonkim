@@ -18,7 +18,7 @@ class WidgetTest extends StatelessWidget {
 Widget account(BuildContext context) {
   List<GestureDetector> above = [
     _buildGestureDetector(icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent), label: "Thông tin cá nhân", widget: const PersonalInfo()),
-    _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
+    // _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
   ];
 
   List<GestureDetector> bellow = [
@@ -29,46 +29,50 @@ Widget account(BuildContext context) {
   var c = ChuonChuonKimController.instance;
 
   return SingleChildScrollView(
-    child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 100,
-            width: 272,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(50), // Image radius
-                    child: Image.network(c.userSnapshot == null ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" : c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                        Text("Tài khoản: ${c.userSnapshot!.user}", style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
-                      ],
+    child: GetBuilder(
+      init: ChuonChuonKimController.instance,
+      id: "account",
+      builder: (controller) => Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 100,
+              width: 272,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(50), // Image radius
+                      child: Image.network(c.userSnapshot == null ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" : c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text("Tài khoản: ${c.userSnapshot!.user.user}", style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          space(0, 20),
-          _buildContainerFrame(context, above),
+            space(0, 20),
+            _buildContainerFrame(context, above),
 
-          space(0, 20),
-          _buildContainerFrame(context, bellow),
-        ],
+            space(0, 20),
+            _buildContainerFrame(context, bellow),
+          ],
+        ),
       ),
     ),
   );
