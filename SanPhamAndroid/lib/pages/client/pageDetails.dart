@@ -120,7 +120,7 @@ class _PageDetailsState extends State<PageDetails> {
                             }
 
                             int number = int.parse(id) + 1;
-                            ProductFavorite pf = ProductFavorite(idPF: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP);
+                            ProductFavorite pf = ProductFavorite(idPF: getIdToString(number), idUser: c.userSnapshot!.user.id, maSP: widget.product.maSP);
                             await ProductFavoriteSnapshot.add(pf)
                             .then((value) {
                               thongBaoThucHienXong(context: context, info: "Đã thêm vào yêu thích.");
@@ -157,7 +157,7 @@ class _PageDetailsState extends State<PageDetails> {
                       }
 
                       int number = int.parse(id) + 1;
-                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.idUser, maSP: widget.product.maSP, soLuong: 1);
+                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.userSnapshot!.user.id, maSP: widget.product.maSP, soLuong: 1);
                       await c.addToCart(cartNew: cart)
                       .then((value) {
                         thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
