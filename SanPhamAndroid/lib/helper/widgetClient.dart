@@ -1,13 +1,15 @@
 import 'dart:math';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
+import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
 import '../pages/admin/pageNotificationAdmin.dart';
 import '../pages/client/pageCart.dart';
-import '../pages/client/pageNotification.dart';
+import '../pages/system/notification/pageNotification.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
 import '../pages/client/pageProductSearch.dart';
@@ -86,53 +88,6 @@ PreferredSizeWidget buildAppBar({required String info}) {
         ),
         onTap: () async {
           Get.to(const PageCart());
-        },
-      ),
-    ],
-  );
-}
-
-PreferredSizeWidget buildAppBarAdmin({required String info}) {
-  return AppBar(
-    elevation: 0,
-    backgroundColor: Colors.white10,
-    title: Text(
-      info,
-      style: const TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
-    ),
-    actions: [
-      GestureDetector(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: badges.Badge(
-            onTap: () {
-              Get.to(const PageNotificationAdmin());
-            },
-            badgeContent: StreamBuilder(
-              stream: NotificationSnapshot.streamData(),
-              builder: (context, snapshot) {
-                List<NotificationSnapshot> list = [];
-
-                try {
-                  list = snapshot.data!;
-                }
-                catch (error) {
-                  list = [];
-                }
-
-                int count = 0;
-                for (var no in list) {
-                  if (no.notification.seen == false) count += 1;
-                }
-
-                return Text("$count", style: const TextStyle(color: Colors.white));
-              },
-            ),
-            child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
-          ),
-        ),
-        onTap: () {
-          Get.to(const PageNotificationAdmin());
         },
       ),
     ],
@@ -478,11 +433,11 @@ Widget buildStreamBuilderNotification() {
                               ),
                               space(10, 0),
                               SizedBox(
-                                height: 50,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
-                                )
+                                  height: 50,
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
+                                  )
                               ),
                             ],
                           ),
@@ -515,11 +470,11 @@ Widget buildStreamBuilderNotification() {
                               ),
                               space(10, 0),
                               SizedBox(
-                                height: 50,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
-                                )
+                                  height: 50,
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
+                                  )
                               ),
                             ],
                           ),

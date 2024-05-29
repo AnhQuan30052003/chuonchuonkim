@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
 class Notification {
-  String idNoti, idUser, maSP, text;
+  String idNoti, idUser, maSP, text, toUser;
   bool seen;
 
   Notification({
@@ -12,6 +12,7 @@ class Notification {
     required this.maSP,
     required this.text,
     required this.seen,
+    required this.toUser,
   });
 
   Map<String, dynamic> toJson() {
@@ -21,6 +22,7 @@ class Notification {
       'maSP': maSP,
       'String': text,
       'seen': seen,
+      'toUser': toUser,
     };
   }
 
@@ -31,6 +33,7 @@ class Notification {
       maSP: map['maSP'] as String,
       text: map['String'] as String,
       seen: map['seen'] as bool,
+      toUser: map['toUser'] as String,
     );
   }
 }
@@ -61,7 +64,7 @@ class NotificationSnapshot {
   }
 
   static Stream<List<NotificationSnapshot>> streamData() {
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colNotification).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).snapshots();
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.idUser).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
         (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
@@ -72,10 +75,10 @@ class NotificationSnapshot {
   }
 
   static Future<List<NotificationSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colNotification).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.idUser).get();
 
     var list = qs.docs.map(
-            (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
+      (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
     ).toList();
 
     return list;
@@ -83,9 +86,9 @@ class NotificationSnapshot {
 }
 
 List<Notification> dbNotification = [
-  Notification(idNoti: "0001", idUser: "0001", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true),
-  Notification(idNoti: "0002", idUser: "0001", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true),
-  Notification(idNoti: "0003", idUser: "0001", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true),
-  Notification(idNoti: "0004", idUser: "0001", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false),
-  Notification(idNoti: "0005", idUser: "0001", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false),
+  Notification(idNoti: "0001", idUser: "0000", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true, toUser: "0001"),
+  Notification(idNoti: "0002", idUser: "0000", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true, toUser: "0001"),
+  Notification(idNoti: "0003", idUser: "0000", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true, toUser: "0001"),
+  Notification(idNoti: "0004", idUser: "0000", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false, toUser: "0001"),
+  Notification(idNoti: "0005", idUser: "0000", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false, toUser: "0001"),
 ];
