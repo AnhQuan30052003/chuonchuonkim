@@ -26,10 +26,10 @@ class ChuonChuonKimController extends GetxController {
   void onReady() {
     super.onReady();
 
+    getUser();
     getProductType();
     getProduct();
     getProductFavorite();
-    getUser();
     getCart();
   }
 
