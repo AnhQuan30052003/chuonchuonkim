@@ -1,39 +1,20 @@
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:chuonchuonkim_app/pages/system/sign/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'signup.dart';
-
-void main() => runApp(const App());
-
-class App extends StatelessWidget {
-  const App({super.key});
+class PageSignup extends StatefulWidget {
+  const PageSignup({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      title: "App",
-      debugShowCheckedModeBanner: false,
-      home: PageSignup(),
-    );
-  }
+  State<PageSignup> createState() => _PageSignupState();
 }
 
-class PageLogin extends StatefulWidget {
-  const PageLogin({super.key});
-
-  @override
-  State<PageLogin> createState() => _PageLoginState();
-}
-
-class _PageLoginState extends State<PageLogin> {
+class _PageSignupState extends State<PageSignup> {
   bool showPass = false;
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController txtUser = TextEditingController();
-    TextEditingController txtPass = TextEditingController();
-
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -41,46 +22,42 @@ class _PageLoginState extends State<PageLogin> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                space(0, 50),
+                space(0, 30),
                 Image.asset("assets/freed.png"),
                 space(0, 50),
                 TextFormField(
-                  keyboardType: TextInputType.phone,
-                  controller: txtUser,
                   decoration: const InputDecoration(
-                      labelText: "Số điện thoại",
+                      labelText: "Họ và tên",
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.person)),
+                ),
+                space(0, 15),
+                TextFormField(
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                      labelText: "Số điện thoại (tài khoản)",
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.phone_android)),
                 ),
                 space(0, 15),
                 TextFormField(
-                  obscureText: showPass,
-                  controller: txtPass,
                   decoration: InputDecoration(
                     labelText: "Mật khẩu",
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          showPass = !showPass;
-                        });
-                      },
-                      icon: const Icon(Icons.remove_red_eye),
-                    ),
+                    suffixIcon:
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Quên mật khẩu",
-                        style: TextStyle(fontSize: 15, color: Colors.redAccent),
-                      ),
-                    )
-                  ],
+                space(0, 15),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Nhập lại mật khẩu",
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon:
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
+                  ),
                 ),
                 space(0, 50),
                 ElevatedButton(
@@ -92,23 +69,23 @@ class _PageLoginState extends State<PageLogin> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child:
-                      const Text("Đăng nhập", style: TextStyle(fontSize: 18, color: Colors.white)),
+                  child: const Text("Tạo tài khoản",
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
                 ),
                 space(0, 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Bạn không có Tài khoản?",
+                      "Bạn đã có Tài khoản?",
                       style: TextStyle(fontSize: 15, color: Colors.black54),
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.to(const PageSignup());
+                        Get.to(const PageLogin());
                       },
                       child: const Text(
-                        "Đăng kí",
+                        "Đăng nhập",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.bold,
