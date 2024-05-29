@@ -103,11 +103,12 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
               child: CircularProgressIndicator(),
             );
           }
-          
+
           var c = ChuonChuonKimController.instance;
           TextEditingController txt = TextEditingController();
           List<ProductSnapshot> list = snapshot.data!;
-          list.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+          list.sort(
+              (ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
           c.listProductSnapshot = list;
           List<ProductSnapshot> products = list;
 
@@ -167,100 +168,106 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                     },
                   ),
                 ),
-          
+
                 // * show products
                 Expanded(
                   child: GetBuilder(
-                    init: ChuonChuonKimController.instance,
-                    id: "productAllAdmin",
-                    builder: (controller) {
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          ProductSnapshot ps = products[index];
+                      init: ChuonChuonKimController.instance,
+                      id: "productAllAdmin",
+                      builder: (controller) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            ProductSnapshot ps = products[index];
 
-                          return ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxHeight: 120,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Slidable(
-                                key: const ValueKey(0),
-                                endActionPane: ActionPane(
-                                  motion: const ScrollMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (value) {
-                                        Get.to(PageUpdateProduct(ps: ps));
-                                      },
-                                      backgroundColor: const Color(0xFF7BC043),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.archive,
-                                      label: 'Cập nhật',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: (value) async {
-                                        List<String> list = ["Xoá", "Huỷ"];
-                                        String cauHoi = "Bạn chắc chắc muốn xoá ?";
-                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
-                                        .then((value) async {
-                                          if (value == list[0]) {
-                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
-                                            await deleteImage(folders: Firebase.pathImageProduct, fileName: "${ps.product.maSP}.jpg");
-                                            await ps.delete()
-                                            .then((value) {
-                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
-                                              print("Đã xoá.");
-                                            })
-                                            .catchError((error) {
-                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
-                                              print("Có lỗi khi xoá !.");
-                                            });
-                                          }
-                                        });
-                                      },
-                                      backgroundColor: const Color.fromARGB(255, 207, 3, 3),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.delete,
-                                      label: 'Xóa',
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Image.network(ps.product.hinhAnhSP),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text("ID: ${ps.product.maSP}"),
-                                            Text("Tên: ${ps.product.tenSP}"),
-                                            Text("Giá: ${ps.product.giaSP}"),
-                                            Text("Mô tả: ${ps.product.moTaSP}"),
-                                            Text("Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
-                                          ],
+                            return ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: 150,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Slidable(
+                                  key: const ValueKey(0),
+                                  endActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        onPressed: (value) {
+                                          Get.to(PageUpdateProduct(ps: ps));
+                                        },
+                                        backgroundColor: const Color(0xFF7BC043),
+                                        foregroundColor: Colors.white,
+                                        icon: Icons.archive,
+                                        label: 'Cập nhật',
+                                      ),
+                                      SlidableAction(
+                                        onPressed: (value) async {
+                                          List<String> list = ["Xoá", "Huỷ"];
+                                          String cauHoi = "Bạn chắc chắc muốn xoá ?";
+                                          await khungLuaChon(
+                                                  context: context,
+                                                  listLuaChon: list,
+                                                  cauHoi: cauHoi)
+                                              .then((value) async {
+                                            if (value == list[0]) {
+                                              thongBaoDangThucHien(
+                                                  context: context, info: "Đang xoá...");
+                                              await deleteImage(
+                                                  folders: Firebase.pathImageProduct,
+                                                  fileName: "${ps.product.maSP}.jpg");
+                                              await ps.delete().then((value) {
+                                                thongBaoThucHienXong(
+                                                    context: context, info: "Đã xoá.");
+                                                print("Đã xoá.");
+                                              }).catchError((error) {
+                                                thongBaoThucHienXong(
+                                                    context: context, info: "Lỗi xoá !");
+                                                print("Có lỗi khi xoá !.");
+                                              });
+                                            }
+                                          });
+                                        },
+                                        backgroundColor: const Color.fromARGB(255, 207, 3, 3),
+                                        foregroundColor: Colors.white,
+                                        icon: Icons.delete,
+                                        label: 'Xóa',
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Image.network(ps.product.hinhAnhSP),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text("ID: ${ps.product.maSP}"),
+                                              Text("Tên: ${ps.product.tenSP}"),
+                                              Text("Giá: ${ps.product.giaSP}"),
+                                              Text("Mô tả: ${ps.product.moTaSP}"),
+                                              Text(
+                                                  "Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => const Divider(thickness: 1.5),
-                        itemCount: products.length,
-                      );
-                    }
-                  ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => const Divider(thickness: 1.5),
+                          itemCount: products.length,
+                        );
+                      }),
                 ),
               ],
             ),
