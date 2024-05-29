@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
+import '../database/models/User.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -18,7 +19,7 @@ class ChuonChuonKimController extends GetxController {
   List<Product> listSimilarProducts= [];
   List<Product> productYouCanLike= [];
 
-  String idUser = "0001";
+  User? user = dbUser[1];
 
   @override
   void onReady() {

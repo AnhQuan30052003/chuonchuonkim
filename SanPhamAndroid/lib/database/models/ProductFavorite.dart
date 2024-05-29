@@ -54,7 +54,7 @@ class ProductFavoriteSnapshot {
   }
 
   static Stream<List<ProductFavoriteSnapshot>> streamData() {
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).snapshots();
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.user!.id).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
           (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)
@@ -65,7 +65,7 @@ class ProductFavoriteSnapshot {
   }
 
   static Future<List<ProductFavoriteSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.idUser).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colProductFavorite).where("idUser", isEqualTo: ChuonChuonKimController.instance.user!.id).get();
 
     var list = qs.docs.map(
       (docSnap) => ProductFavoriteSnapshot.fromDocSnap(docSnap)
