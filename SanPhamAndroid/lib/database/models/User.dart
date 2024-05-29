@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
 class User {
-  String id, user, pass, ten, sdt, hinhAnhUser;
-  List<String> diaChi;
+  String id, user, pass, ten, sdt, hinhAnhUser, diaChi;
 
   User({
     required this.id,
@@ -36,7 +35,7 @@ class User {
       ten: map['ten'] as String,
       sdt: map['sdt'] as String,
       hinhAnhUser: map['hinhAnhUser'] as String,
-      diaChi: map['diaChi'] as List<String>,
+      diaChi: map['diaChi'] as String,
     );
   }
 }
@@ -85,7 +84,7 @@ class UserSnapshot {
 }
 
 List<User> dbUser = [
-  User(id: "0000", user: "admin", pass: "adminn", ten: "Admin", diaChi: List.of([]), sdt: "", hinhAnhUser: Firebase.avtDefault),
-  User(id: "0001", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: List.of(["Ninh Hiệp, Khánh Hoà"]), sdt: "", hinhAnhUser: Firebase.avtDefault),
-  User(id: "0002", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: List.of(["Ninh Thân, Khánh Hoà"]), sdt: "0398090114", hinhAnhUser: Firebase.avtDefault),
+  User(id: "0000", user: "admin", pass: "adminn", ten: "Admin", diaChi: "", sdt: "", hinhAnhUser: Firebase.avtDefault),
+  User(id: "0001", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: "Ninh Hiệp, Khánh Hoà", sdt: "", hinhAnhUser: Firebase.avtDefault),
+  User(id: "0002", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: "Ninh Thân, Khánh Hoà", sdt: "0398090114", hinhAnhUser: Firebase.avtDefault),
 ];

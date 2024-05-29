@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,8 @@ Widget account(BuildContext context) {
     _buildGestureDetector(icon: const Icon(Icons.logout_rounded, color: Colors.redAccent), label: "Đăng xuất", widget: const WidgetTest()),
   ];
 
+  var c = ChuonChuonKimController.instance;
+
   return SingleChildScrollView(
     child: Padding(
       padding: const EdgeInsets.all(10),
@@ -40,18 +43,18 @@ Widget account(BuildContext context) {
                 ClipOval(
                   child: SizedBox.fromSize(
                     size: const Size.fromRadius(50), // Image radius
-                    child: Image.network("https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg", fit: BoxFit.cover),
+                    child: Image.network(c.userSnapshot == null ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" : c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Tên khách hàng", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                        Text("Tài khoản", style: TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
+                        Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        Text("Tài khoản: ${c.userSnapshot!.user}", style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                       ],
                     ),
                   ),

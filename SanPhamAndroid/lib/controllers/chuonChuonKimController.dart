@@ -11,6 +11,7 @@ class ChuonChuonKimController extends GetxController {
   List<ProductSnapshot> listProductSnapshot = [];
   List<ProductTypeSnapshot> listProductTypeSnapshot = [];
   List<CartSnapshot> listCartSnapshot = [];
+  List<UserSnapshot> listUserSnapshot = [];
   List<ProductFavoriteSnapshot> listProductFavoriteSnapshot = [];
 
   List<Product> listProductsPopulator = [];
@@ -19,7 +20,7 @@ class ChuonChuonKimController extends GetxController {
   List<Product> listSimilarProducts= [];
   List<Product> productYouCanLike= [];
 
-  User? user = dbUser[1];
+  UserSnapshot? userSnapshot;
 
   @override
   void onReady() {
@@ -28,9 +29,8 @@ class ChuonChuonKimController extends GetxController {
     getProductType();
     getProduct();
     getProductFavorite();
-    getCart();
     getUser();
-    // getNotification();
+    getCart();
   }
 
   // * -------------------------------------
@@ -66,13 +66,20 @@ class ChuonChuonKimController extends GetxController {
 
   // Lấy dữ liệu user
   Future<void> getUser() async {
+    listUserSnapshot = await UserSnapshot.futureData();
+    listUserSnapshot.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
 
+    // lấy tạm để code
+    for (var o in listUserSnapshot) {
+      if (o.user.id == "0001") {
+        userSnapshot = o;
+        break;
+      }
+    }
   }
 
-  // Lấy dữ liệu notification
-  Future<void> getNotification() async {
 
-  }
+
 
   void getProductsPopulator({required int requestQuantity}) {
     listProductsPopulator = [];

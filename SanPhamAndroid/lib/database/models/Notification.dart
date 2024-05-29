@@ -64,7 +64,7 @@ class NotificationSnapshot {
   }
 
   static Stream<List<NotificationSnapshot>> streamData() {
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.user!.id).snapshots();
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.userSnapshot!.user.id).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
         (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
@@ -75,7 +75,7 @@ class NotificationSnapshot {
   }
 
   static Future<List<NotificationSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.user!.id).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.userSnapshot!.user.id).get();
 
     var list = qs.docs.map(
       (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
