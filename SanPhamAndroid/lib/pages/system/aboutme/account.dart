@@ -1,4 +1,5 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/pages/system/aboutme/editPassword.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,13 +18,22 @@ class WidgetTest extends StatelessWidget {
 
 Widget account(BuildContext context) {
   List<GestureDetector> above = [
-    _buildGestureDetector(icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent), label: "Thông tin cá nhân", widget: const PersonalInfo()),
+    _buildGestureDetector(
+        icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
+        label: "Thông tin cá nhân",
+        widget: const PersonalInfo()),
     // _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
   ];
 
   List<GestureDetector> bellow = [
-    _buildGestureDetector(icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent), label: "Đổi mật khẩu", widget: const WidgetTest()),
-    _buildGestureDetector(icon: const Icon(Icons.logout_rounded, color: Colors.redAccent), label: "Đăng xuất", widget: const WidgetTest()),
+    _buildGestureDetector(
+        icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent),
+        label: "Đổi mật khẩu",
+        widget: const EditPassword()),
+    _buildGestureDetector(
+        icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
+        label: "Đăng xuất",
+        widget: const WidgetTest()),
   ];
 
   var c = ChuonChuonKimController.instance;
@@ -46,7 +56,11 @@ Widget account(BuildContext context) {
                   ClipOval(
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(50), // Image radius
-                      child: Image.network(c.userSnapshot == null ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" : c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover),
+                      child: Image.network(
+                          c.userSnapshot == null
+                              ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg"
+                              : c.userSnapshot!.user.hinhAnhUser,
+                          fit: BoxFit.cover),
                     ),
                   ),
                   Expanded(
@@ -56,8 +70,10 @@ Widget account(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                          Text("Tài khoản: ${c.userSnapshot!.user.user}", style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
+                          Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten,
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text("Tài khoản: ${c.userSnapshot!.user.user}",
+                              style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                         ],
                       ),
                     ),
@@ -65,10 +81,8 @@ Widget account(BuildContext context) {
                 ],
               ),
             ),
-
             space(0, 20),
             _buildContainerFrame(context, above),
-
             space(0, 20),
             _buildContainerFrame(context, bellow),
           ],
@@ -93,7 +107,8 @@ Container _buildContainerFrame(BuildContext context, List<GestureDetector> list)
   );
 }
 
-GestureDetector _buildGestureDetector({required Icon icon, required String label, required Widget widget}) {
+GestureDetector _buildGestureDetector(
+    {required Icon icon, required String label, required Widget widget}) {
   return GestureDetector(
     child: ListTile(
       horizontalTitleGap: 10,
