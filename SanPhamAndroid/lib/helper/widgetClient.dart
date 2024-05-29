@@ -1,13 +1,15 @@
 import 'dart:math';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
+import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
 import '../pages/admin/pageNotificationAdmin.dart';
 import '../pages/client/pageCart.dart';
-import '../pages/client/pageNotification.dart';
+import '../pages/system/notification/pageNotification.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
 import '../pages/client/pageProductSearch.dart';
@@ -418,34 +420,55 @@ Widget buildStreamBuilderNotification() {
               Column(
                 children: listNew.map(
                   (ns) {
-                    return GestureDetector(
-                      child: Card(
-                        color: Colors.white,
-                        child: SizedBox(
-                          height: 50,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 35,
-                                child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
-                              ),
-                              space(10, 0),
-                              SizedBox(
-                                height: 50,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
-                                )
-                              ),
-                            ],
+                    return Slidable(
+                      key: const ValueKey(0),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (value) async {
+                              thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                              await ns.delete()
+                              .then((value) {
+                                thongBaoThucHienXong(context: context, info: "Đã xoá");
+                              });
+                            },
+                            backgroundColor: const Color.fromARGB(255, 207, 3, 3),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Xóa',
+                          ),
+                        ],
+                      ),
+                      child: GestureDetector(
+                        child: Card(
+                          color: Colors.white,
+                          child: SizedBox(
+                            height: 50,
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 35,
+                                  child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
+                                ),
+                                space(10, 0),
+                                SizedBox(
+                                    height: 50,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
+                                    )
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () async {
+                          // Chuyển page..
+                          ns.notification.seen = true;
+                          await ns.update(ns.notification);
+                        },
                       ),
-                      onTap: () async {
-                        // Chuyển page..
-                        ns.notification.seen = true;
-                        await ns.update(ns.notification);
-                      },
                     );
                   }
                 ).toList(),
@@ -455,33 +478,54 @@ Widget buildStreamBuilderNotification() {
               Column(
                 children: listOld.map(
                   (ns) {
-                    return GestureDetector(
-                      child: Card(
-                        color: Colors.black12,
-                        child: SizedBox(
-                          height: 50,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 35,
-                                child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
-                              ),
-                              space(10, 0),
-                              SizedBox(
-                                height: 50,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
-                                )
-                              ),
-                            ],
+                    return Slidable(
+                      key: const ValueKey(0),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (value) async {
+                              thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                              await ns.delete()
+                              .then((value) {
+                                thongBaoThucHienXong(context: context, info: "Đã xoá");
+                              });
+                            },
+                            backgroundColor: const Color.fromARGB(255, 207, 3, 3),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Xóa',
+                          ),
+                        ],
+                      ),
+                      child: GestureDetector(
+                        child: Card(
+                          color: Colors.black12,
+                          child: SizedBox(
+                            height: 50,
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 35,
+                                  child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
+                                ),
+                                space(10, 0),
+                                SizedBox(
+                                    height: 50,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
+                                    )
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          // Chuyển page..
+                          // Get.to();
+                        },
                       ),
-                      onTap: () {
-                        // Chuyển page..
-                        // Get.to();
-                      },
                     );
                   }
                 ).toList(),

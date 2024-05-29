@@ -9,11 +9,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../database/connect/firebaseConnect.dart';
-import '../../database/connect/setupFirebase.dart';
-import '../../database/models/Product.dart';
-import '../../helper/dialog.dart';
-import '../../helper/uploadImage.dart';
-import 'product/pageUpdateProduct.dart';
 import 'widget/widgetAdmin.dart';
 
 class AdminConnect extends StatelessWidget {
