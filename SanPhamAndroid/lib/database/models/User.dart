@@ -82,7 +82,7 @@ class UserSnapshot {
 }
 
 List<User> dbUser = [
-  User(id: "0001", user: "admin", pass: "adminn", ten: "Admin", diaChi: List.of([]), sdt: ""),
-  User(id: "0002", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: List.of(["Ninh Hiệp, Khánh Hoà"]), sdt: ""),
-  User(id: "0003", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: List.of(["Ninh Thân, Khánh Hoà"]), sdt: "0398090114"),
+  User(id: "0000", user: "admin", pass: "adminn", ten: "Admin", diaChi: List.of([]), sdt: ""),
+  User(id: "0001", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: List.of(["Ninh Hiệp, Khánh Hoà"]), sdt: ""),
+  User(id: "0002", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: List.of(["Ninh Thân, Khánh Hoà"]), sdt: "0398090114"),
 ];

@@ -86,9 +86,9 @@ class NotificationSnapshot {
 }
 
 List<Notification> dbNotification = [
-  Notification(idNoti: "0001", idUser: "0001", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true, toUser: "0002"),
-  Notification(idNoti: "0002", idUser: "0001", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true, toUser: "0002"),
-  Notification(idNoti: "0003", idUser: "0001", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true, toUser: "0002"),
-  Notification(idNoti: "0004", idUser: "0001", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false, toUser: "0002"),
-  Notification(idNoti: "0005", idUser: "0001", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false, toUser: "0002"),
+  Notification(idNoti: "0001", idUser: "0000", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true, toUser: "0001"),
+  Notification(idNoti: "0002", idUser: "0000", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true, toUser: "0001"),
+  Notification(idNoti: "0003", idUser: "0000", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true, toUser: "0001"),
+  Notification(idNoti: "0004", idUser: "0000", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false, toUser: "0001"),
+  Notification(idNoti: "0005", idUser: "0000", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false, toUser: "0001"),
 ];

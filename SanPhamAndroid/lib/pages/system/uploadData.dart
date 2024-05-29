@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../database/connect/firebaseConnect.dart';
 import '../../database/connect/setupFirebase.dart';
+import '../../database/models/User.dart';
 import '../../helper/dialog.dart';
 
 class AppUploadData extends StatelessWidget {
@@ -70,6 +71,14 @@ class UploadData extends StatelessWidget {
                 .then((value) {
                   for (var o in dbNotification) {
                     NotificationSnapshot.add(o);
+                  }
+                });
+
+                // Users
+                await deleteData(collectionPath: Firebase.colUser)
+                .then((value) {
+                  for (var o in dbUser) {
+                    UserSnapshot.add(o);
                   }
                 });
 
