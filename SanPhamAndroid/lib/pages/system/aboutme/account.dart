@@ -16,7 +16,6 @@ Widget account(BuildContext context) {
         widget: const PersonalInfo(),
         logout: false,
     ),
-    // _buildGestureDetector(icon: const Icon(CupertinoIcons.location_solid, color: Colors.lightBlue), label: "Địa chỉ nhận hàng", widget: const MyAddress()),
   ];
 
   List<GestureDetector> bellow = [
@@ -57,7 +56,7 @@ Widget account(BuildContext context) {
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(50), // Image radius
                       child: Image.network(
-                          c.userSnapshot == null
+                          c.isLogin == false
                               ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg"
                               : c.userSnapshot!.user.hinhAnhUser,
                           fit: BoxFit.cover),
@@ -70,9 +69,9 @@ Widget account(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(c.userSnapshot == null ? "Tên khách hàng" : c.userSnapshot!.user.ten,
+                          Text(c.isLogin == false ? "Tên khách hàng" : c.userSnapshot!.user.ten,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                          Text("Tài khoản: ${c.userSnapshot!.user.user}",
+                          Text("Tài khoản: ${c.isLogin == false ? "Chưa đăng nhập" : c.userSnapshot!.user.user}",
                               style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                         ],
                       ),
@@ -128,6 +127,12 @@ GestureDetector _buildGestureDetector({required BuildContext context, required I
       ),
     ),
     onTap: () async {
+      var c = ChuonChuonKimController.instance;
+      if (c.isLogin == false) {
+        c.toLogin();
+        return;
+      }
+
       if (logout == false) {
         Get.to(widget);
         return;
@@ -141,7 +146,7 @@ GestureDetector _buildGestureDetector({required BuildContext context, required I
           var c = ChuonChuonKimController.instance;
           c.isLogin = false;
           c.userSnapshot = null;
-          Get.to(widget);
+          Get.offAll(widget);
         }
       });
     },

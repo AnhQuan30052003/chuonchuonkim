@@ -58,9 +58,7 @@ class CartSnapshot {
   }
 
   static Stream<List<CartSnapshot>> streamData() {
-    var c = ChuonChuonKimController.instance.userSnapshot;
-    String id = (c == null ? "" : c.user.id);
-    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: id).snapshots();
+    var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.getId()).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
         (docSnap) => CartSnapshot.fromDocSnap(docSnap)
@@ -71,7 +69,7 @@ class CartSnapshot {
   }
 
   static Future<List<CartSnapshot>> futureData() async {
-    var qs = await FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.userSnapshot!.user.id).get();
+    var qs = await FirebaseFirestore.instance.collection(Firebase.colCart).where("idUser", isEqualTo: ChuonChuonKimController.instance.getId()).get();
 
     var list = qs.docs.map(
       (docSnap) => CartSnapshot.fromDocSnap(docSnap)

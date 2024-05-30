@@ -7,6 +7,7 @@ import '../../../controllers/chuonChuonKimController.dart';
 import '../../../database/connect/setupFirebase.dart';
 import '../../../database/models/Notification.dart';
 import '../../../database/models/Product.dart';
+import '../../../database/models/User.dart';
 import '../../../helper/dialog.dart';
 import '../../../helper/uploadImage.dart';
 import '../pageNotificationAdmin.dart';
@@ -14,6 +15,7 @@ import '../product/pageAddProduct.dart';
 import '../product/pageUpdateProduct.dart';
 import '../product_type/pageAddProductType.dart';
 import '../product_type/pageUpdateProductType.dart';
+import '../user/updateUser.dart';
 
 PreferredSizeWidget buildAppBarAdmin({required String info}) {
   return AppBar(
@@ -54,6 +56,11 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
           ),
         ),
         onTap: () {
+          var c = ChuonChuonKimController.instance;
+          if (c.isLogin == false) {
+            c.toLogin();
+            return;
+          }
           Get.to(const PageNotificationAdmin());
         },
       ),
@@ -89,8 +96,7 @@ Widget buildProduct(BuildContext context) {
         var c = ChuonChuonKimController.instance;
         TextEditingController txt = TextEditingController();
         List<ProductSnapshot> data = snapshot.data!;
-        data.sort(
-            (ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+        data.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
         c.listProductSnapshot = data;
         List<ProductSnapshot> list = data;
 
@@ -233,8 +239,7 @@ Widget buildProduct(BuildContext context) {
                                               Text("Tên: ${ps.product.tenSP}"),
                                               Text("Giá: ${ps.product.giaSP}"),
                                               Text("Mô tả: ${ps.product.moTaSP}"),
-                                              Text(
-                                                  "Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
+                                              Text("Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
                                             ],
                                           ),
                                         ),
@@ -279,8 +284,7 @@ Widget buildProductType(BuildContext context) {
         var c = ChuonChuonKimController.instance;
         TextEditingController txt = TextEditingController();
         List<ProductTypeSnapshot> data = snapshot.data!;
-        data.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) =>
-            a.productType.maLSP.compareTo(b.productType.maLSP));
+        data.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
         c.listProductTypeSnapshot = data;
         List<ProductTypeSnapshot> list = data;
 
@@ -441,5 +445,192 @@ Widget buildProductType(BuildContext context) {
       },
     ),
     floatingActionButton: buildFloatButton(type: const PageAddProductType()),
+  );
+}
+
+Widget buildUser(BuildContext context) {
+  return Scaffold(
+    body: StreamBuilder(
+      stream: UserSnapshot.streamData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        var c = ChuonChuonKimController.instance;
+        TextEditingController txt = TextEditingController();
+        List<UserSnapshot> data = snapshot.data!;
+        for (var o in data) {
+          if (o.user.id == "0000") {
+            data.remove(o);
+            break;
+          }
+        }
+
+        data.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
+        c.listUserSnapshot = data;
+        List<UserSnapshot> list = data;
+
+        void search({required String textSearch}) {
+          if (textSearch.isNotEmpty) {
+            textSearch = textSearch.toLowerCase();
+            list = [];
+
+            for (var object in data) {
+              var p = object.user;
+              bool searchID = p.id.toLowerCase().contains(textSearch);
+              bool searchName = p.ten.toLowerCase().contains(textSearch);
+              bool searchPhoneNumber = p.sdt.toLowerCase().contains(textSearch);
+              bool searchAddress = p.diaChi.toLowerCase().contains(textSearch);
+
+              if (searchID || searchName || searchPhoneNumber || searchAddress) {
+                list.add(object);
+              }
+            }
+            c.updateNameId(nameId: "userAllAdmin");
+          }
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            children: [
+              // * search
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: txt,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    suffixIcon: GestureDetector(
+                      child: const Icon(
+                        Icons.search,
+                        color: Colors.redAccent,
+                      ),
+                      onTap: () {
+                        search(textSearch: txt.text);
+                      },
+                    ),
+                    hintText: "Tìm kiếm...",
+                  ),
+                  onSubmitted: (value) {
+                    search(textSearch: value);
+                  },
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      list = data;
+                      ChuonChuonKimController.instance.updateNameId(nameId: "userAllAdmin");
+                    }
+                  },
+                ),
+              ),
+
+              // * show products
+              Expanded(
+                child: GetBuilder(
+                    init: ChuonChuonKimController.instance,
+                    id: "userAllAdmin",
+                    builder: (controller) {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          UserSnapshot pts = list[index];
+
+                          return ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxHeight: 150,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Slidable(
+                                key: const ValueKey(0),
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (value) {
+                                        Get.to(PageUpdateUser(ps: pts));
+                                      },
+                                      backgroundColor: const Color(0xFF7BC043),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.archive,
+                                      label: 'Cập nhật',
+                                    ),
+                                    SlidableAction(
+                                      onPressed: (value) async {
+                                        List<String> list = ["Xoá", "Huỷ"];
+                                        String cauHoi = "Bạn chắc chắc muốn xoá ?";
+                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
+                                        .then((value) async {
+                                          if (value == list[0]) {
+                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                                            await deleteImage(folders: Firebase.pathAvatarUser, fileName: "${pts.user.id}.jpg");
+                                            await pts.delete().then((value) {
+                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
+                                              print("Đã xoá.");
+                                            }).catchError((error) {
+                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
+                                              print("Có lỗi khi xoá !.");
+                                            });
+                                          }
+                                        });
+                                      },
+                                      backgroundColor: const Color.fromARGB(255, 207, 3, 3),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                      label: 'Xóa',
+                                    ),
+                                  ],
+                                ),
+                                child: Card(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Image.network(pts.user.hinhAnhUser),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text("ID: ${pts.user.id}"),
+                                              Text("Tên: ${pts.user.ten}"),
+                                              Text("SDT: ${pts.user.sdt}"),
+                                              Text("Địa chỉ: ${pts.user.diaChi}"),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const Divider(thickness: 1.5),
+                        itemCount: list.length,
+                      );
+                    }),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
   );
 }

@@ -7,7 +7,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
-import '../pages/admin/pageNotificationAdmin.dart';
 import '../pages/client/pageCart.dart';
 import '../pages/system/notification/pageNotification.dart';
 import 'widget.dart';
@@ -29,6 +28,11 @@ PreferredSizeWidget buildAppBar({required String info}) {
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
             onTap: () {
+              var c = ChuonChuonKimController.instance;
+              if (c.isLogin == false) {
+                c.toLogin();
+                return;
+              }
               Get.to(const PageNotification());
             },
             badgeContent: GetBuilder(
@@ -60,7 +64,10 @@ PreferredSizeWidget buildAppBar({required String info}) {
         ),
         onTap: () {
           var c = ChuonChuonKimController.instance;
-          c.toLogin();
+          if (c.isLogin == false) {
+            c.toLogin();
+            return;
+          }
           Get.to(const PageNotification());
         },
       ),
@@ -69,6 +76,11 @@ PreferredSizeWidget buildAppBar({required String info}) {
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
             onTap: () {
+              var c = ChuonChuonKimController.instance;
+              if (c.isLogin == false) {
+                c.toLogin();
+                return;
+              }
               Get.to(const PageCart());
             },
             badgeContent: GetBuilder(
@@ -98,7 +110,10 @@ PreferredSizeWidget buildAppBar({required String info}) {
         ),
         onTap: () {
           var c = ChuonChuonKimController.instance;
-          c.toLogin();
+          if (c.isLogin == false) {
+            c.toLogin();
+            return;
+          }
           Get.to(const PageCart());
         },
       ),
@@ -298,7 +313,7 @@ Widget buildProductsPopulator() {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 10),
                     child: Container(
                       margin: const EdgeInsets.only(right: 5, left: 5),
                       height: h,
@@ -352,7 +367,7 @@ Widget buildProductsPopulator() {
                     ),
                   ),
                   Positioned(
-                    left: 35,
+                    left: 40,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(80),

@@ -109,7 +109,11 @@ class _PageDetailsState extends State<PageDetails> {
                         ),
                         onPressed: () async {
                           var c = ChuonChuonKimController.instance;
-                          c.toLogin();
+
+                          if (c.isLogin == false) {
+                            c.toLogin();
+                            return;
+                          }
 
                           tym = !tym;
                           c.updateNameId(nameId: widget.product.maSP);
@@ -151,7 +155,10 @@ class _PageDetailsState extends State<PageDetails> {
                   ElevatedButton(
                     onPressed: () async {
                       var c = ChuonChuonKimController.instance;
-                      c.toLogin();
+                      if (c.isLogin == false) {
+                        c.toLogin();
+                        return;
+                      }
 
                       String id = "0";
                       var lastCartSnapshot = c.listCartSnapshot.lastOrNull;
@@ -177,7 +184,10 @@ class _PageDetailsState extends State<PageDetails> {
                   ElevatedButton(
                     onPressed: () {
                       var c = ChuonChuonKimController.instance;
-                      c.toLogin();
+                      if (c.isLogin == false) {
+                        c.toLogin();
+                        return;
+                      }
 
 
                     },

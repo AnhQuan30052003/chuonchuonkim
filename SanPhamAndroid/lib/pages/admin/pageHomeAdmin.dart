@@ -79,12 +79,8 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
 
   _buildBody(BuildContext context, int index) {
     if (index == 1) return buildProductType(context);
-    if (index == 2) return _buildAboutMe(context);
-    if (index == 3) return _buildAboutMe(context);
+    if (index == 2) return buildUser(context);
+    if (index == 3) return account(context);
     return buildProduct(context);
-  }
-
-  _buildAboutMe(BuildContext context) {
-    return account(context);
   }
 }

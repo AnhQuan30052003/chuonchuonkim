@@ -5,6 +5,7 @@ import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
 import '../pages/system/sign/login.dart';
+import '../testCode/a.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -30,9 +31,8 @@ class ChuonChuonKimController extends GetxController {
     getData();
   }
 
-  void getData() async {
-    await getUser();
-    updateNameId(nameId: "appBar");
+  void getData() {
+    getUser();
     getProductType();
     getProduct();
     getProductFavorite();
@@ -74,15 +74,11 @@ class ChuonChuonKimController extends GetxController {
   Future<void> getUser() async {
     listUserSnapshot = await UserSnapshot.futureData();
     listUserSnapshot.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
+    updateNameId(nameId: "appBar");
+  }
 
-    // lấy tạm để code
-    for (var o in listUserSnapshot) {
-      if (o.user.id == "0001") {
-        userSnapshot = o;
-        break;
-      }
-    }
-    isLogin = true;
+  String getId() {
+    return isLogin == false ? "" : userSnapshot!.user.id;
   }
 
 
@@ -222,10 +218,14 @@ class ChuonChuonKimController extends GetxController {
   }
 
   Future<bool> login({required String user, required String password}) async {
+    listUserSnapshot = await UserSnapshot.futureData();
+    listUserSnapshot.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
+
     for (var us in listUserSnapshot) {
       var u = us.user;
       if (u.user == user && u.pass == password) {
         userSnapshot = us;
+        isLogin = true;
         return true;
       }
     }
@@ -233,9 +233,7 @@ class ChuonChuonKimController extends GetxController {
   }
 
   void toLogin() {
-    if (isLogin == false) {
-      Get.to(const PageLogin());
-    }
+    Get.to(const PageLogin());
   }
 }
 
