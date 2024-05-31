@@ -26,7 +26,7 @@ class PageOrder extends StatelessWidget {
             return const Center(
               child: Column(
                 children: [
-                  CircleAvatar(),
+                  CircularProgressIndicator(),
                 ],
               )
             );
