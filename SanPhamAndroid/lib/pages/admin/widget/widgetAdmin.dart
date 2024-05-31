@@ -18,7 +18,7 @@ import '../product_type/pageAddProductType.dart';
 import '../product_type/pageUpdateProductType.dart';
 import '../user/updateUser.dart';
 
-PreferredSizeWidget buildAppBarAdmin({required String info}) {
+PreferredSizeWidget buildAppBarAdmin({required String info, required Future<dynamic> widget}) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white10,
@@ -58,11 +58,11 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
         ),
         onTap: () {
           var c = ChuonChuonKimController.instance;
-          if (c.isLogin == false) {
-            Get.to(const PageLogin());
-            return;
-          }
-          Get.to(const PageNotificationAdmin());
+          // if (c.isLogin == false) {
+          //   Get.to(const PageLogin());
+          //   return;
+          // }
+          widget;
         },
       ),
     ],
@@ -97,7 +97,8 @@ Widget buildProduct(BuildContext context) {
         var c = ChuonChuonKimController.instance;
         TextEditingController txt = TextEditingController();
         List<ProductSnapshot> data = snapshot.data!;
-        data.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+        data.sort(
+            (ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
         c.listProductSnapshot = data;
         List<ProductSnapshot> list = data;
 
@@ -193,26 +194,29 @@ Widget buildProduct(BuildContext context) {
                                       onPressed: (value) async {
                                         List<String> list = ["Xoá", "Huỷ"];
                                         String cauHoi = "Bạn chắc chắc muốn xoá ?";
-                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
-                                        .then((value) async {
+                                        await khungLuaChon(
+                                                context: context, listLuaChon: list, cauHoi: cauHoi)
+                                            .then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                                            thongBaoDangThucHien(
+                                                context: context, info: "Đang xoá...");
 
                                             try {
-                                              await deleteImage(folders: Firebase.pathImageProduct, fileName: "${ps.product.maSP}.jpg");
+                                              await deleteImage(
+                                                  folders: Firebase.pathImageProduct,
+                                                  fileName: "${ps.product.maSP}.jpg");
                                               print("Xoá thành công.");
-                                            }
-                                            catch (error) {
+                                            } catch (error) {
                                               print("Lỗi xoá !");
                                             }
 
-
-                                            await ps.delete()
-                                            .then((value) {
-                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
+                                            await ps.delete().then((value) {
+                                              thongBaoThucHienXong(
+                                                  context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
-                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
+                                              thongBaoThucHienXong(
+                                                  context: context, info: "Lỗi xoá !");
                                               print("Có lỗi khi xoá !.");
                                             });
                                           }
@@ -244,7 +248,8 @@ Widget buildProduct(BuildContext context) {
                                               Text("Tên: ${ps.product.tenSP}"),
                                               Text("Giá: ${ps.product.giaSP}"),
                                               Text("Mô tả: ${ps.product.moTaSP}"),
-                                              Text("Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
+                                              Text(
+                                                  "Loại sản phẩm: ${c.getTenLSP(product: ps.product)}"),
                                             ],
                                           ),
                                         ),
@@ -289,7 +294,8 @@ Widget buildProductType(BuildContext context) {
         var c = ChuonChuonKimController.instance;
         TextEditingController txt = TextEditingController();
         List<ProductTypeSnapshot> data = snapshot.data!;
-        data.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
+        data.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) =>
+            a.productType.maLSP.compareTo(b.productType.maLSP));
         c.listProductTypeSnapshot = data;
         List<ProductTypeSnapshot> list = data;
 
@@ -387,19 +393,21 @@ Widget buildProductType(BuildContext context) {
                                                 context: context, listLuaChon: list, cauHoi: cauHoi)
                                             .then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                                            thongBaoDangThucHien(
+                                                context: context, info: "Đang xoá...");
 
                                             try {
-                                              await deleteImage(folders: Firebase.pathImageProductType, fileName: "${pts.productType.maLSP}.jpg");
+                                              await deleteImage(
+                                                  folders: Firebase.pathImageProductType,
+                                                  fileName: "${pts.productType.maLSP}.jpg");
                                               print("Xoá thành công.");
-                                            }
-                                            catch (error) {
+                                            } catch (error) {
                                               print("Xoá lỗi !");
                                             }
 
-                                            await pts.delete()
-                                            .then((value) {
-                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
+                                            await pts.delete().then((value) {
+                                              thongBaoThucHienXong(
+                                                  context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
                                               thongBaoThucHienXong(
@@ -580,22 +588,27 @@ Widget buildUser(BuildContext context) {
                                       onPressed: (value) async {
                                         List<String> list = ["Xoá", "Huỷ"];
                                         String cauHoi = "Bạn chắc chắc muốn xoá ?";
-                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
-                                        .then((value) async {
+                                        await khungLuaChon(
+                                                context: context, listLuaChon: list, cauHoi: cauHoi)
+                                            .then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+                                            thongBaoDangThucHien(
+                                                context: context, info: "Đang xoá...");
                                             try {
-                                              await deleteImage(folders: Firebase.pathAvatarUser, fileName: "${pts.user.id}.jpg");
+                                              await deleteImage(
+                                                  folders: Firebase.pathAvatarUser,
+                                                  fileName: "${pts.user.id}.jpg");
                                               print("Xoá thành công.");
-                                            }
-                                            catch (error) {
+                                            } catch (error) {
                                               print("Không tìm thấy ảnh !");
                                             }
                                             await pts.delete().then((value) {
-                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
+                                              thongBaoThucHienXong(
+                                                  context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
-                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
+                                              thongBaoThucHienXong(
+                                                  context: context, info: "Lỗi xoá !");
                                               print("Có lỗi khi xoá !.");
                                             });
                                           }

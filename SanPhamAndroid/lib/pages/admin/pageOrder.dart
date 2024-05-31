@@ -16,6 +16,21 @@ class PageOrder extends StatelessWidget {
           style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
         ),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Text("20 đơn đơn chờ"),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -40,9 +40,30 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
   @override
   Widget build(BuildContext context) {
     List<String> title = ["Sản phẩm", "Loại sản phẩm", "Khách hàng", "Tài khoản"];
+    Future<dynamic> show = showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: 200,
+          child: Column(
+            children: [
+              const Text("20 đơn đơn chờ"),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
 
     return Scaffold(
-      appBar: buildAppBarAdmin(info: title[index]),
+      appBar: buildAppBarAdmin(info: title[index], widget: show),
       body: _buildBody(context, index),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(10),

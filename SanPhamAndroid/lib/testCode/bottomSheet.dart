@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const App());
@@ -7,11 +8,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "App",
-      debugShowCheckedModeBanner: false,
-      home: Page()
-    );
+    return const MaterialApp(title: "App", debugShowCheckedModeBanner: false, home: Page());
   }
 }
 
@@ -29,12 +26,11 @@ class Page extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                String name = "close";
-                show(context, name);
-              },
-              child: const Text("Click or Press")
-            )
+                onPressed: () {
+                  String name = "close";
+                  show(context, name);
+                },
+                child: const Text("Click or Press"))
           ],
         ),
       ),
@@ -44,9 +40,9 @@ class Page extends StatelessWidget {
 
 void show(BuildContext context, String text) {
   showModalBottomSheet(
-    context: context,
-    builder: (context) {
-      return SizedBox(
+      context: context,
+      builder: (context) {
+        return SizedBox(
           height: 100,
           child: Center(
             child: ElevatedButton(
@@ -57,7 +53,5 @@ void show(BuildContext context, String text) {
             ),
           ),
         );
-    }
-  );
+      });
 }
-
