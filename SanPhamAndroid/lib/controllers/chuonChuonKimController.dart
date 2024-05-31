@@ -198,9 +198,6 @@ class ChuonChuonKimController extends GetxController {
   }
 
   Future<bool> login({required String user, required String password}) async {
-    listUserSnapshot = await UserSnapshot.futureData();
-    listUserSnapshot.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
-
     for (var us in listUserSnapshot) {
       var u = us.user;
       if ((u.user == user || u.sdt == user) && u.pass == password) {
