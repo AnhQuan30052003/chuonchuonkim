@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/counterQuantityProductController.dart';
 import '../../database/models/Product.dart';
+import 'pageOrderSuccess.dart';
 
 class ConfirmOrder extends StatefulWidget {
   final List<Product> listProduct;
@@ -73,20 +74,23 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 itemBuilder: (context, index) {
                   var p = widget.listProduct[index];
                   var q = widget.listQuantity[index];
-                  return ListTile(
-                    leading: SizedBox(width: 50, height: 100, child: Image.network(p.hinhAnhSP)),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(p.tenSP),
-                      ],
-                    ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Giá: ${p.giaSP} đ"),
-                        Text("X${q.count.value}"),
-                      ],
+                  return Card(
+                    shape: Border.all(width: 0, color: Colors.white),
+                    child: ListTile(
+                      leading: SizedBox(width: 50, height: 100, child: Image.network(p.hinhAnhSP)),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(p.tenSP),
+                        ],
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Giá: ${p.giaSP} đ"),
+                          Text("X${q.count.value}"),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -145,8 +149,21 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                   ),
                 ),
-                onTap: () {
-                  // Get.to(const )
+                onTap: () async {
+                  var c = ChuonChuonKimController.instance;
+
+                  for (int i = 0; i < widget.listProduct.length; i++) {
+                    var p = widget.listProduct[i];
+
+                    for (var cs in c.listCartSnapshot) {
+                      if (cs.cart.maSP == p.maSP) {
+                        await cs.delete();
+                        c.listCartSnapshot.remove(cs);
+                      }
+                    }
+                  }
+
+                  Get.to(const OrderSuccess());
                 },
               ),
             )
