@@ -10,28 +10,28 @@ import 'infor/personalInfo.dart';
 Widget account(BuildContext context) {
   List<GestureDetector> above = [
     _buildGestureDetector(
-        context: context,
-        icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
-        label: "Thông tin cá nhân",
-        widget: const PersonalInfo(),
-        logout: false,
+      context: context,
+      icon: const Icon(Icons.person_2_outlined, color: Colors.orangeAccent),
+      label: "Thông tin cá nhân",
+      widget: const PersonalInfo(),
+      logout: false,
     ),
   ];
 
   List<GestureDetector> bellow = [
     _buildGestureDetector(
-        context: context,
-        icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent),
-        label: "Đổi mật khẩu",
-        widget: const EditPassword(),
-        logout: false,
+      context: context,
+      icon: const Icon(Icons.key_sharp, color: Colors.purpleAccent),
+      label: "Đổi mật khẩu",
+      widget: const EditPassword(),
+      logout: false,
     ),
     _buildGestureDetector(
-        context: context,
-        icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
-        label: "Đăng xuất",
-        widget: const PageLogin(),
-        logout: true,
+      context: context,
+      icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
+      label: "Đăng xuất",
+      widget: const PageLogin(),
+      logout: true,
     ),
   ];
 
@@ -57,10 +57,9 @@ Widget account(BuildContext context) {
                       size: const Size.fromRadius(50), // Image radius
                       child: Image.network(
                           c.isLogin == false
-                            ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg"
-                            : c.userSnapshot!.user.hinhAnhUser,
-                        fit: BoxFit.cover
-                      ),
+                              ? "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"
+                              : c.userSnapshot!.user.hinhAnhUser,
+                          fit: BoxFit.cover),
                     ),
                   ),
                   Expanded(
@@ -72,7 +71,8 @@ Widget account(BuildContext context) {
                         children: [
                           Text(c.isLogin == false ? "Tên khách hàng" : c.userSnapshot!.user.ten,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                          Text("Tài khoản: ${c.isLogin == false ? "Chưa đăng nhập" : c.userSnapshot!.user.user}",
+                          Text(
+                              "Tài khoản: ${c.isLogin == false ? "Chưa đăng nhập" : c.userSnapshot!.user.user}",
                               style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                         ],
                       ),
@@ -107,7 +107,12 @@ Container _buildContainerFrame(BuildContext context, List<GestureDetector> list)
   );
 }
 
-GestureDetector _buildGestureDetector({required BuildContext context, required Icon icon, required String label, required Widget widget, required logout}) {
+GestureDetector _buildGestureDetector(
+    {required BuildContext context,
+    required Icon icon,
+    required String label,
+    required Widget widget,
+    required logout}) {
   return GestureDetector(
     child: ListTile(
       horizontalTitleGap: 10,
@@ -141,8 +146,7 @@ GestureDetector _buildGestureDetector({required BuildContext context, required I
 
       List<String> list = ["Xác nhận", "Huỷ"];
       String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
-      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
-      .then((value) {
+      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
         if (value == list[0]) {
           var c = ChuonChuonKimController.instance;
           c.isLogin = false;
