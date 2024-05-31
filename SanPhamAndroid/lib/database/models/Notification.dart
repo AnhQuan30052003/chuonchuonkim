@@ -50,13 +50,13 @@ class NotificationsSnapshot {
 
   factory NotificationsSnapshot.fromDocSnap(DocumentSnapshot docSnap) {
     return NotificationsSnapshot(
-        notification: Notifications.fromJson(docSnap.data() as Map<String, dynamic>),
+      notification: Notifications.fromJson(docSnap.data() as Map<String, dynamic>),
       docRef: docSnap.reference
     );
   }
 
   static Future<DocumentReference> add(Notifications object) async {
-    return FirebaseFirestore.instance.collection(Firebase.colNotification).add(object.toJson());
+    return await FirebaseFirestore.instance.collection(Firebase.colNotification).add(object.toJson());
   }
 
   Future<void> delete() async {

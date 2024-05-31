@@ -63,7 +63,7 @@ PreferredSizeWidget buildAppBarAdmin({required BuildContext context, required St
 FloatingActionButton buildFloatButton({required Widget type}) {
   return FloatingActionButton(
     onPressed: () {
-      Get.to(type);
+      Get.to(() => type);
     },
     child: const Icon(Icons.add),
   );
