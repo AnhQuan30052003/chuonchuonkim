@@ -77,6 +77,7 @@ class _PageLoginState extends State<PageLogin> {
               space(0, 50),
               ElevatedButton(
                 onPressed: () async {
+                  if (txtUser.text.isEmpty || txtPass.text.isEmpty) return;
                   thongBaoDangThucHien(context: context, info: "Đang đăng nhập...");
                   var c = ChuonChuonKimController.instance;
                   await c

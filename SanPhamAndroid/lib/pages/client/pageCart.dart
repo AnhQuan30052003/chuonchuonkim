@@ -129,6 +129,7 @@ class PageCart extends StatelessWidget {
                 value: checkProduct.isChecked.value,
                 onChanged: (bool? newBool) {
                   checkProduct.isChecked.value = newBool!;
+                  ChuonChuonKimController.instance.updateNameId(nameId: "sumMoney");
                 },
               )
             ),
@@ -153,12 +154,18 @@ class PageCart extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => counterQuantity.decrement(),
+                        onPressed: () {
+                          counterQuantity.decrement();
+                          ChuonChuonKimController.instance.updateNameId(nameId: "sumMoney");
+                        },
                         icon: const Icon(Icons.remove),
                       ),
                       Obx(() => Text("${counterQuantity.count.value}")),
                       IconButton(
-                        onPressed: () => counterQuantity.increment(),
+                        onPressed: () {
+                          counterQuantity.increment();
+                          ChuonChuonKimController.instance.updateNameId(nameId: "sumMoney");
+                        },
                         icon: const Icon(Icons.add),
                       )
                     ]
@@ -188,7 +195,10 @@ class PageCart extends StatelessWidget {
             color: Colors.grey,
           ),
           const SizedBox(height: 10),
-          Obx(() => Text(
+          GetBuilder(
+            init: ChuonChuonKimController.instance,
+            id: "sumMoney",
+            builder: (controller) => Text(
               "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
               style: const TextStyle(color: Colors.red)
             ),

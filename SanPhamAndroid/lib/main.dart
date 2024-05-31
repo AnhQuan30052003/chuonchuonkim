@@ -1,5 +1,8 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:flutter/material.dart';
-import 'pages/client/pageHomeClient.dart';
+import 'package:get/get.dart';
+import 'database/connect/firebaseConnect.dart';
 import 'pages/admin/pageHomeAdmin.dart';
 import 'pages/system/uploadData.dart';
 
@@ -10,10 +13,13 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "Chuonchuonkim App",
-      debugShowCheckedModeBanner: false,
-      home: ListApp(),
+    return FirebaseConnect(
+      builder: (context) => GetMaterialApp(
+        title: "Chuonchuonkim App",
+        debugShowCheckedModeBanner: false,
+        initialBinding: ChuonChuonKimBindings(),
+        home: const ListApp(),
+      ),
     );
   }
 }
@@ -34,8 +40,7 @@ class ListApp extends StatelessWidget {
           child: Column(
             children: [
               _buildButton(context, label: "Upload Data", type: const AppUploadData()),
-              _buildButton(context, label: "App client", type: const ClientConnect()),
-              _buildButton(context, label: "App admin", type: const AdminConnect()),
+              _buildButton(context, label: "App", type: const App()),
             ],
           ),
         ),
@@ -53,6 +58,21 @@ class ListApp extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => type));
         },
       ),
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var c = ChuonChuonKimController.instance;
+
+    return MaterialApp(
+      title: "ChuonChuonKim",
+      debugShowCheckedModeBanner: false,
+      home: (c.isLogin && c.userSnapshot!.user.id == "0000") ? const PageHomeAdmin() : const PageHomeClient(),
     );
   }
 }
