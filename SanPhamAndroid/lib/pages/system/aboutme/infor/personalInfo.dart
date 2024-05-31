@@ -130,7 +130,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             color: Colors.white,
                           ),
                           child: const Icon(
-                            CupertinoIcons.phone,
+                            Icons.location_on_outlined,
                             color: Color.fromRGBO(54, 155, 255, 1),
                           ),
                         ),
