@@ -39,7 +39,8 @@ class _PageAddProductState extends State<PageAddProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cập nhật sản phẩm", style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
+        title: const Text("Thêm sản phẩm",
+            style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -54,8 +55,8 @@ class _PageAddProductState extends State<PageAddProduct> {
                   child: xFile == null
                       ? const Icon(Icons.image)
                       : Image.file(
-                    File(xFile!.path),
-                  ),
+                          File(xFile!.path),
+                        ),
                 ),
               ),
               space(0, 10),
@@ -68,7 +69,6 @@ class _PageAddProductState extends State<PageAddProduct> {
                 },
                 child: const Text("Chọn ảnh"),
               ),
-
               space(0, 10),
               TextField(
                 controller: txtId,
@@ -96,22 +96,20 @@ class _PageAddProductState extends State<PageAddProduct> {
                   labelText: "Giá",
                 ),
               ),
-
               space(0, 10),
               DropdownButton(
-                isExpanded: true,
-                value: txtMaLSP.text,
-                items: c.listProductTypeSnapshot.map(
-                  (pts) => DropdownMenuItem(
-                    value: pts.productType.maLSP,
-                    child: Text(pts.productType.tenLSP),
-                  )
-                ).toList(),
-                onChanged: (value) {
-                  txtMaLSP.text = value!;
-                  setState(() {});
-                }
-              ),
+                  isExpanded: true,
+                  value: txtMaLSP.text,
+                  items: c.listProductTypeSnapshot
+                      .map((pts) => DropdownMenuItem(
+                            value: pts.productType.maLSP,
+                            child: Text(pts.productType.tenLSP),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    txtMaLSP.text = value!;
+                    setState(() {});
+                  }),
             ],
           ),
         ),
@@ -122,15 +120,21 @@ class _PageAddProductState extends State<PageAddProduct> {
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            )
-          ),
+              shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          )),
           onPressed: () async {
-            if (xFile != null && txtId.text.isNotEmpty && txtTen.text.isNotEmpty && txtGia.text.isNotEmpty && txtMota.text.isNotEmpty ) {
+            if (xFile != null &&
+                txtId.text.isNotEmpty &&
+                txtTen.text.isNotEmpty &&
+                txtGia.text.isNotEmpty &&
+                txtMota.text.isNotEmpty) {
               thongBaoDangThucHien(context: context, info: "Đang thêm...");
-              await uploadImage(imagePath: xFile!.path, folders: Firebase.pathImageProduct, fileName: "${txtId.text}.jpg")
-              .then((url) {
+              await uploadImage(
+                      imagePath: xFile!.path,
+                      folders: Firebase.pathImageProduct,
+                      fileName: "${txtId.text}.jpg")
+                  .then((url) {
                 Product p = Product(
                   maSP: txtId.text,
                   tenSP: txtTen.text,
@@ -154,8 +158,7 @@ class _PageAddProductState extends State<PageAddProduct> {
                 thongBaoThucHienXong(context: context, info: "Thêm thất bại !");
                 print("Có lỗi: ${error.toString()}");
               });
-            }
-            else {
+            } else {
               thongBaoThucHienXong(context: context, info: "Kiểm tra lại thông tin nhập");
               print("Có lỗi khi lưu, hãy kiểm tra lại thông tin nhập");
             }
