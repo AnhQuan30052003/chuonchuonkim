@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/products/bun_1.jpg
     - assets/freed.png
+    - assets/success.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
