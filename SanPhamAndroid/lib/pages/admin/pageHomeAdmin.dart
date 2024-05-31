@@ -63,7 +63,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
           tabBorderRadius: 20,
           tabs: const [
             GButton(icon: Icons.fastfood_rounded, text: "Sản phẩm"),
-            GButton(icon: Icons.type_specimen, text: "Loại sản phẩm"),
+            GButton(icon: Icons.category, text: "Loại sản phẩm"),
             GButton(icon: Icons.people, text: "Khách hàng"),
             GButton(icon: Icons.person_outline_outlined, text: "Tôi"),
           ],
