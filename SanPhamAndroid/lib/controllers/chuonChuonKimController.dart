@@ -223,7 +223,7 @@ class ChuonChuonKimController extends GetxController {
 
     for (var us in listUserSnapshot) {
       var u = us.user;
-      if (u.user == user && u.pass == password) {
+      if ((u.user == user || u.sdt == user) && u.pass == password) {
         userSnapshot = us;
         isLogin = true;
         return true;
