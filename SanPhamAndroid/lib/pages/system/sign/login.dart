@@ -32,11 +32,7 @@ class _PageLoginState extends State<PageLogin> {
             children: [
               space(0, 50),
               Image.asset("assets/freed.png"),
-              Text(messageError,
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Text(messageError, style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
               space(0, 50),
               TextFormField(
                 controller: txtUser,
@@ -62,18 +58,18 @@ class _PageLoginState extends State<PageLogin> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Quên mật khẩu",
-                      style: TextStyle(fontSize: 15, color: Colors.redAccent),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     TextButton(
+              //       onPressed: () {},
+              //       child: const Text(
+              //         "Quên mật khẩu",
+              //         style: TextStyle(fontSize: 15, color: Colors.redAccent),
+              //       ),
+              //     )
+              //   ],
+              // ),
               space(0, 50),
               ElevatedButton(
                 onPressed: () async {

@@ -192,22 +192,26 @@ Widget buildProduct(BuildContext context) {
                                       onPressed: (value) async {
                                         List<String> list = ["Xoá", "Huỷ"];
                                         String cauHoi = "Bạn chắc chắc muốn xoá ?";
-                                        await khungLuaChon(
-                                                context: context, listLuaChon: list, cauHoi: cauHoi)
-                                            .then((value) async {
+                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
+                                        .then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(
-                                                context: context, info: "Đang xoá...");
-                                            await deleteImage(
-                                                folders: Firebase.pathImageProduct,
-                                                fileName: "${ps.product.maSP}.jpg");
-                                            await ps.delete().then((value) {
-                                              thongBaoThucHienXong(
-                                                  context: context, info: "Đã xoá.");
+                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+
+                                            try {
+                                              await deleteImage(folders: Firebase.pathImageProduct, fileName: "${ps.product.maSP}.jpg");
+                                              print("Xoá thành công.");
+                                            }
+                                            catch (error) {
+                                              print("Lỗi xoá !");
+                                            }
+
+
+                                            await ps.delete()
+                                            .then((value) {
+                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
-                                              thongBaoThucHienXong(
-                                                  context: context, info: "Lỗi xoá !");
+                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
                                               print("Có lỗi khi xoá !.");
                                             });
                                           }
@@ -382,14 +386,19 @@ Widget buildProductType(BuildContext context) {
                                                 context: context, listLuaChon: list, cauHoi: cauHoi)
                                             .then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(
-                                                context: context, info: "Đang xoá...");
-                                            await deleteImage(
-                                                folders: Firebase.pathImageProductType,
-                                                fileName: "${pts.productType.maLSP}.jpg");
-                                            await pts.delete().then((value) {
-                                              thongBaoThucHienXong(
-                                                  context: context, info: "Đã xoá.");
+                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
+
+                                            try {
+                                              await deleteImage(folders: Firebase.pathImageProductType, fileName: "${pts.productType.maLSP}.jpg");
+                                              print("Xoá thành công.");
+                                            }
+                                            catch (error) {
+                                              print("Xoá lỗi !");
+                                            }
+
+                                            await pts.delete()
+                                            .then((value) {
+                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
                                               thongBaoThucHienXong(
@@ -574,7 +583,13 @@ Widget buildUser(BuildContext context) {
                                         .then((value) async {
                                           if (value == list[0]) {
                                             thongBaoDangThucHien(context: context, info: "Đang xoá...");
-                                            await deleteImage(folders: Firebase.pathAvatarUser, fileName: "${pts.user.id}.jpg");
+                                            try {
+                                              await deleteImage(folders: Firebase.pathAvatarUser, fileName: "${pts.user.id}.jpg");
+                                              print("Xoá thành công.");
+                                            }
+                                            catch (error) {
+                                              print("Không tìm thấy ảnh !");
+                                            }
                                             await pts.delete().then((value) {
                                               thongBaoThucHienXong(context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
