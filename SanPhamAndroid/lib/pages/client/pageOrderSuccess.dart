@@ -1,7 +1,8 @@
 import 'package:chuonchuonkim_app/helper/widget.dart';
-import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
+import 'package:chuonchuonkim_app/pages/system/uploadData.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../main.dart';
 
 class OrderSuccess extends StatelessWidget {
   const OrderSuccess({super.key});
@@ -31,7 +32,8 @@ class OrderSuccess extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                   ),
                   onPressed: () {
-                    Get.to(() => const PageHomeClient());
+                    // Get.to(const UploadData());
+                    Get.to(const App());
                   },
                   child: const Text(
                     "Tiếp tục mua hàng",

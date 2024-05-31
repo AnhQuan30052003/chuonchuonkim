@@ -4,7 +4,6 @@ import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
-import '../pages/system/sign/login.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -220,10 +219,6 @@ class ChuonChuonKimController extends GetxController {
       }
     }
     return null;
-  }
-
-  void toLogin() {
-    Get.to(const PageLogin());
   }
 }
 

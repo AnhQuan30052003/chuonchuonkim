@@ -10,6 +10,7 @@ import '../../../database/models/Product.dart';
 import '../../../database/models/User.dart';
 import '../../../helper/dialog.dart';
 import '../../../helper/uploadImage.dart';
+import '../../system/sign/login.dart';
 import '../pageNotificationAdmin.dart';
 import '../product/pageAddProduct.dart';
 import '../product/pageUpdateProduct.dart';
@@ -34,9 +35,9 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
               Get.to(const PageNotificationAdmin());
             },
             badgeContent: StreamBuilder(
-              stream: NotificationSnapshot.streamData(),
+              stream: NotificationsSnapshot.streamData(),
               builder: (context, snapshot) {
-                List<NotificationSnapshot> list = [];
+                List<NotificationsSnapshot> list = [];
 
                 try {
                   list = snapshot.data!;
@@ -58,7 +59,7 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
         onTap: () {
           var c = ChuonChuonKimController.instance;
           if (c.isLogin == false) {
-            c.toLogin();
+            Get.to(const PageLogin());
             return;
           }
           Get.to(const PageNotificationAdmin());

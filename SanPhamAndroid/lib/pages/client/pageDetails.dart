@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
+import '../system/sign/login.dart';
 
 class PageDetails extends StatefulWidget {
   final Product product;
@@ -111,7 +112,7 @@ class _PageDetailsState extends State<PageDetails> {
                           var c = ChuonChuonKimController.instance;
 
                           if (c.isLogin == false) {
-                            c.toLogin();
+                            Get.to(const PageLogin());
                             return;
                           }
 
@@ -156,7 +157,7 @@ class _PageDetailsState extends State<PageDetails> {
                     onPressed: () async {
                       var c = ChuonChuonKimController.instance;
                       if (c.isLogin == false) {
-                        c.toLogin();
+                        Get.to(const PageLogin());
                         return;
                       }
 
@@ -185,7 +186,7 @@ class _PageDetailsState extends State<PageDetails> {
                     onPressed: () {
                       var c = ChuonChuonKimController.instance;
                       if (c.isLogin == false) {
-                        c.toLogin();
+                        Get.to(const PageLogin());
                         return;
                       }
 
