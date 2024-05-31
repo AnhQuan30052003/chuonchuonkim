@@ -69,8 +69,8 @@ class UploadData extends StatelessWidget {
                 // Notifications
                 await deleteData(collectionPath: Firebase.colNotification)
                 .then((value) {
-                  for (var o in dbNotification) {
-                    NotificationSnapshot.add(o);
+                  for (var o in dbNotifications) {
+                    NotificationsSnapshot.add(o);
                   }
                 });
 

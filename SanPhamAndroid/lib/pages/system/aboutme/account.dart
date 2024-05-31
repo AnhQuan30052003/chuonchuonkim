@@ -161,7 +161,7 @@ GestureDetector _buildGestureDetector(
     onTap: () async {
       var c = ChuonChuonKimController.instance;
       if (c.isLogin == false) {
-        c.toLogin();
+        Get.to(const PageLogin());
         return;
       }
 
@@ -175,8 +175,8 @@ GestureDetector _buildGestureDetector(
       await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
         if (value == list[0]) {
           var c = ChuonChuonKimController.instance;
-          c.isLogin = false;
           c.userSnapshot = null;
+          c.isLogin = false;
           Get.offAll(widget);
         }
       });

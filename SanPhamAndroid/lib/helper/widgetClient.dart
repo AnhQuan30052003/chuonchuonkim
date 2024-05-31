@@ -9,6 +9,7 @@ import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
 import '../pages/client/pageCart.dart';
 import '../pages/system/notification/pageNotification.dart';
+import '../pages/system/sign/login.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
 import '../pages/client/pageProductSearch.dart';
@@ -31,9 +32,9 @@ PreferredSizeWidget buildAppBar({required String info}) {
               init: ChuonChuonKimController.instance,
               id: "appBar",
               builder: (controller) => StreamBuilder(
-                stream: NotificationSnapshot.streamData(),
+                stream: NotificationsSnapshot.streamData(),
                 builder: (context, snapshot) {
-                  List<NotificationSnapshot> list = [];
+                  List<NotificationsSnapshot> list = [];
 
                   try {
                     list = snapshot.data!;
@@ -57,10 +58,12 @@ PreferredSizeWidget buildAppBar({required String info}) {
         onTap: () {
           var c = ChuonChuonKimController.instance;
           if (c.isLogin == false) {
-            c.toLogin();
+            Get.to(const PageLogin());
             return;
           }
-          Get.to(const PageNotification());
+          else {
+            Get.to(const PageNotification());
+          }
         },
       ),
       GestureDetector(
@@ -95,7 +98,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
         onTap: () {
           var c = ChuonChuonKimController.instance;
           if (c.isLogin == false) {
-            c.toLogin();
+            Get.to(const PageLogin());
             return;
           }
           Get.to(const PageCart());
@@ -394,7 +397,7 @@ Padding _buildTinTucThongBao(double spacePading, String text) {
 
 Widget buildStreamBuilderNotification() {
   return StreamBuilder(
-    stream: NotificationSnapshot.streamData(),
+    stream: NotificationsSnapshot.streamData(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
         return const Center(
@@ -402,12 +405,12 @@ Widget buildStreamBuilderNotification() {
         );
       }
 
-      List<NotificationSnapshot> list = [], listNew = [], listOld = [];
+      List<NotificationsSnapshot> list = [], listNew = [], listOld = [];
 
       try {
         list = snapshot.data!;
 
-        for (NotificationSnapshot l in list) {
+        for (NotificationsSnapshot l in list) {
           if (l.notification.seen) {
             listOld.add(l);
           } else {
@@ -415,8 +418,8 @@ Widget buildStreamBuilderNotification() {
           }
         }
 
-        listNew.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
-        listOld.sort((NotificationSnapshot a, NotificationSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+        listNew.sort((NotificationsSnapshot a, NotificationsSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+        listOld.sort((NotificationsSnapshot a, NotificationsSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
       } catch (error) {
         list = [];
       }

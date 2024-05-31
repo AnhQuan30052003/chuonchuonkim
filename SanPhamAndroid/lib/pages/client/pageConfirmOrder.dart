@@ -1,4 +1,5 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -162,6 +163,26 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       }
                     }
                   }
+
+                  List<NotificationsSnapshot> listNoti = await NotificationsSnapshot.futureData();
+                  listNoti.sort((NotificationsSnapshot a, NotificationsSnapshot b) => a.notification.idNoti.compareTo(b.notification.idNoti));
+
+                  int number = 1 + int.parse(listNoti.last.notification.idNoti);
+
+                  for (int i = 0; i < widget.listProduct.length; i++) {
+                    Notifications no = Notifications(
+                      idNoti: getIdToString(number++),
+                      idUser: c.userSnapshot!.user.id,
+                      maSP: widget.listProduct[i].maSP,
+                      text: "Khách hàng ${c.userSnapshot!.user}, đã đặt đơn hàng có mã là ${widget.listProduct[i].maSP}",
+                      seen: false,
+                      toUser: "0000",
+                      soLuong: widget.listQuantity[i].count.value
+                    );
+
+                    await NotificationsSnapshot.add(no);
+                  }
+
 
                   Get.to(const OrderSuccess());
                 },

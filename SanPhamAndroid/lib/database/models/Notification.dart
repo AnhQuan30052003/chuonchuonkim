@@ -2,17 +2,19 @@ import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../connect/setupFirebase.dart';
 
-class Notification {
+class Notifications {
   String idNoti, idUser, maSP, text, toUser;
+  int soLuong;
   bool seen;
 
-  Notification({
+  Notifications({
     required this.idNoti,
     required this.idUser,
     required this.maSP,
     required this.text,
     required this.seen,
     required this.toUser,
+    required this.soLuong,
   });
 
   Map<String, dynamic> toJson() {
@@ -23,35 +25,37 @@ class Notification {
       'String': text,
       'seen': seen,
       'toUser': toUser,
+      'soLuong': soLuong,
     };
   }
 
-  factory Notification.fromJson(Map<String, dynamic> map) {
-    return Notification(
+  factory Notifications.fromJson(Map<String, dynamic> map) {
+    return Notifications(
       idNoti: map['idNoti'] as String,
       idUser: map['idUser'] as String,
       maSP: map['maSP'] as String,
       text: map['String'] as String,
       seen: map['seen'] as bool,
       toUser: map['toUser'] as String,
+      soLuong: map['soLuong'] as int,
     );
   }
 }
 
-class NotificationSnapshot {
-  Notification notification;
+class NotificationsSnapshot {
+  Notifications notification;
   DocumentReference docRef;
 
-  NotificationSnapshot({required this.notification, required this.docRef});
+  NotificationsSnapshot({required this.notification, required this.docRef});
 
-  factory NotificationSnapshot.fromDocSnap(DocumentSnapshot docSnap) {
-    return NotificationSnapshot(
-      notification: Notification.fromJson(docSnap.data() as Map<String, dynamic>),
+  factory NotificationsSnapshot.fromDocSnap(DocumentSnapshot docSnap) {
+    return NotificationsSnapshot(
+        notification: Notifications.fromJson(docSnap.data() as Map<String, dynamic>),
       docRef: docSnap.reference
     );
   }
 
-  static Future<DocumentReference> add(Notification object) async {
+  static Future<DocumentReference> add(Notifications object) async {
     return FirebaseFirestore.instance.collection(Firebase.colNotification).add(object.toJson());
   }
 
@@ -59,36 +63,30 @@ class NotificationSnapshot {
     await docRef.delete();
   }
 
-  Future<void> update(Notification object) async {
+  Future<void> update(Notifications object) async {
     await docRef.update(object.toJson());
   }
 
-  static Stream<List<NotificationSnapshot>> streamData() {
+  static Stream<List<NotificationsSnapshot>> streamData() {
     var querySnapshot = FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.getId()).snapshots();
     var list = querySnapshot.map(
       (qsn) => qsn.docs.map(
-        (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
+        (docSnap) => NotificationsSnapshot.fromDocSnap(docSnap)
       ).toList()
     );
 
     return list;
   }
 
-  static Future<List<NotificationSnapshot>> futureData() async {
+  static Future<List<NotificationsSnapshot>> futureData() async {
     var qs = await FirebaseFirestore.instance.collection(Firebase.colNotification).where("toUser", isEqualTo: ChuonChuonKimController.instance.getId()).get();
 
     var list = qs.docs.map(
-      (docSnap) => NotificationSnapshot.fromDocSnap(docSnap)
+      (docSnap) => NotificationsSnapshot.fromDocSnap(docSnap)
     ).toList();
 
     return list;
   }
 }
 
-List<Notification> dbNotification = [
-  Notification(idNoti: "0001", idUser: "0000", maSP: "0001", text: "Admin đã xác nhận đơn hàng mã 0001", seen: true, toUser: "0001"),
-  Notification(idNoti: "0002", idUser: "0000", maSP: "0002", text: "Admin đã xác nhận đơn hàng mã 0002", seen: true, toUser: "0001"),
-  Notification(idNoti: "0003", idUser: "0000", maSP: "0003", text: "Admin đã xác nhận đơn hàng mã 0003", seen: true, toUser: "0001"),
-  Notification(idNoti: "0004", idUser: "0000", maSP: "0004", text: "Admin đã xác nhận đơn hàng mã 0004", seen: false, toUser: "0001"),
-  Notification(idNoti: "0005", idUser: "0000", maSP: "0005", text: "Admin đã xác nhận đơn hàng mã 0005", seen: false, toUser: "0001"),
-];
+List<Notifications> dbNotifications = [];

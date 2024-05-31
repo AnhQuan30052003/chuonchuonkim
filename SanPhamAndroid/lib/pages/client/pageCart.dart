@@ -196,8 +196,22 @@ class PageCart extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 var c = ChuonChuonKimController.instance;
+                String text;
+
                 if (c.listCartSnapshot.isEmpty) {
-                  String text = "Hãy thêm sản phẩm vào giỏ hàng !";
+                  text = "Hãy thêm sản phẩm vào giỏ hàng !";
+                  info(context, text);
+                  return;
+                }
+
+                int sumChecked = 0;
+                for (var check in listCheck) {
+                  if (check.isChecked.value) {
+                    sumChecked += 1;
+                  }
+                }
+                if (sumChecked == 0) {
+                  text = "Click chọn sản phẩm để đặt hàng !";
                   info(context, text);
                   return;
                 }

@@ -39,7 +39,7 @@ class ListApp extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              _buildButton(context, label: "Upload Data", type: const AppUploadData()),
+              _buildButton(context, label: "Upload Data", type: const UploadData()),
               _buildButton(context, label: "App", type: const App()),
             ],
           ),
