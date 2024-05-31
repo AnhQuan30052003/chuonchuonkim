@@ -208,7 +208,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       idNoti: getIdToString(number++),
                       idUser: c.userSnapshot!.user.id,
                       maSP: widget.listProduct[i].maSP,
-                      text: "Khách hàng ${c.userSnapshot!.user}, đã đặt đơn hàng có mã là ${widget.listProduct[i].maSP}",
+                      text: "Khách hàng ${c.userSnapshot!.user.ten}, đã đặt đơn hàng có mã là ${widget.listProduct[i].maSP}",
                       seen: false,
                       toUser: "0000",
                       soLuong: widget.listQuantity[i].count.value
