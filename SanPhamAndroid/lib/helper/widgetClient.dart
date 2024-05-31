@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -39,8 +40,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
 
                   try {
                     list = snapshot.data!;
-                  }
-                  catch (error) {
+                  } catch (error) {
                     list = [];
                   }
 
@@ -61,8 +61,7 @@ PreferredSizeWidget buildAppBar({required String info}) {
           if (c.isLogin == false) {
             Get.to(const PageLogin());
             return;
-          }
-          else {
+          } else {
             Get.to(const PageNotification());
           }
         },
@@ -83,9 +82,9 @@ PreferredSizeWidget buildAppBar({required String info}) {
                   try {
                     list = snapshot.data!;
                     c.listCartSnapshot = list;
-                    c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-                  }
-                  catch (error) {
+                    c.listCartSnapshot.sort(
+                        (CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+                  } catch (error) {
                     list = [];
                   }
 
@@ -110,13 +109,14 @@ PreferredSizeWidget buildAppBar({required String info}) {
 }
 
 Widget buildSearch({required BuildContext context}) {
-TextEditingController c = TextEditingController();
+  TextEditingController c = TextEditingController();
   void startSearch() {
     String textSearch = c.text;
     if (textSearch.isEmpty) return;
     c.clear;
     ChuonChuonKimController.instance.showProductSearch(search: textSearch);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
   }
 
   return SizedBox(
@@ -186,12 +186,13 @@ Widget buildFilter() {
             );
           },
         ),
-    );
+      );
     },
   );
 }
 
-Widget buildGridViewProducts({required BuildContext context, required List<Product> list, required bool showNotFound}) {
+Widget buildGridViewProducts(
+    {required BuildContext context, required List<Product> list, required bool showNotFound}) {
   if (list.isEmpty && showNotFound) {
     return const Column(
       children: [
@@ -201,18 +202,18 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
   }
 
   return GridView.extent(
-    maxCrossAxisExtent: 300,
-    crossAxisSpacing: 12,
-    mainAxisSpacing: 10,
-    shrinkWrap: true,
-    childAspectRatio: 0.8,
-    physics: const NeverScrollableScrollPhysics(),
-    children: list.map(
-      (product) {
+      maxCrossAxisExtent: 300,
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 10,
+      shrinkWrap: true,
+      childAspectRatio: 0.8,
+      physics: const NeverScrollableScrollPhysics(),
+      children: list.map((product) {
         return GestureDetector(
           onTap: () {
             ChuonChuonKimController.instance.showSimilarProducts(product: product);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PageDetails(product: product)));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => PageDetails(product: product)));
           },
           child: PhysicalModel(
             borderRadius: BorderRadius.circular(10),
@@ -250,8 +251,8 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         Text(
                           "${product.giaSP}đ",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, color: Colors.redAccent),
+                          style:
+                              const TextStyle(fontWeight: FontWeight.w500, color: Colors.redAccent),
                         ),
                         Text("Đã bán: ${Random().nextInt(400)}",
                             style: const TextStyle(fontWeight: FontWeight.normal)),
@@ -263,9 +264,7 @@ Widget buildGridViewProducts({required BuildContext context, required List<Produ
             ),
           ),
         );
-      }
-    ).toList()
-  );
+      }).toList());
 }
 
 Widget buildInstruction({required String text}) {
@@ -419,8 +418,10 @@ Widget buildStreamBuilderNotification() {
           }
         }
 
-        listNew.sort((NotificationsSnapshot a, NotificationsSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
-        listOld.sort((NotificationsSnapshot a, NotificationsSnapshot b) => (b.notification.idNoti.compareTo(a.notification.idNoti)));
+        listNew.sort((NotificationsSnapshot a, NotificationsSnapshot b) =>
+            (b.notification.idNoti.compareTo(a.notification.idNoti)));
+        listOld.sort((NotificationsSnapshot a, NotificationsSnapshot b) =>
+            (b.notification.idNoti.compareTo(a.notification.idNoti)));
       } catch (error) {
         list = [];
       }
@@ -429,13 +430,9 @@ Widget buildStreamBuilderNotification() {
 
       if (listNew.isEmpty && listOld.isEmpty) {
         return const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Không có thông báo !")
-            ]
-          )
-        );
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text("Không có thông báo !")]));
       }
 
       return SingleChildScrollView(
@@ -445,75 +442,69 @@ Widget buildStreamBuilderNotification() {
             children: [
               _buildTinTucThongBao(spacePading, "Mới(${listNew.length})"),
               Column(
-                children: listNew.map(
-                  (ns) {
-                    return GestureDetector(
-                      child: Card(
-                        color: Colors.white,
-                        child: SizedBox(
-                          height: 50,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 35,
-                                child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
-                              ),
-                              space(10, 0),
-                              SizedBox(
+                children: listNew.map((ns) {
+                  return GestureDetector(
+                    child: Card(
+                      color: Colors.white,
+                      child: SizedBox(
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 35,
+                              child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
+                            ),
+                            space(10, 0),
+                            Expanded(
+                              child: SizedBox(
                                   height: 50,
                                   child: Align(
                                       alignment: Alignment.center,
-                                      child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
-                                  )
-                              ),
-                            ],
-                          ),
+                                      child: Text(ns.notification.text,
+                                          style: const TextStyle(color: Colors.black)))),
+                            ),
+                          ],
                         ),
                       ),
-                      onTap: () async {
-                        ns.notification.seen = true;
-                        await ns.update(ns.notification);
-                        Get.to(PageOrder(noti: ns.notification));
-                      },
-                    );
-                  }
-                ).toList(),
+                    ),
+                    onTap: () async {
+                      ns.notification.seen = true;
+                      await ns.update(ns.notification);
+                      Get.to(PageOrder(noti: ns.notification));
+                    },
+                  );
+                }).toList(),
               ),
-
               _buildTinTucThongBao(spacePading, "Trước đó(${listOld.length})"),
               Column(
-                children: listOld.map(
-                  (ns) {
-                    return GestureDetector(
-                      child: Card(
-                        color: Colors.black12,
-                        child: SizedBox(
-                          height: 50,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 35,
-                                child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
-                              ),
-                              space(10, 0),
-                              SizedBox(
-                                  height: 50,
-                                  child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
-                                  )
-                              ),
-                            ],
-                          ),
+                children: listOld.map((ns) {
+                  return GestureDetector(
+                    child: Card(
+                      color: Colors.black12,
+                      child: SizedBox(
+                        height: 50,
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 35,
+                              child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
+                            ),
+                            space(10, 0),
+                            SizedBox(
+                                height: 50,
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(ns.notification.text,
+                                        style: const TextStyle(color: Colors.white)))),
+                          ],
                         ),
                       ),
-                      onTap: () {
-                        // Chuyển page..
-                        // Get.to();
-                      },
-                    );
-                  }
-                ).toList(),
+                    ),
+                    onTap: () {
+                      // Chuyển page..
+                      // Get.to();
+                    },
+                  );
+                }).toList(),
               ),
             ],
           ),
