@@ -1,9 +1,7 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../controllers/counterQuantityProductController.dart';
 import '../../database/models/Product.dart';
@@ -195,21 +193,15 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 onTap: () async {
                   var c = ChuonChuonKimController.instance;
 
-                  for (int i = 0; i < widget.listProduct.length; i++) {
-                    var p = widget.listProduct[i];
-
-                    for (var cs in c.listCartSnapshot) {
-                      if (cs.cart.maSP == p.maSP) {
-                        await cs.delete();
-                        c.listCartSnapshot.remove(cs);
-                      }
-                    }
-                  }
-
                   List<NotificationsSnapshot> listNoti = await NotificationsSnapshot.futureData();
                   listNoti.sort((NotificationsSnapshot a, NotificationsSnapshot b) => a.notification.idNoti.compareTo(b.notification.idNoti));
 
-                  int number = 1 + int.parse(listNoti.last.notification.idNoti);
+                  int number;
+                  if (listNoti.isEmpty) {
+                    number = 0;
+                  } else {
+                    number = 1 + int.parse(listNoti.last.notification.idNoti);
+                  }
 
                   for (int i = 0; i < widget.listProduct.length; i++) {
                     Notifications no = Notifications(
@@ -225,6 +217,16 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     await NotificationsSnapshot.add(no);
                   }
 
+                  for (int i = 0; i < widget.listProduct.length; i++) {
+                    var p = widget.listProduct[i];
+
+                    for (var cs in c.listCartSnapshot) {
+                      if (cs.cart.maSP == p.maSP) {
+                        await cs.delete();
+                        c.listCartSnapshot.remove(cs);
+                      }
+                    }
+                  }
 
                   Get.to(const OrderSuccess());
                 },
