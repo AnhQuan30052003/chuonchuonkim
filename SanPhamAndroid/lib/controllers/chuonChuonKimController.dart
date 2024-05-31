@@ -232,6 +232,16 @@ class ChuonChuonKimController extends GetxController {
     return false;
   }
 
+  Product? getProductFromID({required String id}) {
+    for (var ps in listProductSnapshot) {
+      if (ps.product.maSP == id) {
+        return ps.product;
+      }
+    }
+    return null;
+  }
+
+
   void toLogin() {
     Get.to(const PageLogin());
   }

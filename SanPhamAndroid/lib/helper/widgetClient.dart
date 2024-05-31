@@ -422,6 +422,18 @@ Widget buildStreamBuilderNotification() {
       }
 
       double spacePading = 5.0;
+
+      if (listNew.isEmpty && listOld.isEmpty) {
+        return const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Không có thông báo !")
+            ]
+          )
+        );
+      }
+
       return SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(left: spacePading, right: spacePading),

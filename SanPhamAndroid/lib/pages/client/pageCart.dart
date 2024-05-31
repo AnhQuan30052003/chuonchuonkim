@@ -50,8 +50,7 @@ class PageCart extends StatelessWidget {
             list = snapshot.data!;
             var c = ChuonChuonKimController.instance;
             c.listCartSnapshot = list;
-            c.listCartSnapshot
-                .sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+            c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
           } catch (error) {
             list = [];
           }
@@ -115,8 +114,7 @@ class PageCart extends StatelessWidget {
     );
   }
 
-  Card _buildCard(String maSP, CounterQuantityProductController counterQuantity,
-      CheckProductController checkProduct) {
+  Card _buildCard(String maSP, CounterQuantityProductController counterQuantity, CheckProductController checkProduct) {
     Product p = ChuonChuonKimController.instance.getProductFromCart(maSP: maSP)!;
 
     return Card(
@@ -175,8 +173,7 @@ class PageCart extends StatelessWidget {
     );
   }
 
-  Padding _buildBottomInfo(List<CounterQuantityProductController> listCounter,
-      List<CheckProductController> listCheck, BuildContext context) {
+  Padding _buildBottomInfo(List<CounterQuantityProductController> listCounter, List<CheckProductController> listCheck, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -198,12 +195,23 @@ class PageCart extends StatelessWidget {
           const SizedBox(height: 15),
           ElevatedButton(
               onPressed: () {
-                // String text = "Hãy thêm sản phẩm vào giỏ hàng !";
-                // if (ChuonChuonKimController.instance.listCartSnapshot.isNotEmpty) {
-                //   text = "Đặt hàng thành công";
-                // }
-                // info(context, text);
-                Get.to(const ConfirmOrder());
+                var c = ChuonChuonKimController.instance;
+                if (c.listCartSnapshot.isEmpty) {
+                  String text = "Hãy thêm sản phẩm vào giỏ hàng !";
+                  info(context, text);
+                  return;
+                }
+
+                List<Product> getListProduct = [];
+                List<CounterQuantityProductController> getListQuantity = [];
+                for (int i = 0; i < listCheck.length; i++) {
+                  if (listCheck[i].isChecked.value) {
+                    getListQuantity.add(listCounter[i]);
+                    getListProduct.add(c.getProductFromID(id: c.listCartSnapshot[i].cart.maSP)!);
+                  }
+                }
+
+                Get.to(ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
               },
               child: const Text("Đặt hàng"))
         ],
