@@ -57,9 +57,10 @@ Widget account(BuildContext context) {
                       size: const Size.fromRadius(50), // Image radius
                       child: Image.network(
                           c.isLogin == false
-                              ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg"
-                              : c.userSnapshot!.user.hinhAnhUser,
-                          fit: BoxFit.cover),
+                            ? "https://i.pinimg.com/474x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg"
+                            : c.userSnapshot!.user.hinhAnhUser,
+                        fit: BoxFit.cover
+                      ),
                     ),
                   ),
                   Expanded(

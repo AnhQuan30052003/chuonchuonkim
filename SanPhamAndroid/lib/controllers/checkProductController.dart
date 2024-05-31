@@ -1,3 +1,4 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:get/get.dart';
 
 class CheckProductController extends GetxController {
