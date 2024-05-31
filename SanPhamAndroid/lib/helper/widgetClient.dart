@@ -7,7 +7,7 @@ import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
 import '../pages/admin/pageOrder.dart';
 import '../pages/client/pageCart.dart';
-import '../pages/system/notification/pageNotification.dart';
+import '../pages/client/pageNotification.dart';
 import '../pages/system/sign/login.dart';
 import 'widget.dart';
 import '../pages/client/pageDetails.dart';
@@ -431,34 +431,28 @@ Widget buildStreamBuilderNotification() {
               _buildTinTucThongBao(spacePading, "Mới(${listNew.length})"),
               Column(
                 children: listNew.map((ns) {
-                  return GestureDetector(
-                    child: Card(
-                      color: Colors.white,
-                      child: SizedBox(
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 35,
-                              child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
+                  return Card(
+                    color: Colors.white,
+                    child: SizedBox(
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 35,
+                            child: Icon(Icons.mark_as_unread, color: Colors.grey, size: 40),
+                          ),
+                          space(10, 0),
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
+                              )
                             ),
-                            space(10, 0),
-                            Expanded(
-                              child: SizedBox(
-                                  height: 50,
-                                  child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(ns.notification.text,
-                                          style: const TextStyle(color: Colors.black)))),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    onTap: () async {
-                      ns.notification.seen = true;
-                      await ns.update(ns.notification);
-                      Get.to(() => PageOrder(noti: ns.notification));
-                    },
                   );
                 }).toList(),
               ),

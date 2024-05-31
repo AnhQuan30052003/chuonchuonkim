@@ -3,7 +3,6 @@ import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'database/connect/firebaseConnect.dart';
-import 'pages/admin/pageHomeAdmin.dart';
 import 'pages/system/uploadData.dart';
 
 void main() => runApp(const ChuonChuonKimApp());
@@ -30,8 +29,6 @@ class ListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = ChuonChuonKimController.instance;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -42,10 +39,7 @@ class ListApp extends StatelessWidget {
           child: Column(
             children: [
               _buildButton(context, label: "Upload Data", type: const UploadData()),
-              // _buildButton(context, label: "App", type: const App()),
-              // _buildButton(context, label: "App", type: (c.isLogin && c.userSnapshot!.user.id == "0000") ? const PageHomeAdmin() : const PageHomeClient()),
-              _buildButton(context, label: "App", type: const PageHomeClient()),
-
+              _buildButton(context, label: "App", type: const App()),
             ],
           ),
         ),
@@ -72,12 +66,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = ChuonChuonKimController.instance;
-
-    return MaterialApp(
-      title: "ChuonChuonKim App",
+    return const MaterialApp(
+      title: "ChuonoChuonKimApp",
       debugShowCheckedModeBanner: false,
-      home: (c.isLogin && c.userSnapshot!.user.id == "0000") ? const PageHomeAdmin() : const PageHomeClient(),
+      home: PageHomeClient(),
     );
   }
 }

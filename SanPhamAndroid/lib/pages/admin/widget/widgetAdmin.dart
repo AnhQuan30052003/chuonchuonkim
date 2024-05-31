@@ -10,16 +10,14 @@ import '../../../database/models/Product.dart';
 import '../../../database/models/User.dart';
 import '../../../helper/dialog.dart';
 import '../../../helper/uploadImage.dart';
-import '../../system/sign/login.dart';
-import '../pageNotificationAdmin.dart';
+import '../pageOrder.dart';
 import '../product/pageAddProduct.dart';
 import '../product/pageUpdateProduct.dart';
 import '../product_type/pageAddProductType.dart';
 import '../product_type/pageUpdateProductType.dart';
 import '../user/updateUser.dart';
 
-PreferredSizeWidget buildAppBarAdmin({required String info}) {
-  // , required Future<dynamic> widget
+PreferredSizeWidget buildAppBarAdmin({required BuildContext context, required String info}) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white10,
@@ -55,13 +53,7 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
           ),
         ),
         onTap: () {
-          // var c = ChuonChuonKimController.instance;
-          // if (c.isLogin == false) {
-          //   Get.to(const PageLogin());
-          //   return;
-          // }
-          // widget;
-          Get.to(() => const PageNotificationAdmin());
+          Get.to(() => const PageOrder());
         },
       ),
     ],
@@ -96,8 +88,7 @@ Widget buildProduct(BuildContext context) {
         var c = ChuonChuonKimController.instance;
         TextEditingController txt = TextEditingController();
         List<ProductSnapshot> data = snapshot.data!;
-        data.sort(
-            (ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+        data.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
         c.listProductSnapshot = data;
         List<ProductSnapshot> list = data;
 
@@ -263,7 +254,8 @@ Widget buildProduct(BuildContext context) {
                         separatorBuilder: (context, index) => const Divider(thickness: 1.5),
                         itemCount: list.length,
                       );
-                    }),
+                    }
+                  ),
               ),
             ],
           ),
