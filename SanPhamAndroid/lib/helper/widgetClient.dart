@@ -1,10 +1,7 @@
 import 'dart:math';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/Notification.dart';
-import 'package:chuonchuonkim_app/helper/dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';

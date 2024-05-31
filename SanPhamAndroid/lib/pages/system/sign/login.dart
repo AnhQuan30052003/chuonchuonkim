@@ -38,7 +38,7 @@ class _PageLoginState extends State<PageLogin> {
               TextFormField(
                 controller: txtUser,
                 decoration: const InputDecoration(
-                    labelText: "Tài khoản / số điện thoại",
+                    labelText: "Tài khoản / Số điện thoại",
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person)),
               ),
@@ -79,9 +79,9 @@ class _PageLoginState extends State<PageLogin> {
                     c.getData();
                     thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
                     if (c.userSnapshot!.user.id == "0000") {
-                      Get.offAll(const PageHomeAdmin());
+                      Get.to(const PageHomeAdmin());
                     } else {
-                      Get.offAll(const PageHomeClient());
+                      Get.to(const PageHomeClient());
                     }
                   });
                 },
