@@ -30,6 +30,8 @@ class ListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var c = ChuonChuonKimController.instance;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -40,7 +42,10 @@ class ListApp extends StatelessWidget {
           child: Column(
             children: [
               _buildButton(context, label: "Upload Data", type: const UploadData()),
-              _buildButton(context, label: "App", type: const App()),
+              // _buildButton(context, label: "App", type: const App()),
+              // _buildButton(context, label: "App", type: (c.isLogin && c.userSnapshot!.user.id == "0000") ? const PageHomeAdmin() : const PageHomeClient()),
+              _buildButton(context, label: "App", type: const PageHomeClient()),
+
             ],
           ),
         ),
@@ -55,7 +60,7 @@ class ListApp extends StatelessWidget {
       child: ElevatedButton(
         child: Text(label),
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => type));
+          Get.to(() => type);
         },
       ),
     );
@@ -70,7 +75,7 @@ class App extends StatelessWidget {
     var c = ChuonChuonKimController.instance;
 
     return MaterialApp(
-      title: "ChuonChuonKim",
+      title: "ChuonChuonKim App",
       debugShowCheckedModeBanner: false,
       home: (c.isLogin && c.userSnapshot!.user.id == "0000") ? const PageHomeAdmin() : const PageHomeClient(),
     );

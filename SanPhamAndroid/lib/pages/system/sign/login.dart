@@ -76,12 +76,11 @@ class _PageLoginState extends State<PageLogin> {
                       return;
                     }
 
-                    c.getData();
                     thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
                     if (c.userSnapshot!.user.id == "0000") {
-                      Get.to(const PageHomeAdmin());
+                      Get.offAll(() => const PageHomeAdmin());
                     } else {
-                      Get.to(const PageHomeClient());
+                      Get.offAll(() => const PageHomeClient());
                     }
                   });
                 },
@@ -104,7 +103,7 @@ class _PageLoginState extends State<PageLogin> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Get.to(const PageSignup());
+                      Get.to(() => const PageSignup());
                     },
                     child: const Text(
                       "Đăng kí",

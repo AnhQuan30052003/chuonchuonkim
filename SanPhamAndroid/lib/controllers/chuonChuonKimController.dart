@@ -29,8 +29,8 @@ class ChuonChuonKimController extends GetxController {
     getData();
   }
 
-  void getData() {
-    getUser();
+  void getData() async {
+    await getUser();
     getProductType();
     getProduct();
     getProductFavorite();
@@ -41,22 +41,16 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu cart
   Future<void> getCart() async {
     listCartSnapshot = await CartSnapshot.futureData();
-    listCartSnapshot
-        .sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
   }
 
   // Lấy dữ liệu product favorite
   Future<void> getProductFavorite() async {
     listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
-    listProductFavoriteSnapshot.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) =>
-        a.productFavorite.idPF.compareTo(b.productFavorite.idPF));
   }
 
   // Lấy dữ liệu product
   Future<void> getProduct() async {
     listProductSnapshot = await ProductSnapshot.futureData();
-    listProductSnapshot
-        .sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
 
     getProductsPopulator(requestQuantity: 1);
     listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
@@ -66,8 +60,6 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu product Type
   Future<void> getProductType() async {
     listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
-    listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) =>
-        a.productType.maLSP.compareTo(b.productType.maLSP));
     updateNameId(nameId: "filter");
     updateNameId(nameId: "productAllAdmin");
   }
@@ -75,8 +67,6 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu user
   Future<void> getUser() async {
     listUserSnapshot = await UserSnapshot.futureData();
-    listUserSnapshot.sort((UserSnapshot a, UserSnapshot b) => a.user.id.compareTo(b.user.id));
-    updateNameId(nameId: "appBar");
   }
 
   String getId() {
@@ -100,6 +90,7 @@ class ChuonChuonKimController extends GetxController {
   }
 
   void updateNameId({required String nameId}) {
+    print("Chuẩn bị update id: $nameId");
     update([nameId]);
   }
 
@@ -152,7 +143,8 @@ class ChuonChuonKimController extends GetxController {
     if (idLSP.isEmpty) {
       listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
       listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
-    } else {
+    }
+    else {
       for (var p in listProductsPopulator) {
         if (p.maLSP == idLSP) {
           Product temp = p;
@@ -224,5 +216,6 @@ class ChuonChuonKimBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(ChuonChuonKimController());
+    print("Đã tạo xong controller");
   }
 }

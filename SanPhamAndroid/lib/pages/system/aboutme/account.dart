@@ -44,14 +44,14 @@ Widget account(BuildContext context) {
     children: [
       ElevatedButton(
           onPressed: () {
-            Get.to(const PageLogin());
+            Get.to(() => const PageLogin());
           },
           child: const Text("Đăng nhập")
       ),
       space(10, 0),
       ElevatedButton(
           onPressed: () {
-            Get.to(const PageSignup());
+            Get.to(() => const PageSignup());
           },
           child: const Text("Đăng ký")
       ),
@@ -153,31 +153,23 @@ GestureDetector _buildGestureDetector(
         ),
         child: icon,
       ),
-      trailing: IconButton(
-        icon: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
-        onPressed: () => Get.to(widget),
-      ),
+      trailing: const Icon(Icons.arrow_forward_ios_outlined, size: 17),
     ),
     onTap: () async {
-      var c = ChuonChuonKimController.instance;
-      if (c.isLogin == false) {
-        Get.to(const PageLogin());
-        return;
-      }
-
       if (logout == false) {
-        Get.to(widget);
+        Get.to(() => widget);
         return;
       }
 
       List<String> list = ["Xác nhận", "Huỷ"];
       String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
-      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
+      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
+      .then((value) {
         if (value == list[0]) {
           var c = ChuonChuonKimController.instance;
           c.userSnapshot = null;
           c.isLogin = false;
-          Get.offAll(widget);
+          Get.offAll(() => widget);
         }
       });
     },

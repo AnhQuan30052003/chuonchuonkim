@@ -18,7 +18,8 @@ import '../product_type/pageAddProductType.dart';
 import '../product_type/pageUpdateProductType.dart';
 import '../user/updateUser.dart';
 
-PreferredSizeWidget buildAppBarAdmin({required String info, required Future<dynamic> widget}) {
+PreferredSizeWidget buildAppBarAdmin({required String info}) {
+  // , required Future<dynamic> widget
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white10,
@@ -31,9 +32,6 @@ PreferredSizeWidget buildAppBarAdmin({required String info, required Future<dyna
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
-            onTap: () {
-              Get.to(const PageNotificationAdmin());
-            },
             badgeContent: StreamBuilder(
               stream: NotificationsSnapshot.streamData(),
               builder: (context, snapshot) {
@@ -57,12 +55,13 @@ PreferredSizeWidget buildAppBarAdmin({required String info, required Future<dyna
           ),
         ),
         onTap: () {
-          var c = ChuonChuonKimController.instance;
+          // var c = ChuonChuonKimController.instance;
           // if (c.isLogin == false) {
           //   Get.to(const PageLogin());
           //   return;
           // }
-          widget;
+          // widget;
+          Get.to(() => const PageNotificationAdmin());
         },
       ),
     ],

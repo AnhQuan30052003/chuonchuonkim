@@ -27,28 +27,24 @@ PreferredSizeWidget buildAppBar({required String info}) {
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
-            badgeContent: GetBuilder(
-              init: ChuonChuonKimController.instance,
-              id: "appBar",
-              builder: (controller) => StreamBuilder(
-                stream: NotificationsSnapshot.streamData(),
-                builder: (context, snapshot) {
-                  List<NotificationsSnapshot> list = [];
+            badgeContent: StreamBuilder(
+              stream: NotificationsSnapshot.streamData(),
+              builder: (context, snapshot) {
+                List<NotificationsSnapshot> list = [];
 
-                  try {
-                    list = snapshot.data!;
-                  } catch (error) {
-                    list = [];
-                  }
+                try {
+                  list = snapshot.data!;
+                } catch (error) {
+                  list = [];
+                }
 
-                  int count = 0;
-                  for (var no in list) {
-                    if (no.notification.seen == false) count += 1;
-                  }
+                int count = 0;
+                for (var no in list) {
+                  if (no.notification.seen == false) count += 1;
+                }
 
-                  return Text("$count", style: const TextStyle(color: Colors.white));
-                },
-              ),
+                return Text("$count", style: const TextStyle(color: Colors.white));
+              },
             ),
             child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
           ),
@@ -67,27 +63,23 @@ PreferredSizeWidget buildAppBar({required String info}) {
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
-            badgeContent: GetBuilder(
-              init: ChuonChuonKimController.instance,
-              id: "appBar",
-              builder: (controller) => StreamBuilder(
-                stream: CartSnapshot.streamData(),
-                builder: (context, snapshot) {
-                  var c = ChuonChuonKimController.instance;
-                  List<CartSnapshot> list = [];
+            badgeContent: StreamBuilder(
+              stream: CartSnapshot.streamData(),
+              builder: (context, snapshot) {
+                var c = ChuonChuonKimController.instance;
+                List<CartSnapshot> list = [];
 
-                  try {
-                    list = snapshot.data!;
-                    c.listCartSnapshot = list;
-                    c.listCartSnapshot.sort(
-                        (CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
-                  } catch (error) {
-                    list = [];
-                  }
+                try {
+                  list = snapshot.data!;
+                  c.listCartSnapshot = list;
+                  c.listCartSnapshot.sort(
+                      (CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+                } catch (error) {
+                  list = [];
+                }
 
-                  return Text("${list.length}", style: const TextStyle(color: Colors.white));
-                },
-              ),
+                return Text("${list.length}", style: const TextStyle(color: Colors.white));
+              },
             ),
             child: const Icon(Icons.shopping_cart_outlined),
           ),
@@ -95,10 +87,10 @@ PreferredSizeWidget buildAppBar({required String info}) {
         onTap: () {
           var c = ChuonChuonKimController.instance;
           if (c.isLogin == false) {
-            Get.to(const PageLogin());
+            Get.to(() => const PageLogin());
             return;
           }
-          Get.to(const PageCart());
+          Get.to(() => const PageCart());
         },
       ),
     ],
@@ -112,8 +104,7 @@ Widget buildSearch({required BuildContext context}) {
     if (textSearch.isEmpty) return;
     c.clear;
     ChuonChuonKimController.instance.showProductSearch(search: textSearch);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
   }
 
   return SizedBox(
@@ -375,7 +366,7 @@ Widget buildProductsPopulator() {
               ),
               onTap: () {
                 controller.showSimilarProducts(product: item);
-                Get.to(PageDetails(product: item));
+                Get.to(() => PageDetails(product: item));
               },
             );
           },
@@ -466,7 +457,7 @@ Widget buildStreamBuilderNotification() {
                     onTap: () async {
                       ns.notification.seen = true;
                       await ns.update(ns.notification);
-                      Get.to(PageOrder(noti: ns.notification));
+                      Get.to(() => PageOrder(noti: ns.notification));
                     },
                   );
                 }).toList(),
@@ -487,11 +478,13 @@ Widget buildStreamBuilderNotification() {
                             ),
                             space(10, 0),
                             SizedBox(
-                                height: 50,
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(ns.notification.text,
-                                        style: const TextStyle(color: Colors.white)))),
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(ns.notification.text, style: const TextStyle(color: Colors.white)
+                                )
+                              )
+                            ),
                           ],
                         ),
                       ),

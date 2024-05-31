@@ -97,7 +97,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
   _buildBody(BuildContext context, int index) {
     var c = ChuonChuonKimController.instance;
     if (index == 0) {
-      c.showProductType(idLSP: "");
+      // c.showProductType(idLSP: "");
       return home();
     }
 
@@ -174,7 +174,6 @@ class _PageHomeClientState extends State<PageHomeClient> {
                   );
                 }
 
-                var c = ChuonChuonKimController.instance;
                 List<ProductFavoriteSnapshot> list = [];
                 List<Product> listProduct = [];
 
@@ -198,6 +197,7 @@ class _PageHomeClientState extends State<PageHomeClient> {
                 return buildGridViewProducts(context: context, list: listProduct, showNotFound: false);
               }
             ),
+
             space(0, 20),
             buildInstruction(text: "Có thể bạn cũng thích"),
             space(0, 10),

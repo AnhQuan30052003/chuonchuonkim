@@ -228,7 +228,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     }
                   }
 
-                  Get.to(const OrderSuccess());
+                  Get.offAll(() => const OrderSuccess());
                 },
               ),
             )

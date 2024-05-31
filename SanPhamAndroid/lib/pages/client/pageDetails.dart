@@ -112,7 +112,7 @@ class _PageDetailsState extends State<PageDetails> {
                           var c = ChuonChuonKimController.instance;
 
                           if (c.isLogin == false) {
-                            Get.to(const PageLogin());
+                            Get.to(() => const PageLogin());
                             return;
                           }
 
@@ -157,7 +157,7 @@ class _PageDetailsState extends State<PageDetails> {
                     onPressed: () async {
                       var c = ChuonChuonKimController.instance;
                       if (c.isLogin == false) {
-                        Get.to(const PageLogin());
+                        Get.to(() => const PageLogin());
                         return;
                       }
 
@@ -186,7 +186,7 @@ class _PageDetailsState extends State<PageDetails> {
                     onPressed: () {
                       var c = ChuonChuonKimController.instance;
                       if (c.isLogin == false) {
-                        Get.to(const PageLogin());
+                        Get.to(() => const PageLogin());
                         return;
                       }
 

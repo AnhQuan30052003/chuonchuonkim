@@ -73,7 +73,7 @@ class PageCart extends StatelessWidget {
                                     var c = ChuonChuonKimController.instance;
                                     Product p = c.getProductFromCart(maSP: item.cart.maSP)!;
                                     c.showSimilarProducts(product: p);
-                                    Get.to(PageDetails(product: p));
+                                    Get.to(() => PageDetails(product: p));
                                   },
                                   backgroundColor: Colors.blue,
                                   foregroundColor: Colors.white,
@@ -225,7 +225,7 @@ class PageCart extends StatelessWidget {
                   }
                 }
 
-                Get.to(ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
+                Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
               },
               child: const Text("Đặt hàng"))
         ],
