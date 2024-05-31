@@ -109,8 +109,13 @@ class _PageSignupState extends State<PageSignup> {
                     await UserSnapshot.add(u);
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
-                      Get.offAll(const PageHomeClient());
-                      thongBaoThucHienXong(context: context, info: "Tạo thành công. Đăng nhập thành công");
+                      if (value == true) {
+                        Get.offAll(const PageHomeClient());
+                        thongBaoThucHienXong(context: context, info: "Tạo thành công. Đăng nhập thành công");
+                      }
+                      else {
+                        thongBaoThucHienXong(context: context, info: "Có lỗi tạo account !");
+                      }
                     });
                   }
                 },

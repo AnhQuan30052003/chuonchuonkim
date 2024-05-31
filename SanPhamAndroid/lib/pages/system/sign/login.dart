@@ -37,7 +37,7 @@ class _PageLoginState extends State<PageLogin> {
               TextFormField(
                 controller: txtUser,
                 decoration: const InputDecoration(
-                    labelText: "Tài khoản",
+                    labelText: "Tài khoản / số điện thoại",
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person)),
               ),

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class _EditProfileState extends State<EditProfile> {
                     ClipOval(
                       child: SizedBox.fromSize(
                         size: const Size.fromRadius(50), // Image radius
-                        child: Image.network(c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover),
+                        child: xFile == null ? Image.network(c.userSnapshot!.user.hinhAnhUser, fit: BoxFit.cover) : Image.file(File(xFile!.path))
                       ),
                     ),
                     Positioned(
@@ -115,7 +116,6 @@ class _EditProfileState extends State<EditProfile> {
       bottomNavigationBar: Container(
         height: 50,
         margin: const EdgeInsets.all(20),
-        // padding: const EdgeInsets.symmetric(horizontal: 10),
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
