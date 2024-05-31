@@ -24,12 +24,11 @@ class PageOrder extends StatelessWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(),
-                ],
-              )
-            );
+                child: Column(
+              children: [
+                CircularProgressIndicator(),
+              ],
+            ));
           }
 
           List<NotificationsSnapshot> list = [];
@@ -46,55 +45,63 @@ class PageOrder extends StatelessWidget {
           }
 
           print("Lấy dữ liệu. Length: ${list.length}");
-          return Text("$count đơn đang chờ", style: const TextStyle(color: Colors.white));
-
-          // return Column(
-          // children: [
-          //   Text("$count đơn đang chờ", style: const TextStyle(color: Colors.white)),
-
-          // space(0, 10),
-          // ListView.separated(
-          //   itemBuilder: (context, index) {
-          //     var c = ChuonChuonKimController.instance;
-          //     NotificationsSnapshot item = list[index];
-          //     Product? getP;
-          //
-          //     for (var ps in c.listProductSnapshot) {
-          //       if (ps.product.maSP == item.notification.maSP) {
-          //         getP = ps.product;
-          //         break;
-          //       }
-          //     }
-          //     Product p = getP!;
-          //
-          //     return Card(
-          //       child: Row(
-          //         children: [
-          //           Expanded(
-          //             flex: 1,
-          //             child: Image.network(p.hinhAnhSP),
-          //           ),
-          //           Expanded(
-          //             flex: 2,
-          //             child: Padding(
-          //               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          //               child: Column(
-          //                 crossAxisAlignment: CrossAxisAlignment.start,
-          //                 children: [
-          //                   Text(p.tenSP),
-          //                 ],
-          //               ),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   },
-          //   separatorBuilder: (context, index) => const Divider(thickness: 1.5),
-          //   itemCount: list.length
-          // )
-          // ],
+          // return Text(
+          //   "$count đơn đang chờ",
+          //   style: const TextStyle(color: Colors.white),
           // );
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Text(
+                  "$count đơn đang chờ",
+                  style: const TextStyle(color: Colors.black),
+                ),
+                space(0, 10),
+                ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var c = ChuonChuonKimController.instance;
+                      NotificationsSnapshot item = list[index];
+                      Product? getP;
+
+                      for (var ps in c.listProductSnapshot) {
+                        if (ps.product.maSP == item.notification.maSP) {
+                          getP = ps.product;
+                          break;
+                        }
+                      }
+                      Product p = getP!;
+
+                      return Card(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Image.network(p.hinhAnhSP),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(p.tenSP),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(thickness: 1.5),
+                    itemCount: list.length)
+              ],
+            ),
+          );
         },
       ),
     );
