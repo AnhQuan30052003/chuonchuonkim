@@ -31,7 +31,7 @@ class OrderSuccess extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                   ),
                   onPressed: () {
-                    Get.to(const PageHomeClient());
+                    Get.to(() => const PageHomeClient());
                   },
                   child: const Text(
                     "Tiếp tục mua hàng",

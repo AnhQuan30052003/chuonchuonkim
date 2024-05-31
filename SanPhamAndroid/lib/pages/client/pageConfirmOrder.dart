@@ -1,6 +1,8 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../controllers/counterQuantityProductController.dart';
 import '../../database/models/Product.dart';
@@ -31,18 +33,57 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       }
       return tong;
     }
-    
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Xác nhận đặt hàng", style: const TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
+        title: const Text("Xác nhận đặt hàng",
+            style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              _buildRow(label: "Địa chỉ nhận hàng",icon: const Icon(Icons.location_on, color: Colors.redAccent), textLeft:  diaChiNhanHang),
-
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on,
+                    color: Colors.redAccent,
+                  ),
+                  space(5, 0),
+                  const Text(
+                    "Địa chỉ nhận hàng",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              space(0, 20),
+              Container(
+                height: 70,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white70,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(diaChiNhanHang, style: const TextStyle(fontSize: 14)),
+                      Text(u.user.diaChi, style: const TextStyle(fontSize: 14)),
+                    ],
+                  ),
+                ),
+              ),
               space(0, 20),
               Row(
                 children: [
@@ -65,10 +106,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   _buildVanChuyen("Tiết kiệm", "2-7 ngày", 2),
                 ],
               ),
-
               space(0, 20),
-              _buildRow(label: "Phương thức thanh toán", icon:  const Icon(Icons.monetization_on_outlined, color: Colors.redAccent), textLeft:  "Thanh toán khi nhận hàng"),
-
+              _buildRow(
+                  label: "Phương thức thanh toán",
+                  icon: const Icon(Icons.monetization_on_outlined, color: Colors.redAccent),
+                  textLeft: "Thanh toán khi nhận hàng"),
               ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -196,7 +238,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(13),
-        border: Border.all(color: (phuongThucVanChuyenChon == phuongThuc ? Colors.red : Colors.white)),
+        border:
+            Border.all(color: (phuongThucVanChuyenChon == phuongThuc ? Colors.red : Colors.white)),
         boxShadow: const [
           BoxShadow(
             color: Colors.black38,

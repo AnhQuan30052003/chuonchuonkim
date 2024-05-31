@@ -5,7 +5,6 @@ import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
 import '../pages/system/sign/login.dart';
-import '../testCode/a.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -21,9 +20,9 @@ class ChuonChuonKimController extends GetxController {
 
   List<Product> listProductsPopulator = [];
   List<Product> listProductsGridView = [];
-  List<Product> listProductSearch= [];
-  List<Product> listSimilarProducts= [];
-  List<Product> productYouCanLike= [];
+  List<Product> listProductSearch = [];
+  List<Product> listSimilarProducts = [];
+  List<Product> productYouCanLike = [];
 
   @override
   void onReady() {
@@ -43,19 +42,22 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu cart
   Future<void> getCart() async {
     listCartSnapshot = await CartSnapshot.futureData();
-    listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+    listCartSnapshot
+        .sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
   }
 
   // Lấy dữ liệu product favorite
   Future<void> getProductFavorite() async {
     listProductFavoriteSnapshot = await ProductFavoriteSnapshot.futureData();
-    listProductFavoriteSnapshot.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) => a.productFavorite.idPF.compareTo(b.productFavorite.idPF));
+    listProductFavoriteSnapshot.sort((ProductFavoriteSnapshot a, ProductFavoriteSnapshot b) =>
+        a.productFavorite.idPF.compareTo(b.productFavorite.idPF));
   }
 
   // Lấy dữ liệu product
   Future<void> getProduct() async {
     listProductSnapshot = await ProductSnapshot.futureData();
-    listProductSnapshot.sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
+    listProductSnapshot
+        .sort((ProductSnapshot a, ProductSnapshot b) => a.product.maSP.compareTo(b.product.maSP));
 
     getProductsPopulator(requestQuantity: 1);
     listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
@@ -65,7 +67,8 @@ class ChuonChuonKimController extends GetxController {
   // Lấy dữ liệu product Type
   Future<void> getProductType() async {
     listProductTypeSnapshot = await ProductTypeSnapshot.futureData();
-    listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) => a.productType.maLSP.compareTo(b.productType.maLSP));
+    listProductTypeSnapshot.sort((ProductTypeSnapshot a, ProductTypeSnapshot b) =>
+        a.productType.maLSP.compareTo(b.productType.maLSP));
     updateNameId(nameId: "filter");
     updateNameId(nameId: "productAllAdmin");
   }
@@ -80,9 +83,6 @@ class ChuonChuonKimController extends GetxController {
   String getId() {
     return isLogin == false ? "" : userSnapshot!.user.id;
   }
-
-
-
 
   void getProductsPopulator({required int requestQuantity}) {
     listProductsPopulator = [];
@@ -104,15 +104,6 @@ class ChuonChuonKimController extends GetxController {
     update([nameId]);
   }
 
-
-
-
-
-
-
-
-
-
   // * -------------------------------------
   // Thêm sản phẩm vào giỏ hàng
   Future<void> addToCart({required Cart cartNew}) async {
@@ -132,7 +123,6 @@ class ChuonChuonKimController extends GetxController {
   void deleteFromCart({required int index}) {
     listCartSnapshot.removeAt(index);
   }
-
 
   // Lấy sản phẩm từ giỏ hàng
   Product? getProductFromCart({required String maSP}) {
@@ -157,22 +147,13 @@ class ChuonChuonKimController extends GetxController {
     return text;
   }
 
-
-
-
-
-
-
-
-
   // * -------------------------------------
   // Hiển thị sản phẩm theo loại sản phẩm click vào !
   void showProductType({required String idLSP}) {
     if (idLSP.isEmpty) {
       listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
       listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
-    }
-    else {
+    } else {
       for (var p in listProductsPopulator) {
         if (p.maLSP == idLSP) {
           Product temp = p;
@@ -200,7 +181,7 @@ class ChuonChuonKimController extends GetxController {
     for (var ps in listProductSnapshot) {
       bool searchMaSP = ps.product.maSP.toLowerCase().contains(search);
       bool searchName = ps.product.tenSP.toLowerCase().contains(search);
-      bool searchMota= ps.product.moTaSP.toLowerCase().contains(search);
+      bool searchMota = ps.product.moTaSP.toLowerCase().contains(search);
 
       if (searchMaSP || searchName || searchMota) {
         listProductSearch.add(ps.product);
@@ -241,20 +222,10 @@ class ChuonChuonKimController extends GetxController {
     return null;
   }
 
-
   void toLogin() {
     Get.to(const PageLogin());
   }
 }
-
-
-
-
-
-
-
-
-
 
 // Bindings..
 class ChuonChuonKimBindings extends Bindings {
