@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:flutter/material.dart';
 
 class PageOrder extends StatelessWidget {
-  const PageOrder({super.key});
+  final Notifications noti;
+  const PageOrder({required this.noti, super.key});
 
   @override
   Widget build(BuildContext context) {

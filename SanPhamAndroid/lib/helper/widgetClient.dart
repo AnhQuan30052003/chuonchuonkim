@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../controllers/chuonChuonKimController.dart';
 import '../database/models/Product.dart';
+import '../pages/admin/pageOrder.dart';
 import '../pages/client/pageCart.dart';
 import '../pages/system/notification/pageNotification.dart';
 import '../pages/system/sign/login.dart';
@@ -470,9 +471,9 @@ Widget buildStreamBuilderNotification() {
                         ),
                       ),
                       onTap: () async {
-                        // Chuyển page..
                         ns.notification.seen = true;
                         await ns.update(ns.notification);
+                        Get.to(PageOrder(noti: ns.notification));
                       },
                     );
                   }
