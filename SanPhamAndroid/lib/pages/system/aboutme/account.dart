@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../helper/dialog.dart';
 import '../../../helper/widget.dart';
+import '../sign/login.dart';
+import '../sign/signup.dart';
 import 'infor/personalInfo.dart';
 
 Widget account(BuildContext context) {
@@ -36,6 +38,34 @@ Widget account(BuildContext context) {
   ];
 
   var c = ChuonChuonKimController.instance;
+
+  var rowNotLogin = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      ElevatedButton(
+          onPressed: () {
+            Get.to(const PageLogin());
+          },
+          child: const Text("Đăng nhập")
+      ),
+      space(10, 0),
+      ElevatedButton(
+          onPressed: () {
+            Get.to(const PageSignup());
+          },
+          child: const Text("Đăng ký")
+      ),
+    ],
+  );
+
+  var columnLogined = Column(
+    children: [
+      space(0, 20),
+      _buildContainerFrame(context, above),
+      space(0, 20),
+      _buildContainerFrame(context, bellow),
+    ],
+  );
 
   return SingleChildScrollView(
     child: GetBuilder(
@@ -81,10 +111,7 @@ Widget account(BuildContext context) {
                 ],
               ),
             ),
-            space(0, 20),
-            _buildContainerFrame(context, above),
-            space(0, 20),
-            _buildContainerFrame(context, bellow),
+            (c.isLogin ? columnLogined : rowNotLogin)
           ],
         ),
       ),
@@ -157,3 +184,4 @@ GestureDetector _buildGestureDetector(
     },
   );
 }
+
