@@ -32,24 +32,19 @@ class _PageLoginState extends State<PageLogin> {
             children: [
               space(0, 50),
               Image.asset("assets/freed.png"),
-
-              Text(
-                messageError,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-
+              Text(messageError,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  )),
               space(0, 50),
               TextFormField(
                 controller: txtUser,
                 decoration: const InputDecoration(
-                  labelText: "Tài khoản",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person)),
+                    labelText: "Tài khoản",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person)),
               ),
-
               space(0, 15),
               TextFormField(
                 controller: txtPass,
@@ -79,14 +74,14 @@ class _PageLoginState extends State<PageLogin> {
                   )
                 ],
               ),
-
               space(0, 50),
               ElevatedButton(
                 onPressed: () async {
                   thongBaoDangThucHien(context: context, info: "Đang đăng nhập...");
                   var c = ChuonChuonKimController.instance;
-                  await c.login(user: txtUser.text.trim(), password: txtPass.text.trim())
-                  .then((value) {
+                  await c
+                      .login(user: txtUser.text.trim(), password: txtPass.text.trim())
+                      .then((value) {
                     if (value == false) {
                       thongBaoThucHienXong(context: context, info: "Đăng nhập thất bại.");
                       messageError = "Tài khoản hoặc mẫu không chính xác !";
@@ -98,8 +93,7 @@ class _PageLoginState extends State<PageLogin> {
                     thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
                     if (c.userSnapshot!.user.id == "0000") {
                       Get.offAll(const PageHomeAdmin());
-                    }
-                    else {
+                    } else {
                       Get.offAll(const PageHomeClient());
                     }
                   });

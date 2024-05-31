@@ -22,7 +22,6 @@ class _PageSignupState extends State<PageSignup> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                space(0, 30),
                 Image.asset("assets/freed.png"),
                 space(0, 50),
                 TextFormField(
@@ -41,6 +40,7 @@ class _PageSignupState extends State<PageSignup> {
                 ),
                 space(0, 15),
                 TextFormField(
+                  obscureText: showPass,
                   decoration: InputDecoration(
                     labelText: "Mật khẩu",
                     border: const OutlineInputBorder(),
