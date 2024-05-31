@@ -1,10 +1,10 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:chuonchuonkim_app/pages/system/aboutme/editPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../helper/dialog.dart';
 import '../../../helper/widget.dart';
-import '../sign/login.dart';
 import 'infor/personalInfo.dart';
 
 Widget account(BuildContext context) {
@@ -30,7 +30,7 @@ Widget account(BuildContext context) {
       context: context,
       icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
       label: "Đăng xuất",
-      widget: const PageLogin(),
+      widget: const PageHomeClient(),
       logout: true,
     ),
   ];
