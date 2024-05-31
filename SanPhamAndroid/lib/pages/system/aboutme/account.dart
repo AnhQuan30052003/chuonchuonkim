@@ -57,7 +57,7 @@ Widget account(BuildContext context) {
                       size: const Size.fromRadius(50), // Image radius
                       child: Image.network(
                           c.isLogin == false
-                              ? "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"
+                              ? "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
                               : c.userSnapshot!.user.hinhAnhUser,
                           fit: BoxFit.cover),
                     ),
