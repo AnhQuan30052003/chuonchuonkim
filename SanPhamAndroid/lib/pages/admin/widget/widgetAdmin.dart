@@ -53,16 +53,16 @@ PreferredSizeWidget buildAppBarAdmin({required String info}) {
                 return Text("$count", style: const TextStyle(color: Colors.white));
               },
             ),
-            child: const Icon(Icons.notifications_none, color: Color(0xFF3A3737)),
+            child: const Icon(Icons.card_travel, color: Color(0xFF3A3737)),
           ),
         ),
         onTap: () {
-          var c = ChuonChuonKimController.instance;
-          if (c.isLogin == false) {
-            Get.to(const PageLogin());
-            return;
-          }
-          Get.to(const PageNotificationAdmin());
+          // var c = ChuonChuonKimController.instance;
+          // if (c.isLogin == false) {
+          //   Get.to(const PageLogin());
+          //   return;
+          // }
+          // Get.to(const PageNotificationAdmin());
         },
       ),
     ],
