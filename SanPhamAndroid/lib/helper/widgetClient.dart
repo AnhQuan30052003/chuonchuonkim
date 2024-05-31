@@ -27,14 +27,6 @@ PreferredSizeWidget buildAppBar({required String info}) {
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
-            onTap: () {
-              var c = ChuonChuonKimController.instance;
-              if (c.isLogin == false) {
-                c.toLogin();
-                return;
-              }
-              Get.to(const PageNotification());
-            },
             badgeContent: GetBuilder(
               init: ChuonChuonKimController.instance,
               id: "appBar",
@@ -75,14 +67,6 @@ PreferredSizeWidget buildAppBar({required String info}) {
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: badges.Badge(
-            onTap: () {
-              var c = ChuonChuonKimController.instance;
-              if (c.isLogin == false) {
-                c.toLogin();
-                return;
-              }
-              Get.to(const PageCart());
-            },
             badgeContent: GetBuilder(
               init: ChuonChuonKimController.instance,
               id: "appBar",
