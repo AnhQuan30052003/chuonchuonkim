@@ -75,10 +75,23 @@ class _PageSignupState extends State<PageSignup> {
                       return;
                     }
 
-                    thongBaoDangThucHien(context: context, info: "Đang tạo...");
                     var c = ChuonChuonKimController.instance;
                     c.listUserSnapshot = await UserSnapshot.futureData();
                     c.listUserSnapshot.sort((UserSnapshot a,UserSnapshot b) => a.user.id.compareTo(b.user.id));
+
+                    for (var us in c.listUserSnapshot) {
+                      if (txtUser.text == us.user.user) {
+                        messageError = "Tên tài khoản đã có !";
+                        setState(() {});
+                        return;
+                      }
+
+                      if (txtSdt.text == us.user.sdt) {
+                        messageError = "Số điện thoại đã đăng ký !";
+                        setState(() {});
+                        return;
+                      }
+                    }
 
                     int number = 1 + int.parse(c.listUserSnapshot.last.user.id);
 
@@ -92,6 +105,7 @@ class _PageSignupState extends State<PageSignup> {
                       hinhAnhUser: Firebase.avtDefault,
                     );
 
+                    thongBaoDangThucHien(context: context, info: "Đang tạo...");
                     await UserSnapshot.add(u);
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
