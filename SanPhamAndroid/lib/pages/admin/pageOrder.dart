@@ -29,17 +29,21 @@ class PageOrder extends StatelessWidget {
             );
           }
 
+          List<NotificationsSnapshot> data = [];
           List<NotificationsSnapshot> list = [];
 
           try {
-            list = snapshot.data!;
+            data = snapshot.data!;
           } catch (error) {
-            list = [];
+            data = [];
           }
 
           int count = 0;
-          for (var no in list) {
-            if (no.notification.seen == false) count += 1;
+          for (var no in data) {
+            if (no.notification.seen == false) {
+              count += 1;
+              list.add(no);
+            }
           }
 
           return Padding(
@@ -108,6 +112,9 @@ class PageOrder extends StatelessWidget {
                                             thongBaoDangThucHien(context: context, info: "Đang xác nhận...");
                                             await item.update(item.notification)
                                             .then((value) {
+
+
+
                                               thongBaoThucHienXong(context: context, info: "Đã xác nhận.");
                                             });
                                           },
@@ -126,6 +133,10 @@ class PageOrder extends StatelessWidget {
                                             thongBaoDangThucHien(context: context, info: "Đang huỷ...");
                                             await item.update(item.notification)
                                             .then((value) {
+
+
+
+
                                               thongBaoThucHienXong(context: context, info: "Đã huỷ.");
                                             });
                                           },
