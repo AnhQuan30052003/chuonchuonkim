@@ -2,6 +2,7 @@ import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/database/connect/setupFirebase.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
+import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:chuonchuonkim_app/pages/system/sign/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,7 @@ class _PageSignupState extends State<PageSignup> {
                     await UserSnapshot.add(u);
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
+                      Get.offAll(const PageHomeClient());
                       thongBaoThucHienXong(context: context, info: "Tạo thành công. Đăng nhập thành công");
                     });
                   }
