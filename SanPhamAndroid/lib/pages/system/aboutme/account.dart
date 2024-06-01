@@ -43,17 +43,32 @@ Widget account(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       ElevatedButton(
-          onPressed: () {
-            Get.to(() => const PageLogin());
-          },
-          child: const Text("Đăng nhập")
+        onPressed: () {
+          Get.to(() => const PageLogin());
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: const BorderSide(color: Colors.redAccent)),
+          backgroundColor: Colors.white,
+        ),
+        child: const Text(
+          "Đăng nhập",
+          style: TextStyle(color: Colors.redAccent),
+        ),
       ),
-      space(10, 0),
+      space(20, 0),
       ElevatedButton(
-          onPressed: () {
-            Get.to(() => const PageSignup());
-          },
-          child: const Text("Đăng ký")
+        onPressed: () {
+          Get.to(() => const PageSignup());
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5)),
+          backgroundColor: Colors.redAccent,
+        ),
+        child: const Text(
+          "Đăng ký",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     ],
   );
@@ -102,7 +117,7 @@ Widget account(BuildContext context) {
                           Text(c.isLogin == false ? "Tên khách hàng" : c.userSnapshot!.user.ten,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                           Text(
-                              "Tài khoản: ${c.isLogin == false ? "Chưa đăng nhập" : c.userSnapshot!.user.user}",
+                              c.isLogin == false ? "Chưa đăng nhập" : "Tài khoản ${c.userSnapshot!.user.user}",
                               style: const TextStyle(color: Color.fromARGB(96, 27, 10, 10))),
                         ],
                       ),
@@ -163,8 +178,7 @@ GestureDetector _buildGestureDetector(
 
       List<String> list = ["Xác nhận", "Huỷ"];
       String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
-      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi)
-      .then((value) {
+      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
         if (value == list[0]) {
           var c = ChuonChuonKimController.instance;
           c.userSnapshot = null;
@@ -175,4 +189,3 @@ GestureDetector _buildGestureDetector(
     },
   );
 }
-
