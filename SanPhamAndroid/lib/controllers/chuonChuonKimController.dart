@@ -44,10 +44,10 @@ class ChuonChuonKimController extends GetxController {
   Future<void> getCart() async {
     listCartSnapshot = await CartSnapshot.futureData();
     if (isLogin && userSnapshot!.user.id == "0000") {
-      Get.to(() => const PageHomeAdmin());
+      Get.offAll(() => const PageHomeAdmin());
     }
     else {
-      Get.to(() => const PageHomeClient());
+      Get.offAll(() => const PageHomeClient());
     }
   }
 

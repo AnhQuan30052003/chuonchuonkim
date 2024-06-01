@@ -1,22 +1,19 @@
+import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  return runApp(const App());
-}
-
-class App extends StatelessWidget {
-  const App({super.key});
+class PageLoad extends StatefulWidget {
+  const PageLoad({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: PageLoad(),
-    );
-  }
+  State<PageLoad> createState() => _PageLoadState();
 }
 
-class PageLoad extends StatelessWidget {
-  const PageLoad({super.key});
+class _PageLoadState extends State<PageLoad> {
+  @override
+  void initState() {
+    var c = ChuonChuonKimController.instance;
+    c.getData();
+  }
 
   @override
   Widget build(BuildContext context) {
