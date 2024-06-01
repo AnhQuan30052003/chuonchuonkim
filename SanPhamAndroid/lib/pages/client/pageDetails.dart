@@ -15,10 +15,9 @@ import '../../helper/widgetClient.dart';
 import '../system/sign/login.dart';
 import 'pageConfirmOrder.dart';
 
-
 class PageDetails extends StatefulWidget {
-  final Product product ;
-  PageDetails({required this.product, super.key});
+  final Product product;
+  const PageDetails({required this.product, super.key});
 
   @override
   State<PageDetails> createState() => _PageDetailsState();
@@ -60,48 +59,36 @@ class _PageDetailsState extends State<PageDetails> {
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(widget.product.hinhAnhSP),
               ),
-
               space(0, 20),
               Row(
                 children: [
-                  Text(
-                    "${widget.product.giaSP}đ",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                    )
-                  ),
+                  Text("${widget.product.giaSP}đ",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      )),
                   space(10, 0),
-                  Text(
-                    "${widget.product.giaSP * 1.25}đ",
-                    style: const TextStyle(
-                        fontSize: 15,
-                        decoration: TextDecoration.lineThrough
-                    )
-                  ),
+                  Text("${widget.product.giaSP * 1.25}đ",
+                      style: const TextStyle(fontSize: 15, decoration: TextDecoration.lineThrough)),
                 ],
               ),
-
               Row(
                 children: [
                   Text(widget.product.moTaSP, style: const TextStyle(fontSize: 20)),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.yellow),
-                          Text("${randomStar()} / 5"),
-                        ],
-                      ),
-                      Text("  |  Đã bán ${Random().nextInt(400)}"),
-                    ]
-                  ),
+                  Row(children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.star, color: Colors.yellow),
+                        Text("${randomStar()} / 5"),
+                      ],
+                    ),
+                    Text("  |  Đã bán ${Random().nextInt(400)}"),
+                  ]),
                   Row(
                     children: [
                       IconButton(
@@ -109,7 +96,9 @@ class _PageDetailsState extends State<PageDetails> {
                           init: ChuonChuonKimController.instance,
                           id: widget.product.maSP,
                           builder: (controller) {
-                            return tym ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite, color: Colors.black26);
+                            return tym
+                                ? const Icon(Icons.favorite, color: Colors.red)
+                                : const Icon(Icons.favorite, color: Colors.black26);
                           },
                         ),
                         onPressed: () async {
@@ -125,19 +114,22 @@ class _PageDetailsState extends State<PageDetails> {
 
                           if (tym) {
                             String id = "0";
-                            var lastProductFavoriteSnapshot = c.listProductFavoriteSnapshot.lastOrNull;
+                            var lastProductFavoriteSnapshot =
+                                c.listProductFavoriteSnapshot.lastOrNull;
                             if (lastProductFavoriteSnapshot != null) {
                               id = lastProductFavoriteSnapshot.productFavorite.maSP;
                             }
 
                             int number = int.parse(id) + 1;
-                            ProductFavorite pf = ProductFavorite(idPF: getIdToString(number), idUser: c.userSnapshot!.user.id, maSP: widget.product.maSP);
-                            await ProductFavoriteSnapshot.add(pf)
-                            .then((value) {
-                              thongBaoThucHienXong(context: context, info: "Đã thêm vào yêu thích.");
+                            ProductFavorite pf = ProductFavorite(
+                                idPF: getIdToString(number),
+                                idUser: c.userSnapshot!.user.id,
+                                maSP: widget.product.maSP);
+                            await ProductFavoriteSnapshot.add(pf).then((value) {
+                              thongBaoThucHienXong(
+                                  context: context, info: "Đã thêm vào yêu thích.");
                             });
-                          }
-                          else {
+                          } else {
                             for (var pfn in c.listProductFavoriteSnapshot) {
                               if (pfn.productFavorite.maSP == widget.product.maSP) {
                                 await pfn.delete();
@@ -153,11 +145,11 @@ class _PageDetailsState extends State<PageDetails> {
                   ),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade600),
                     onPressed: () async {
                       var c = ChuonChuonKimController.instance;
                       if (c.isLogin == false) {
@@ -172,96 +164,109 @@ class _PageDetailsState extends State<PageDetails> {
                       }
 
                       int number = int.parse(id) + 1;
-                      Cart cart = Cart(idCart: getIdToString(number), idUser: c.userSnapshot!.user.id, maSP: widget.product.maSP, soLuong: 1);
-                      await c.addToCart(cartNew: cart)
-                      .then((value) {
+                      Cart cart = Cart(
+                          idCart: getIdToString(number),
+                          idUser: c.userSnapshot!.user.id,
+                          maSP: widget.product.maSP,
+                          soLuong: 1);
+                      await c.addToCart(cartNew: cart).then((value) {
                         thongBaoThucHienXong(context: context, info: "Đã thêm vào giỏ hàng.");
                       });
                     },
                     child: Row(
                       children: [
-                        const Icon(Icons.shopping_cart_outlined),
+                        const Icon(Icons.shopping_cart_outlined, color: Colors.white),
                         space(5, 0),
-                        const Text("Thêm vào giỏ hàng"),
+                        const Text("Thêm vào giỏ hàng", style: TextStyle(color: Colors.white)),
                       ],
-                    )
+                    ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      var c = ChuonChuonKimController.instance;
-                      if (c.isLogin == false) {
-                        Get.to(() => const PageLogin());
-                        return;
-                      }
-
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          CounterQuantityProductController quantity = CounterQuantityProductController(0);
-
-                          return SizedBox(
-                            height: 100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        quantity.decrement();
-                                      },
-                                      icon: const Icon(Icons.remove),
-                                    ),
-                                    Obx(() => Text("${quantity.count.value}")),
-                                    IconButton(
-                                      onPressed: () {
-                                        quantity.increment();
-                                      },
-                                      icon: const Icon(Icons.add),
-                                    ),
-                                  ],
-                                ),
-
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                        side: const BorderSide(
-                                          color: Colors.redAccent
-                                        )
-                                      )
-                                    ),
-                                    onPressed: () {
-                                      List<Product> getListProduct = [];
-                                      List<int> getListQuantity = [];
-                                      getListProduct.add(widget.product);
-                                      getListQuantity.add(quantity.count.value);
-                                  
-                                      Navigator.of(context).pop();
-                                      Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
-                                    },
-                                    child: const Text("Mua", style: TextStyle(color: Colors.redAccent),),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                      onPressed: () {
+                        var c = ChuonChuonKimController.instance;
+                        if (c.isLogin == false) {
+                          Get.to(() => const PageLogin());
+                          return;
                         }
-                      );
-                    },
-                    child: const Text("Mua ngay")
-                  ),
+
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            CounterQuantityProductController quantity =
+                                CounterQuantityProductController(1);
+
+                            return SizedBox(
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          quantity.decrement();
+                                        },
+                                        icon: const Icon(Icons.remove, color: Colors.black54),
+                                      ),
+                                      Obx(() => Text(
+                                            "${quantity.count.value}",
+                                            style: const TextStyle(
+                                                fontSize: 15, fontWeight: FontWeight.bold),
+                                          )),
+                                      IconButton(
+                                        onPressed: () {
+                                          quantity.increment();
+                                        },
+                                        icon: const Icon(Icons.add, color: Colors.black54),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                    width: 150,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.redAccent,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(25),
+                                              side: const BorderSide(color: Colors.redAccent))),
+                                      onPressed: () {
+                                        List<Product> getListProduct = [];
+                                        List<int> getListQuantity = [];
+                                        getListProduct.add(widget.product);
+                                        getListQuantity.add(quantity.count.value);
+
+                                        Navigator.of(context).pop();
+                                        Get.to(() => ConfirmOrder(
+                                            listProduct: getListProduct,
+                                            listQuantity: getListQuantity));
+                                      },
+                                      child: const Text(
+                                        "Mua",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: const Text(
+                        "Mua ngay",
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ],
               ),
-
               space(0, 10),
               buildInstruction(text: "Sản phẩm tương tự"),
               space(0, 10),
-              buildGridViewProducts(context: context, list: ChuonChuonKimController.instance.listSimilarProducts, showNotFound: false),
+              buildGridViewProducts(
+                  context: context,
+                  list: ChuonChuonKimController.instance.listSimilarProducts,
+                  showNotFound: false),
             ],
           ),
         ),

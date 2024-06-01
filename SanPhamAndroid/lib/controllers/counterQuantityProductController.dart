@@ -9,7 +9,7 @@ class CounterQuantityProductController extends GetxController {
   }
 
   void decrement() {
-    if (count.value > 0) {
+    if (count.value > 1) {
       count.value -= 1;
     }
   }
