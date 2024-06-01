@@ -107,11 +107,9 @@ class _PageSignupState extends State<PageSignup> {
                     );
 
                     thongBaoDangThucHien(context: context, info: "Đang tạo...");
-                    await UserSnapshot.add(u).then((value) {
-                      thongBaoThucHienXong(context: context, info: "Tạo thành công.");
-                    });
-
+                    await UserSnapshot.add(u);
                     c.listUserSnapshot = await UserSnapshot.futureData();
+                    thongBaoThucHienXong(context: context, info: "Tạo thành công.");
 
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
