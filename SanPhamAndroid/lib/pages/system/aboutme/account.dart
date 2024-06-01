@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
 import 'package:chuonchuonkim_app/pages/system/aboutme/editPassword.dart';
 import 'package:flutter/material.dart';
@@ -178,14 +179,16 @@ GestureDetector _buildGestureDetector(
 
       List<String> list = ["Xác nhận", "Huỷ"];
       String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
-      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
-        if (value == list[0]) {
-          var c = ChuonChuonKimController.instance;
+      SharedPreferences spf = await SharedPreferences.getInstance();
+      String chon = await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi);
+      if (chon == list[0]) {
+        spf.remove("idLogin").then((value) {
+        var c = ChuonChuonKimController.instance;
           c.userSnapshot = null;
           c.isLogin = false;
           Get.offAll(() => widget);
-        }
-      });
+        });
+      }
     },
   );
 }

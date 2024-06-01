@@ -72,7 +72,7 @@ class ChuonChuonKimController extends GetxController {
         userSnapshot = us;
         isLogin = true;
         SharedPreferences spf = await SharedPreferences.getInstance();
-        spf.setString("isLogin", userSnapshot!.user.id);
+        spf.setString("idLogin", userSnapshot!.user.id);
         return true;
       }
     }
