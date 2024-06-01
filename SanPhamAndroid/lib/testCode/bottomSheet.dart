@@ -1,4 +1,6 @@
+import 'package:chuonchuonkim_app/controllers/counterQuantityProductController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() => runApp(const App());
 
@@ -39,21 +41,45 @@ class Page extends StatelessWidget {
 
 void show(BuildContext context, String text) {
   showModalBottomSheet(
-    context: context,
-    builder: (context) {
-      return SizedBox(
-        height: 100,
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-
-
-              Navigator.of(context).pop();
-            },
-            child: Text(text),
+      context: context,
+      builder: (context) {
+        CounterQuantityProductController quantity = CounterQuantityProductController(0);
+        return SizedBox(
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      quantity.decrement();
+                    },
+                    icon: const Icon(Icons.remove),
+                  ),
+                  Obx(() => Text("${quantity.count.value}")),
+                  IconButton(
+                    onPressed: () {
+                      quantity.increment();
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(color: Colors.redAccent))),
+                onPressed: () {},
+                child: const Text(
+                  "Mua",
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+              ),
+            ],
           ),
-        ),
-      );
-    }
-  );
+        );
+      });
 }

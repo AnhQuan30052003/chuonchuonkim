@@ -12,7 +12,7 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       title: "Chuonchuonkim App",
       debugShowCheckedModeBanner: false,
       home: ListApp(),
@@ -64,7 +64,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirebaseConnect(
-      builder: (context) =>  GetMaterialApp(
+      builder: (context) => GetMaterialApp(
         title: "ChuonoChuonKimApp",
         debugShowCheckedModeBanner: false,
         initialBinding: ChuonChuonKimBindings(),
