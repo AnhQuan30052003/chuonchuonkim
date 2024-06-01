@@ -57,8 +57,7 @@ class ChuonChuonKimController extends GetxController {
 
         if (idLogin == "0000") {
           Get.offAll(() => const PageHomeAdmin());
-        }
-        else {
+        } else {
           Get.offAll(() => const PageHomeClient());
         }
       }
@@ -185,8 +184,7 @@ class ChuonChuonKimController extends GetxController {
     if (idLSP.isEmpty) {
       listProductsGridView = listProductSnapshot.map((e) => e.product).toList();
       listProductsPopulator.sort((Product a, Product b) => a.maSP.compareTo(b.maSP));
-    }
-    else {
+    } else {
       for (var p in listProductsPopulator) {
         if (p.maLSP == idLSP) {
           Product temp = p;
@@ -230,7 +228,6 @@ class ChuonChuonKimController extends GetxController {
       }
     }
   }
-
 
   Product? getProductFromID({required String id}) {
     for (var ps in listProductSnapshot) {

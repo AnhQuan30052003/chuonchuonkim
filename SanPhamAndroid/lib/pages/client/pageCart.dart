@@ -1,6 +1,7 @@
 // Quân
 
 import 'package:chuonchuonkim_app/helper/dialog.dart';
+import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:chuonchuonkim_app/pages/client/pageConfirmOrder.dart';
 import 'package:flutter/widgets.dart';
 import '../../controllers/chuonChuonKimController.dart';
@@ -143,7 +144,7 @@ class PageCart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(child: Text(p.tenSP)),
-                  Text("${p.giaSP} đ"),
+                  Text("${formatNumber(p.giaSP)} đ"),
                 ],
               ),
               subtitle: Row(
@@ -167,7 +168,7 @@ class PageCart extends StatelessWidget {
                     )
                   ]),
                   Obx(() => Text(
-                      "Tổng: ${sumPirceOfProduct(product: p, quantity: counterQuantity.count.value)} đ",
+                      "Tổng: ${formatNumber(sumPirceOfProduct(product: p, quantity: counterQuantity.count.value))} đ",
                       style: const TextStyle(color: Colors.red))),
                 ],
               ),
@@ -216,18 +217,16 @@ class PageCart extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Divider(
-                height: 1,
-                thickness: 1,
-                color: Colors.grey,
-              ),
               const SizedBox(height: 10),
               GetBuilder(
                 init: ChuonChuonKimController.instance,
                 id: "sumMoney",
-                builder: (controller) => Text(
-                    "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
-                    style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                builder: (controller) {
+                  var price =
+                      formatNumber(sumPriceOfList(listCounter: listCounter, listCheck: listCheck));
+                  return Text("Tổng tiền: $price đ",
+                      style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold));
+                },
               ),
               const SizedBox(height: 15),
               ElevatedButton(

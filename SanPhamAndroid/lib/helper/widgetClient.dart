@@ -104,7 +104,8 @@ Widget buildSearch({required BuildContext context}) {
     if (textSearch.isEmpty) return;
     c.clear;
     ChuonChuonKimController.instance.showProductSearch(search: textSearch);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => PageProductSearch(search: textSearch)));
   }
 
   return SizedBox(
@@ -238,7 +239,7 @@ Widget buildGridViewProducts(
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         Text(
-                          "${product.giaSP}đ",
+                          "${formatNumber(product.giaSP)}đ",
                           style:
                               const TextStyle(fontWeight: FontWeight.w500, color: Colors.redAccent),
                         ),
@@ -328,7 +329,7 @@ Widget buildProductsPopulator() {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${item.giaSP}đ",
+                                  "${formatNumber(item.giaSP)}đ",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500, color: Colors.redAccent),
                                 ),
@@ -443,12 +444,11 @@ Widget buildStreamBuilderNotification() {
                           space(10, 0),
                           Expanded(
                             child: SizedBox(
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(ns.notification.text, style: const TextStyle(color: Colors.black))
-                              )
-                            ),
+                                height: 50,
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(ns.notification.text,
+                                        style: const TextStyle(color: Colors.black)))),
                           ),
                         ],
                       ),
@@ -472,13 +472,11 @@ Widget buildStreamBuilderNotification() {
                             ),
                             space(10, 0),
                             SizedBox(
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(ns.notification.text, style: const TextStyle(color: Colors.white)
-                                )
-                              )
-                            ),
+                                height: 50,
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(ns.notification.text,
+                                        style: const TextStyle(color: Colors.white)))),
                           ],
                         ),
                       ),
