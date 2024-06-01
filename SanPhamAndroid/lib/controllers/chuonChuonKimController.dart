@@ -37,18 +37,19 @@ class ChuonChuonKimController extends GetxController {
     await getProduct();
     await getProductFavorite();
     await getCart();
-  }
 
-  // * -------------------------------------
-  // Lấy dữ liệu cart
-  Future<void> getCart() async {
-    listCartSnapshot = await CartSnapshot.futureData();
     if (isLogin && userSnapshot!.user.id == "0000") {
       Get.offAll(() => const PageHomeAdmin());
     }
     else {
       Get.offAll(() => const PageHomeClient());
     }
+  }
+
+  // * -------------------------------------
+  // Lấy dữ liệu cart
+  Future<void> getCart() async {
+    listCartSnapshot = await CartSnapshot.futureData();
   }
 
   // Lấy dữ liệu product favorite
