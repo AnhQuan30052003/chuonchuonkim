@@ -55,27 +55,34 @@ void show(BuildContext context, String text) {
                     onPressed: () {
                       quantity.decrement();
                     },
-                    icon: const Icon(Icons.remove),
+                    icon: const Icon(Icons.remove, color: Colors.black54),
                   ),
-                  Obx(() => Text("${quantity.count.value}")),
+                  Obx(() => Text(
+                        "${quantity.count.value}",
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      )),
                   IconButton(
                     onPressed: () {
                       quantity.increment();
                     },
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add, color: Colors.black54),
                   ),
                 ],
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: const BorderSide(color: Colors.redAccent))),
-                onPressed: () {},
-                child: const Text(
-                  "Mua",
-                  style: TextStyle(color: Colors.redAccent),
+              SizedBox(
+                height: 50,
+                width: 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          side: const BorderSide(color: Colors.redAccent))),
+                  onPressed: () {},
+                  child: const Text(
+                    "Mua",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],

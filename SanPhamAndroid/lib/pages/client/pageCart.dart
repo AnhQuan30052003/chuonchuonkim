@@ -2,6 +2,7 @@
 
 import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/pages/client/pageConfirmOrder.dart';
+import 'package:flutter/widgets.dart';
 import '../../controllers/chuonChuonKimController.dart';
 import '../../controllers/checkProductController.dart';
 import '../../controllers/counterQuantityProductController.dart';
@@ -19,6 +20,7 @@ class PageCart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CounterQuantityProductController> listCounter = [];
     List<CheckProductController> listCheck = [];
+    CheckProductController selectAll = CheckProductController();
 
     for (int i = 0; i < ChuonChuonKimController.instance.listCartSnapshot.length; i++) {
       listCounter.add(CounterQuantityProductController(
@@ -50,7 +52,8 @@ class PageCart extends StatelessWidget {
             list = snapshot.data!;
             var c = ChuonChuonKimController.instance;
             c.listCartSnapshot = list;
-            c.listCartSnapshot.sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
+            c.listCartSnapshot
+                .sort((CartSnapshot a, CartSnapshot b) => a.cart.idCart.compareTo(b.cart.idCart));
           } catch (error) {
             list = [];
           }
@@ -105,7 +108,7 @@ class PageCart extends StatelessWidget {
                         },
                         separatorBuilder: (context, index) => const Divider(thickness: 1.5),
                         itemCount: list.length)),
-                _buildBottomInfo(listCounter, listCheck, context)
+                _buildBottomInfo(listCounter, listCheck, selectAll, context)
               ],
             ),
           );
@@ -114,10 +117,12 @@ class PageCart extends StatelessWidget {
     );
   }
 
-  Card _buildCard(String maSP, CounterQuantityProductController counterQuantity, CheckProductController checkProduct) {
+  Card _buildCard(String maSP, CounterQuantityProductController counterQuantity,
+      CheckProductController checkProduct) {
     Product p = ChuonChuonKimController.instance.getProductFromCart(maSP: maSP)!;
 
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       color: Colors.white,
       child: Row(
         children: [
@@ -173,61 +178,103 @@ class PageCart extends StatelessWidget {
     );
   }
 
-  Padding _buildBottomInfo(List<CounterQuantityProductController> listCounter, List<CheckProductController> listCheck, BuildContext context) {
+  Padding _buildBottomInfo(
+      List<CounterQuantityProductController> listCounter,
+      List<CheckProductController> listCheck,
+      CheckProductController selectAll,
+      BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.grey,
+          Expanded(
+            child: Row(
+              children: [
+                SizedBox(
+                  child: Obx(
+                    () => Checkbox(
+                      value: selectAll.isChecked.value,
+                      onChanged: (bool? newBool) {
+                        selectAll.isChecked.value = newBool!;
+                        for (var o in listCheck) {
+                          if (selectAll.isChecked.value = true) {
+                            o.isChecked.value = true;
+                          } else {
+                            o.isChecked.value = false;
+                          }
+                        }
+                        ChuonChuonKimController.instance.updateNameId(nameId: "sumMoney");
+                      },
+                    ),
+                  ),
+                ),
+                const Text("Tất cả", style: TextStyle(color: Colors.black, fontSize: 16))
+              ],
+            ),
           ),
-          const SizedBox(height: 10),
-          GetBuilder(
-            init: ChuonChuonKimController.instance,
-            id: "sumMoney",
-            builder: (controller) => Text(
-                "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
-                style: const TextStyle(color: Colors.red)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Divider(
+                height: 1,
+                thickness: 1,
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 10),
+              GetBuilder(
+                init: ChuonChuonKimController.instance,
+                id: "sumMoney",
+                builder: (controller) => Text(
+                    "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
+                    style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 15),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  onPressed: () {
+                    var c = ChuonChuonKimController.instance;
+                    String text;
+
+                    if (c.listCartSnapshot.isEmpty) {
+                      text = "Hãy thêm sản phẩm vào giỏ hàng !";
+                      info(context, text);
+                      return;
+                    }
+
+                    int sumChecked = 0;
+                    for (var check in listCheck) {
+                      if (check.isChecked.value) {
+                        sumChecked += 1;
+                      }
+                    }
+                    if (sumChecked == 0) {
+                      text = "Click chọn sản phẩm để đặt hàng !";
+                      info(context, text);
+                      return;
+                    }
+
+                    List<Product> getListProduct = [];
+                    List<int> getListQuantity = [];
+                    for (int i = 0; i < listCheck.length; i++) {
+                      if (listCheck[i].isChecked.value) {
+                        getListQuantity.add(listCounter[i].count.value);
+                        getListProduct
+                            .add(c.getProductFromID(id: c.listCartSnapshot[i].cart.maSP)!);
+                      }
+                    }
+
+                    Get.to(() =>
+                        ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
+                  },
+                  child: const Text("Mua hàng ", style: TextStyle(color: Colors.white)))
+            ],
           ),
-          const SizedBox(height: 15),
-          ElevatedButton(
-              onPressed: () {
-                var c = ChuonChuonKimController.instance;
-                String text;
-
-                if (c.listCartSnapshot.isEmpty) {
-                  text = "Hãy thêm sản phẩm vào giỏ hàng !";
-                  info(context, text);
-                  return;
-                }
-
-                int sumChecked = 0;
-                for (var check in listCheck) {
-                  if (check.isChecked.value) {
-                    sumChecked += 1;
-                  }
-                }
-                if (sumChecked == 0) {
-                  text = "Click chọn sản phẩm để đặt hàng !";
-                  info(context, text);
-                  return;
-                }
-
-                List<Product> getListProduct = [];
-                List<int> getListQuantity = [];
-                for (int i = 0; i < listCheck.length; i++) {
-                  if (listCheck[i].isChecked.value) {
-                    getListQuantity.add(listCounter[i].count.value);
-                    getListProduct.add(c.getProductFromID(id: c.listCartSnapshot[i].cart.maSP)!);
-                  }
-                }
-
-                Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
-              },
-              child: const Text("Đặt hàng"))
         ],
       ),
     );
@@ -250,6 +297,17 @@ class PageCart extends StatelessWidget {
   // Tổng giá của sản phẩm
   int sumPirceOfProduct({required Product product, required int quantity}) {
     return product.giaSP * quantity;
+  }
+
+  // Tính số lượng sản phẩm đã chọn
+  int numberOfItemSelected(List<CheckProductController> listCheck) {
+    int cnt = 0;
+    for (var o in listCheck) {
+      if (o.isChecked.value) {
+        cnt++;
+      }
+    }
+    return cnt;
   }
 
   // Tổng tiền cả giỏ hàng
