@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
+import 'package:chuonchuonkim_app/controllers/counterQuantityProductController.dart';
 import 'package:chuonchuonkim_app/database/models/Cart.dart';
 import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
 import '../system/sign/login.dart';
+import 'pageConfirmOrder.dart';
 
 class PageDetails extends StatefulWidget {
   final Product product;
@@ -190,7 +192,50 @@ class _PageDetailsState extends State<PageDetails> {
                         return;
                       }
 
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          CounterQuantityProductController quantity = CounterQuantityProductController(0);
 
+                          return SizedBox(
+                            height: 100,
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        quantity.decrement();
+                                      },
+                                      icon: const Icon(Icons.remove),
+                                    ),
+                                    Obx(() => Text("${quantity.count.value}")),
+                                    IconButton(
+                                      onPressed: () {
+                                        quantity.increment();
+                                      },
+                                      icon: const Icon(Icons.add),
+                                    ),
+                                  ],
+                                ),
+
+                                ElevatedButton(
+                                  onPressed: () {
+                                    List<Product> getListProduct = [];
+                                    List<int> getListQuantity = [];
+                                    getListProduct.add(widget.product);
+                                    getListQuantity.add(quantity.count.value);
+
+                                    Navigator.of(context).pop();
+                                    Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
+                                  },
+                                  child: const Text("Mua"),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      );
                     },
                     child: const Text("Mua ngay")
                   ),
