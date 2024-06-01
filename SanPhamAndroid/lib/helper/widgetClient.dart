@@ -477,12 +477,14 @@ Widget buildStreamBuilderNotification() {
                             child: Icon(Icons.mark_as_unread, color: Colors.white, size: 40),
                           ),
                           space(10, 0),
-                          SizedBox(
-                            height: 50,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
-                            )
+                          Expanded(
+                            child: SizedBox(
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(ns.notification.text, style: const TextStyle(color: Colors.white))
+                              )
+                            ),
                           ),
                         ],
                       ),
