@@ -5,6 +5,7 @@ import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../admin/pageHomeAdmin.dart';
+import '../loadPage.dart';
 import 'signup.dart';
 
 class PageLogin extends StatefulWidget {
@@ -76,12 +77,9 @@ class _PageLoginState extends State<PageLogin> {
                       return;
                     }
 
-                    thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
-                    if (c.userSnapshot!.user.id == "0000") {
-                      Get.offAll(() => const PageHomeAdmin());
-                    } else {
-                      Get.offAll(() => const PageHomeClient());
-                    }
+                    // thongBaoThucHienXong(context: context, info: "Đăng nhập thành công.");
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    Get.offAll(() => const PageLoad());
                   });
                 },
                 style: ElevatedButton.styleFrom(
