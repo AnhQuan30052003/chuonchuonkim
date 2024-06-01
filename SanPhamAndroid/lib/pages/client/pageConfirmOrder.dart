@@ -3,13 +3,12 @@ import 'package:chuonchuonkim_app/database/models/Notification.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/counterQuantityProductController.dart';
 import '../../database/models/Product.dart';
 import 'pageOrderSuccess.dart';
 
 class ConfirmOrder extends StatefulWidget {
   final List<Product> listProduct;
-  final List<CounterQuantityProductController> listQuantity;
+  final List<int> listQuantity;
   const ConfirmOrder({required this.listProduct, required this.listQuantity, super.key});
 
   @override
@@ -28,7 +27,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     int tongTienDaMua() {
       int tong = 0;
       for (int i = 0; i < widget.listProduct.length; i++) {
-        tong += widget.listProduct[i].giaSP * widget.listQuantity[i].count.value;
+        tong += widget.listProduct[i].giaSP * widget.listQuantity[i];
       }
       return tong;
     }
@@ -36,7 +35,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Xác nhận đặt hàng",
-            style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
+          style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -129,7 +128,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Giá: ${p.giaSP} đ"),
-                          Text("X${q.count.value}"),
+                          Text("X$q"),
                         ],
                       ),
                     ),
@@ -208,10 +207,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       idNoti: getIdToString(number++),
                       idUser: c.userSnapshot!.user.id,
                       maSP: widget.listProduct[i].maSP,
-                      text: "Khách hàng ${c.userSnapshot!.user.ten}, đã đặt đơn hàng có mã là ${widget.listProduct[i].maSP}",
+                      text: "",
                       seen: false,
                       toUser: "0000",
-                      soLuong: widget.listQuantity[i].count.value
+                      soLuong: widget.listQuantity[i]
                     );
 
                     await NotificationsSnapshot.add(no);

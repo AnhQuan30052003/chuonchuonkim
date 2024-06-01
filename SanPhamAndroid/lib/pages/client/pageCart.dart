@@ -217,10 +217,10 @@ class PageCart extends StatelessWidget {
                 }
 
                 List<Product> getListProduct = [];
-                List<CounterQuantityProductController> getListQuantity = [];
+                List<int> getListQuantity = [];
                 for (int i = 0; i < listCheck.length; i++) {
                   if (listCheck[i].isChecked.value) {
-                    getListQuantity.add(listCounter[i]);
+                    getListQuantity.add(listCounter[i].count.value);
                     getListProduct.add(c.getProductFromID(id: c.listCartSnapshot[i].cart.maSP)!);
                   }
                 }
