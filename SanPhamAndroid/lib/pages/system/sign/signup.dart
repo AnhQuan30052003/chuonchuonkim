@@ -107,6 +107,9 @@ class _PageSignupState extends State<PageSignup> {
 
                     thongBaoDangThucHien(context: context, info: "Đang tạo...");
                     await UserSnapshot.add(u);
+
+                    c.listUserSnapshot = await UserSnapshot.futureData();
+
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
                       if (value == true) {
@@ -114,7 +117,7 @@ class _PageSignupState extends State<PageSignup> {
                         thongBaoThucHienXong(context: context, info: "Tạo thành công. Đăng nhập thành công");
                       }
                       else {
-                        thongBaoThucHienXong(context: context, info: "Có lỗi tạo account !");
+                        thongBaoThucHienXong(context: context, info: "Lỗi đăng nhập");
                       }
                     });
                   }
