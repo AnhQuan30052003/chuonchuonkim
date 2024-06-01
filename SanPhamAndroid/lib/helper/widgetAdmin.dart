@@ -3,19 +3,19 @@ import 'package:chuonchuonkim_app/database/models/ProductType.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import '../../../controllers/chuonChuonKimController.dart';
-import '../../../database/connect/setupFirebase.dart';
-import '../../../database/models/Notification.dart';
-import '../../../database/models/Product.dart';
-import '../../../database/models/User.dart';
-import '../../../helper/dialog.dart';
-import '../../../helper/uploadImage.dart';
-import '../pageOrder.dart';
-import '../product/pageAddProduct.dart';
-import '../product/pageUpdateProduct.dart';
-import '../product_type/pageAddProductType.dart';
-import '../product_type/pageUpdateProductType.dart';
-import '../user/updateUser.dart';
+import '../controllers/chuonChuonKimController.dart';
+import '../database/connect/setupFirebase.dart';
+import '../database/models/Notification.dart';
+import '../database/models/Product.dart';
+import '../database/models/User.dart';
+import 'dialog.dart';
+import 'uploadImage.dart';
+import '../pages/admin/pageOrder.dart';
+import '../pages/admin/product/pageAddProduct.dart';
+import '../pages/admin/product/pageUpdateProduct.dart';
+import '../pages/admin/product_type/pageAddProductType.dart';
+import '../pages/admin/product_type/pageUpdateProductType.dart';
+import '../pages/admin/user/updateUser.dart';
 
 PreferredSizeWidget buildAppBarAdmin({required BuildContext context, required String info}) {
   return AppBar(

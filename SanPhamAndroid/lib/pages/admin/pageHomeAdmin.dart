@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../database/connect/firebaseConnect.dart';
-import 'widget/widgetAdmin.dart';
+import '../../helper/widgetAdmin.dart';
 
 class AdminConnect extends StatelessWidget {
   const AdminConnect({super.key});
