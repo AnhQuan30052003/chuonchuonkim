@@ -1,8 +1,8 @@
 import 'package:chuonchuonkim_app/controllers/chuonChuonKimController.dart';
-import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'database/connect/firebaseConnect.dart';
+import 'pages/system/loadPage.dart';
 import 'pages/system/uploadData.dart';
 
 void main() => runApp(const ChuonChuonKimApp());
@@ -12,13 +12,10 @@ class ChuonChuonKimApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FirebaseConnect(
-      builder: (context) => GetMaterialApp(
-        title: "Chuonchuonkim App",
-        debugShowCheckedModeBanner: false,
-        initialBinding: ChuonChuonKimBindings(),
-        home: const ListApp(),
-      ),
+    return const MaterialApp(
+      title: "Chuonchuonkim App",
+      debugShowCheckedModeBanner: false,
+      home: ListApp(),
     );
   }
 }
@@ -66,10 +63,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "ChuonoChuonKimApp",
-      debugShowCheckedModeBanner: false,
-      home: PageHomeClient(),
+    return FirebaseConnect(
+      builder: (context) =>  GetMaterialApp(
+        title: "ChuonoChuonKimApp",
+        debugShowCheckedModeBanner: false,
+        initialBinding: ChuonChuonKimBindings(),
+        home: const PageLoad(),
+      ),
     );
   }
 }

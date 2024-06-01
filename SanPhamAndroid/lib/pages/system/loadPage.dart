@@ -11,11 +11,7 @@ class PageLoad extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: Image.asset("assets/logo.png"),
-            ),
-            const Text(
-              'Loading...',
-              style: TextStyle(fontSize: 15),
+              child: Image.asset("assets/logo.png", height: 85),
             ),
           ],
         ),

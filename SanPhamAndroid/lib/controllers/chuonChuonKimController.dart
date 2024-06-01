@@ -1,4 +1,6 @@
 import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
+import 'package:chuonchuonkim_app/pages/admin/pageHomeAdmin.dart';
+import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
 import 'package:get/get.dart';
 import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
@@ -31,16 +33,22 @@ class ChuonChuonKimController extends GetxController {
 
   void getData() async {
     await getUser();
-    getProductType();
-    getProduct();
-    getProductFavorite();
-    getCart();
+    await getProductType();
+    await getProduct();
+    await getProductFavorite();
+    await getCart();
   }
 
   // * -------------------------------------
   // Lấy dữ liệu cart
   Future<void> getCart() async {
     listCartSnapshot = await CartSnapshot.futureData();
+    if (isLogin && userSnapshot!.user.id == "0000") {
+      Get.to(() => const PageHomeAdmin());
+    }
+    else {
+      Get.to(() => const PageHomeClient());
+    }
   }
 
   // Lấy dữ liệu product favorite
