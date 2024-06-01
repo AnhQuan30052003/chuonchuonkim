@@ -35,7 +35,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Xác nhận đặt hàng",
-          style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -110,6 +110,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   icon: const Icon(Icons.monetization_on_outlined, color: Colors.redAccent),
                   textLeft: "Thanh toán khi nhận hàng"),
               ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   var p = widget.listProduct[index];
@@ -127,7 +128,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Giá: ${p.giaSP} đ"),
+                          Text("Giá: ${formatNumber(p.giaSP)} đ"),
                           Text("X$q"),
                         ],
                       ),
@@ -169,7 +170,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       style: TextStyle(fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      "${tongTienDaMua()} đ",
+                      "${formatNumber(tongTienDaMua())} đ",
                       style: const TextStyle(
                           color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 15),
                     ),
@@ -193,7 +194,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   var c = ChuonChuonKimController.instance;
 
                   List<NotificationsSnapshot> listNoti = await NotificationsSnapshot.futureData();
-                  listNoti.sort((NotificationsSnapshot a, NotificationsSnapshot b) => a.notification.idNoti.compareTo(b.notification.idNoti));
+                  listNoti.sort((NotificationsSnapshot a, NotificationsSnapshot b) =>
+                      a.notification.idNoti.compareTo(b.notification.idNoti));
 
                   int number;
                   if (listNoti.isEmpty) {
@@ -204,14 +206,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
 
                   for (int i = 0; i < widget.listProduct.length; i++) {
                     Notifications no = Notifications(
-                      idNoti: getIdToString(number++),
-                      idUser: c.userSnapshot!.user.id,
-                      maSP: widget.listProduct[i].maSP,
-                      text: "",
-                      seen: false,
-                      toUser: "0000",
-                      soLuong: widget.listQuantity[i]
-                    );
+                        idNoti: getIdToString(number++),
+                        idUser: c.userSnapshot!.user.id,
+                        maSP: widget.listProduct[i].maSP,
+                        text: "",
+                        seen: false,
+                        toUser: "0000",
+                        soLuong: widget.listQuantity[i]);
 
                     await NotificationsSnapshot.add(no);
                   }

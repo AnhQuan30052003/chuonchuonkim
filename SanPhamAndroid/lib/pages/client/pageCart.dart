@@ -1,6 +1,7 @@
 // Quân
 
 import 'package:chuonchuonkim_app/helper/dialog.dart';
+import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:chuonchuonkim_app/pages/client/pageConfirmOrder.dart';
 import 'package:flutter/widgets.dart';
 import '../../controllers/chuonChuonKimController.dart';
@@ -142,7 +143,7 @@ class PageCart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(child: Text(p.tenSP)),
-                  Text("${p.giaSP} đ"),
+                  Text("${formatNumber(p.giaSP)} đ"),
                 ],
               ),
               subtitle: Row(
@@ -166,7 +167,7 @@ class PageCart extends StatelessWidget {
                     )
                   ]),
                   Obx(() => Text(
-                      "Tổng: ${sumPirceOfProduct(product: p, quantity: counterQuantity.count.value)} đ",
+                      "Tổng: ${formatNumber(sumPirceOfProduct(product: p, quantity: counterQuantity.count.value))} đ",
                       style: const TextStyle(color: Colors.red))),
                 ],
               ),
@@ -221,18 +222,18 @@ class PageCart extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                    "Tổng tiền: ${sumPriceOfList(listCounter: listCounter, listCheck: listCheck)} đ",
+                    "Tổng tiền: ${formatNumber(sumPriceOfList(listCounter: listCounter, listCheck: listCheck))} đ",
                     style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    onPressed: () {
+                  ),
+                  onPressed: () {
                       var c = ChuonChuonKimController.instance;
                       String text;
 
@@ -265,7 +266,8 @@ class PageCart extends StatelessWidget {
 
                       Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
                     },
-                    child: Text("Mua hàng (${numberOfItemSelected(listCheck)})", style: const TextStyle(color: Colors.white)))
+                  child: Text("Mua hàng (${numberOfItemSelected(listCheck)})", style: const TextStyle(color: Colors.white))
+                ),
               ],
             ),
           ),

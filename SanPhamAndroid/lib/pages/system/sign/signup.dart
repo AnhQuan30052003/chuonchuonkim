@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../database/models/User.dart';
+import '../loadPage.dart';
 
 class PageSignup extends StatefulWidget {
   const PageSignup({super.key});
@@ -106,15 +107,16 @@ class _PageSignupState extends State<PageSignup> {
                     );
 
                     thongBaoDangThucHien(context: context, info: "Đang tạo...");
-                    await UserSnapshot.add(u);
+                    await UserSnapshot.add(u).then((value) {
+                      thongBaoThucHienXong(context: context, info: "Tạo thành công.");
+                    });
 
                     c.listUserSnapshot = await UserSnapshot.futureData();
 
                     await c.login(user: u.user, password: u.pass)
                     .then((value) {
                       if (value == true) {
-                        Get.offAll(const PageHomeClient());
-                        thongBaoThucHienXong(context: context, info: "Tạo thành công. Đăng nhập thành công");
+                        Get.offAll(() => const PageLoad());
                       }
                       else {
                         thongBaoThucHienXong(context: context, info: "Lỗi đăng nhập");
