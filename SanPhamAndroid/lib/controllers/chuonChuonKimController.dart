@@ -6,6 +6,7 @@ import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -37,13 +38,45 @@ class ChuonChuonKimController extends GetxController {
     await getProduct();
     await getProductFavorite();
     await getCart();
+    await testLogin();
+  }
 
-    if (isLogin && userSnapshot!.user.id == "0000") {
-      Get.offAll(() => const PageHomeAdmin());
-    }
-    else {
+  Future<void> testLogin() async {
+    SharedPreferences spf = await SharedPreferences.getInstance();
+    String? idLogin = spf.getString("idLogin");
+
+    if (idLogin == null) {
       Get.offAll(() => const PageHomeClient());
+      return;
     }
+
+    for (var us in listUserSnapshot) {
+      if (us.user.id == idLogin) {
+        userSnapshot = us;
+        isLogin = true;
+
+        if (idLogin == "0000") {
+          Get.offAll(() => const PageHomeAdmin());
+        }
+        else {
+          Get.offAll(() => const PageHomeClient());
+        }
+      }
+    }
+  }
+
+  Future<bool> login({required String user, required String password}) async {
+    for (var us in listUserSnapshot) {
+      var u = us.user;
+      if ((u.user == user || u.sdt == user) && u.pass == password) {
+        userSnapshot = us;
+        isLogin = true;
+        SharedPreferences spf = await SharedPreferences.getInstance();
+        spf.setString("isLogin", userSnapshot!.user.id);
+        return true;
+      }
+    }
+    return false;
   }
 
   // * -------------------------------------
@@ -198,17 +231,6 @@ class ChuonChuonKimController extends GetxController {
     }
   }
 
-  Future<bool> login({required String user, required String password}) async {
-    for (var us in listUserSnapshot) {
-      var u = us.user;
-      if ((u.user == user || u.sdt == user) && u.pass == password) {
-        userSnapshot = us;
-        isLogin = true;
-        return true;
-      }
-    }
-    return false;
-  }
 
   Product? getProductFromID({required String id}) {
     for (var ps in listProductSnapshot) {
