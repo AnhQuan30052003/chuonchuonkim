@@ -8,15 +8,17 @@ import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/helper/dialog.dart';
 import 'package:chuonchuonkim_app/helper/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../database/models/Product.dart';
 import '../../helper/widgetClient.dart';
 import '../system/sign/login.dart';
 import 'pageConfirmOrder.dart';
 
+
 class PageDetails extends StatefulWidget {
-  final Product product;
-  const PageDetails({required this.product, super.key});
+  final Product product ;
+  PageDetails({required this.product, super.key});
 
   @override
   State<PageDetails> createState() => _PageDetailsState();
@@ -200,6 +202,7 @@ class _PageDetailsState extends State<PageDetails> {
                           return SizedBox(
                             height: 100,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Row(
                                   children: [
@@ -219,17 +222,30 @@ class _PageDetailsState extends State<PageDetails> {
                                   ],
                                 ),
 
-                                ElevatedButton(
-                                  onPressed: () {
-                                    List<Product> getListProduct = [];
-                                    List<int> getListQuantity = [];
-                                    getListProduct.add(widget.product);
-                                    getListQuantity.add(quantity.count.value);
-
-                                    Navigator.of(context).pop();
-                                    Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
-                                  },
-                                  child: const Text("Mua"),
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                        side: const BorderSide(
+                                          color: Colors.redAccent
+                                        )
+                                      )
+                                    ),
+                                    onPressed: () {
+                                      List<Product> getListProduct = [];
+                                      List<int> getListQuantity = [];
+                                      getListProduct.add(widget.product);
+                                      getListQuantity.add(quantity.count.value);
+                                  
+                                      Navigator.of(context).pop();
+                                      Get.to(() => ConfirmOrder(listProduct: getListProduct, listQuantity: getListQuantity));
+                                    },
+                                    child: const Text("Mua", style: TextStyle(color: Colors.redAccent),),
+                                  ),
                                 ),
                               ],
                             ),
