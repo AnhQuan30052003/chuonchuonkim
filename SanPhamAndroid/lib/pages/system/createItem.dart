@@ -6,7 +6,7 @@ import 'dart:math';
 import '../../helper/widget.dart';
 
 List<String> listTen = [
-  "Hà Nội", "Hồ Chí Minh", "Nghệ An", "Vũng Tàu", "5 ngon",
+  "Hà Nội", "Sài Gòn", "Nghệ An", "Vũng Tàu", "5 ngon",
   "Phú Quốc", "Vạn Giã", "Xuân Bắc", "Khánh Hoà", "Thái Nguyên",
 ];
 

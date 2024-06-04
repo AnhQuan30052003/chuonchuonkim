@@ -180,15 +180,16 @@ GestureDetector _buildGestureDetector(
       List<String> list = ["Xác nhận", "Huỷ"];
       String cauHoi = "Bạn chắc chắc muốn đăng xuất ?";
       SharedPreferences spf = await SharedPreferences.getInstance();
-      String chon = await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi);
-      if (chon == list[0]) {
-        spf.remove("idLogin").then((value) {
-        var c = ChuonChuonKimController.instance;
-          c.userSnapshot = null;
-          c.isLogin = false;
-          Get.offAll(() => widget);
-        });
-      }
+      await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) {
+        if (value == list.first) {
+          spf.remove("idLogin").then((value) {
+            var c = ChuonChuonKimController.instance;
+            c.userSnapshot = null;
+            c.isLogin = false;
+            Get.offAll(() => widget);
+          });
+        }
+      });
     },
   );
 }

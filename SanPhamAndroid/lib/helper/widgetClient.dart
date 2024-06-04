@@ -419,9 +419,11 @@ Widget buildStreamBuilderNotification() {
 
       if (listNew.isEmpty && listOld.isEmpty) {
         return const Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Không có thông báo !")]));
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text("Không có thông báo !")]
+          )
+        );
       }
 
       return SingleChildScrollView(

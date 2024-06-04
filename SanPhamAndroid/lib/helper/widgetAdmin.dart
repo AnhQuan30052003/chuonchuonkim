@@ -26,6 +26,21 @@ PreferredSizeWidget buildAppBarAdmin({required BuildContext context, required St
       style: const TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold),
     ),
     actions: [
+      IconButton(
+        onPressed: () async {
+          List<String> list = ["Xác nhận", "Huỷ"];
+          String cauHoi = "Tiến hành cập nhật lại database về mặc định ?";
+          await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) async {
+            if (value == list.last) return;
+            var c = ChuonChuonKimController.instance;
+            thongBaoThucHienXong(context: context, info: "Đang cập nhật lại database...");
+            await c.removeAndUploadData().then((value) {
+              thongBaoThucHienXong(context: context, info: "Cập nhật xong.");
+            });
+          });
+        },
+        icon: const Icon(Icons.upload, color: Color(0xFF3A3737)),
+      ),
       GestureDetector(
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0),
@@ -41,12 +56,7 @@ PreferredSizeWidget buildAppBarAdmin({required BuildContext context, required St
                   list = [];
                 }
 
-                int count = 0;
-                for (var no in list) {
-                  if (no.notification.seen == false) count += 1;
-                }
-
-                return Text("$count", style: const TextStyle(color: Colors.white));
+                return Text("${list.length}", style: const TextStyle(color: Colors.white));
               },
             ),
             child: const Icon(Icons.card_travel, color: Color(0xFF3A3737)),
@@ -184,29 +194,22 @@ Widget buildProduct(BuildContext context) {
                                       onPressed: (value) async {
                                         List<String> list = ["Xoá", "Huỷ"];
                                         String cauHoi = "Bạn chắc chắc muốn xoá ?";
-                                        await khungLuaChon(
-                                                context: context, listLuaChon: list, cauHoi: cauHoi)
-                                            .then((value) async {
+                                        await khungLuaChon(context: context, listLuaChon: list, cauHoi: cauHoi).then((value) async {
                                           if (value == list[0]) {
-                                            thongBaoDangThucHien(
-                                                context: context, info: "Đang xoá...");
+                                            thongBaoDangThucHien(context: context, info: "Đang xoá...");
 
                                             try {
-                                              await deleteImage(
-                                                  folders: Firebase.pathImageProduct,
-                                                  fileName: "${ps.product.maSP}.jpg");
+                                              await deleteImage(folders: Firebase.pathImageProduct, fileName: "${ps.product.maSP}.jpg");
                                               print("Xoá thành công.");
                                             } catch (error) {
                                               print("Lỗi xoá !");
                                             }
 
                                             await ps.delete().then((value) {
-                                              thongBaoThucHienXong(
-                                                  context: context, info: "Đã xoá.");
+                                              thongBaoThucHienXong(context: context, info: "Đã xoá.");
                                               print("Đã xoá.");
                                             }).catchError((error) {
-                                              thongBaoThucHienXong(
-                                                  context: context, info: "Lỗi xoá !");
+                                              thongBaoThucHienXong(context: context, info: "Lỗi xoá !");
                                               print("Có lỗi khi xoá !.");
                                             });
                                           }

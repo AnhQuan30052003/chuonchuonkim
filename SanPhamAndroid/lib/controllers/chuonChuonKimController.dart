@@ -1,12 +1,18 @@
 import 'package:chuonchuonkim_app/database/models/ProductFavorite.dart';
 import 'package:chuonchuonkim_app/pages/admin/pageHomeAdmin.dart';
 import 'package:chuonchuonkim_app/pages/client/pageHomeClient.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import '../database/connect/setupFirebase.dart';
+import '../database/models/Notification.dart';
 import '../database/models/Product.dart';
 import '../database/models/Cart.dart';
 import '../database/models/ProductType.dart';
 import '../database/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../helper/dialog.dart';
+import '../pages/system/createItem.dart';
 
 class ChuonChuonKimController extends GetxController {
   static ChuonChuonKimController get instance => Get.find<ChuonChuonKimController>();
@@ -24,12 +30,71 @@ class ChuonChuonKimController extends GetxController {
   List<Product> listProductsGridView = [];
   List<Product> listProductSearch = [];
   List<Product> listSimilarProducts = [];
-  List<Product> productYouCanLike = [];
 
   @override
   void onReady() {
     super.onReady();
     getData();
+  }
+
+  Future<void> removeAndUploadData() async {
+    print("Đang thêm dữ liệu lên firebase...");
+    // Product type
+    await deleteData(collectionPath: Firebase.colProductType)
+        .then((value) {
+      for (var o in dbProductType) {
+        ProductTypeSnapshot.add(o);
+      }
+    });
+
+    // Carts
+    await deleteData(collectionPath: Firebase.colCart)
+        .then((value) {
+      for (var o in dbCart) {
+        CartSnapshot.add(o);
+      }
+    });
+
+    // Product favorite
+    await deleteData(collectionPath: Firebase.colProductFavorite)
+        .then((value) {
+      for (var o in dbProductFavorite) {
+        ProductFavoriteSnapshot.add(o);
+      }
+    });
+
+    // Notifications
+    await deleteData(collectionPath: Firebase.colNotification)
+        .then((value) {
+      for (var o in dbNotifications) {
+        NotificationsSnapshot.add(o);
+      }
+    });
+
+    // Users
+    await deleteData(collectionPath: Firebase.colUser)
+        .then((value) {
+      for (var o in dbUser) {
+        UserSnapshot.add(o);
+      }
+    });
+
+    // Product
+    await deleteData(collectionPath: Firebase.colProduct)
+    .then((value) {
+      int soLuongTao = 20, indexLSP = 0;
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Cơm sườn", hinhAnhSPTao: hinhAnhComSuon, giaSPTao: List.of([20000, 25000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Hamburger", hinhAnhSPTao: hinhAnhHamburger, giaSPTao: List.of([25000, 30000, 40000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Bún", hinhAnhSPTao: hinhAnhBun, giaSPTao: List.of([15000, 20000, 25000, 30000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Phở", hinhAnhSPTao: hinhAnhPho, giaSPTao: List.of([20000, 25000, 30000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Nước", hinhAnhSPTao: hinhAnhNuoc, giaSPTao: List.of([10000, 15000, 20000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      buildProduct(soLuongTao: soLuongTao, tenSPTao: "Sald", hinhAnhSPTao: hinhAnhSalad, giaSPTao: List.of([10000, 15000]), maLSPTao: dbProductType[indexLSP++].maLSP);
+      for (var o in dbProduct) {
+        ProductSnapshot.add(o);
+      }
+    });
+
+    print("Thêm dữ liệu thành công lên Firebase.");
   }
 
   void getData() async {
@@ -236,6 +301,23 @@ class ChuonChuonKimController extends GetxController {
       }
     }
     return null;
+  }
+
+  Future<void> adminConfirm({
+    required BuildContext context,
+    required List<String> thongBaoRaManHinh,
+    required NotificationsSnapshot ns,
+    required Notifications no
+    }) async {
+
+    int i = 0;
+    thongBaoDangThucHien(context: context, info: thongBaoRaManHinh[i++]);
+    no.text = thongBaoRaManHinh[i++];
+
+    await NotificationsSnapshot.add(no).then((value) {
+      thongBaoThucHienXong(context: context, info: thongBaoRaManHinh[i++]);
+      ns.delete();
+    });
   }
 }
 

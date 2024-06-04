@@ -83,7 +83,7 @@ class UserSnapshot {
 }
 
 List<User> dbUser = [
-  User(id: "0000", user: "admin", pass: "admin", ten: "Admin", diaChi: "Nha Trang, Việt Nam", sdt: "0398090114", hinhAnhUser: Firebase.avtDefault),
-  User(id: "0001", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: "Ninh Hiệp, Khánh Hoà", sdt: "", hinhAnhUser: Firebase.avtDefault),
-  User(id: "0002", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: "Ninh Thân, Khánh Hoà", sdt: "0398090114", hinhAnhUser: Firebase.avtDefault),
+  User(id: "0000", user: "admin", pass: "admin", ten: "Admin", diaChi: "Nha Trang, Việt Nam", sdt: "0123456789", hinhAnhUser: Firebase.avtDefault),
+  // User(id: "0001", user: "tiendat", pass: "tiendat", ten: "Nguyễn Tiến Đạt", diaChi: "Ninh Hiệp, Khánh Hoà", sdt: "", hinhAnhUser: Firebase.avtDefault),
+  // User(id: "0002", user: "anhquan", pass: "anhquan", ten: "Nguyễn Anh Quân", diaChi: "Ninh Thân, Khánh Hoà", sdt: "0398090114", hinhAnhUser: Firebase.avtDefault),
 ];

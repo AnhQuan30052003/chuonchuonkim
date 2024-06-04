@@ -80,7 +80,7 @@ class CartSnapshot {
 }
 
 List<Cart> dbCart = [
-  Cart(idCart: "0001", idUser: "0001", maSP: "0001", soLuong: 1),
-  Cart(idCart: "0002", idUser: "0001", maSP: "0002", soLuong: 1),
-  Cart(idCart: "0003", idUser: "0001", maSP: "0003", soLuong: 5),
+  // Cart(idCart: "0001", idUser: "0001", maSP: "0001", soLuong: 1),
+  // Cart(idCart: "0002", idUser: "0001", maSP: "0002", soLuong: 1),
+  // Cart(idCart: "0003", idUser: "0001", maSP: "0003", soLuong: 5),
 ];

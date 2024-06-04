@@ -51,21 +51,21 @@ class _PageOrderState extends State<PageOrder> {
             );
           }
 
-          List<NotificationsSnapshot> data = [];
           List<NotificationsSnapshot> list = [];
 
           try {
-            data = snapshot.data!;
+            list = snapshot.data!;
           } catch (error) {
-            data = [];
+            list = [];
           }
 
-          int count = 0;
-          for (var no in data) {
-            if (no.notification.seen == false) {
-              count += 1;
-              list.add(no);
-            }
+          if (list.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text("Không có đơn hàng nào cần duyêt !")]
+              )
+            );
           }
 
           return Padding(
@@ -73,7 +73,7 @@ class _PageOrderState extends State<PageOrder> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildInstruction(text: "Cần duyệt: $count đơn"),
+                buildInstruction(text: "Cần duyệt: ${list.length} đơn"),
                 space(0, 10),
                 Expanded(
                   child: ListView.separated(
@@ -140,15 +140,12 @@ class _PageOrderState extends State<PageOrder> {
                                         children: [
                                           ElevatedButton(
                                             onPressed: () async {
-                                              item.notification.seen = true;
-                                              thongBaoDangThucHien(context: context, info: "Đang xác nhận...");
-                                              await item.update(item.notification);
-                                              var c = ChuonChuonKimController.instance;
-                                              String text = "Đơn hàng ${c.getProductFromID(id:item.notification.maSP)!.tenSP} của bạn đã được xác nhận. Vui lòng chú điện thoại để nhận hàng.";
-                                              no.text = text;
-                                              NotificationsSnapshot.add(no).then((value) {
-                                                thongBaoThucHienXong(context: context, info: "Đã xác nhận.");
-                                              });
+                                              List<String> thongBao = [
+                                                "Đang xác nhận...",
+                                                "Đơn hàng ${c.getProductFromID(id:item.notification.maSP)!.tenSP} của bạn đã được xác nhận. Vui lòng chú điện thoại để nhận hàng.",
+                                                "Đã xác nhận.",
+                                              ];
+                                              c.adminConfirm(context: context, thongBaoRaManHinh: thongBao, ns: item, no: no);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
@@ -160,25 +157,22 @@ class _PageOrderState extends State<PageOrder> {
                                             child: const Text("Xác nhận", style: TextStyle(color: Colors.white)),
                                           ),
                                           ElevatedButton(
-                                              onPressed: () async {
-                                                item.notification.seen = true;
-                                                thongBaoDangThucHien(context: context, info: "Đang huỷ...");
-                                                await item.update(item.notification);
-                                                var c = ChuonChuonKimController.instance;
-                                                String text = "Đơn hàng ${c.getProductFromID(id:item.notification.maSP)!.tenSP} của bạn đã bị huỷ. Vui lòng đặt lại đơn khác !";
-                                                no.text = text;
-                                                await NotificationsSnapshot.add(no).then((value) {
-                                                  thongBaoThucHienXong(context: context, info: "Đã huỷ.");
-                                                });
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.red,
-                                                minimumSize: const Size(100, 45),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
+                                            onPressed: () async {
+                                              List<String> thongBao = [
+                                                "Đang huỷ...",
+                                                "Đơn hàng ${c.getProductFromID(id:item.notification.maSP)!.tenSP} của bạn đã bị huỷ. Vui lòng đặt lại đơn khác !",
+                                                "Đã huỷ.",
+                                              ];
+                                              c.adminConfirm(context: context, thongBaoRaManHinh: thongBao, ns: item, no: no);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red,
+                                              minimumSize: const Size(100, 45),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
-                                              child: const Text("Huỷ", style: TextStyle(color: Colors.white))
+                                            ),
+                                            child: const Text("Huỷ", style: TextStyle(color: Colors.white))
                                           ),
                                         ],
                                       )
