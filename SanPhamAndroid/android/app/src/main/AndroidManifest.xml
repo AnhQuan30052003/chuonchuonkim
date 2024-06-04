@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="chuonchuonkim_app"
+        android:label="Chuồn Chuồn Kim"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
