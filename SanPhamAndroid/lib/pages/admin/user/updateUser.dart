@@ -44,7 +44,7 @@ class _PageUpdateUserState extends State<PageUpdateUser> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cập nhật sản phẩm", style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
+        title: const Text("Cập nhật khách hàng", style: TextStyle(fontSize: 16, color: Color(0xFF3A3737), fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
